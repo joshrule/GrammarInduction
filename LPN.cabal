@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 -- The name of the package.
-name:                GIJoe
+name:                LPN
 
 -- The package version.  See the Haskell package versioning policy (PVP) 
 -- for standards guiding when and how versions should be incremented.
@@ -104,7 +104,7 @@ library
 executable prismify
            Main-is: haskell/LPN/Prismify-Main.hs
 
-           build-depends:  GIJoe, 
+           build-depends:  LPN, 
                            base >=4.6,
                        MonadRandom >=0.1,
                        PSQueue >=1.1,
