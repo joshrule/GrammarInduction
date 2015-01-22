@@ -6,6 +6,8 @@
 \usepackage{pslatex}
 \usepackage{apacite}
 \usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{natbib}
 
 \title{Representing and Learning a Large System of Number Concepts using Latent Predicate Networks}
  
@@ -23,29 +25,30 @@
   children acquire, forming a foundation on which the rest of
   mathematics and the sciences depend. Psychologists have accordingly
   spent decades investigating number knowledge in children and adults
-  as a case study in concept representation and acquisition. To the
-  extent that formal psychological models of natural number have been
-  studied, however, they have largely ignored at least two challenges
-  related to the language-like productivity and compositionality of
-  exact number concepts: 1) there is an unbounded set of exact number
-  concepts, each with distinct semantic content; and 2) people can
-  reason flexibly about any of these concepts (even fictitious ones
-  like “eighteen gazillion and seven”). Conventional models of concept
-  learning that represent individual concepts as collections of
-  prototypes or rules do not naturally explain these
-  capacities. Instead we need a way of learning the structure of the
-  entire infinite set of exact number concepts as a system akin to a
-  natural language grammar. The heart of what must be learned are the
-  relationships between concepts that support reference and
-  generalization. Here, we suggest that latent predicate networks
-  (LPNs) -- a probabilistic context-sensitive grammar formalism we
-  have previously developed -- facilitate tractable learning of and
-  reasoning about exact number concepts. We show how the grammar of
-  the number words and their relations to one another can be expressed
-  in this formalism and discuss a Bayesian learning algorithm for LPNs
-  that implements a computational mechanism by which children might
-  learn abstract numerical knowledge from linguistic utterances about
-  numbers.
+  as a case study in concept representation and acquisition
+  \citep[{\it e.g.}][]{Car2009}. To the extent that formal
+  psychological models of natural number have been studied, however,
+  they have largely ignored at least two challenges related to the
+  language-like productivity and compositionality of exact number
+  concepts: 1) there is an unbounded set of exact number concepts,
+  each with distinct semantic content; and 2) people can reason
+  flexibly about any of these concepts (even fictitious ones like
+  \emph{eighteen-gazillion and thirty-one}). Conventional models of
+  concept learning that represent individual concepts as collections
+  of prototypes or rules do not naturally explain these capacities
+  (citation for conventional models). Instead we need a way of
+  learning the structure of the entire infinite set of exact number
+  concepts as a system akin to a natural language grammar. The heart
+  of what must be learned are the relationships between concepts that
+  support reference and generalization. Here, we suggest that latent
+  predicate networks (LPNs) -- a probabilistic context-sensitive
+  grammar formalism we have previously developed -- facilitate
+  tractable learning and reasoning for exact number concepts
+  \citep{DecRulTenming}. We show how the grammar of the number words and
+  their relations to one another can be expressed in this formalism
+  and discuss a Bayesian learning algorithm for LPNs, suggesting a
+  computational mechanism by which children might learn abstract
+  numerical knowledge from linguistic utterances about numbers.
 
   \textbf{Keywords:}
   child development; concept learning; number; generalization;
@@ -54,7 +57,92 @@
 
 \section{Introduction}
 
-This is going to be the best paper ever. Definitely read it.
+The natural numbers (1, 2, 3, $\ldots$) are among the most powerful
+and foundational concepts that humans have discovered. They allow
+precise quantification over finite sets and thus form a foundation on
+which nearly all mathematical intuition is built. They are among the
+simplest of abstract, symbolic structures, yet their usefulness is
+literally infinite.
+
+Despite this pivotal role, current evidence suggests humans aren't
+born with an innate understanding of the natural numbers
+\citep{Car2009}. Certainly, they aren't born with mastery: the entire
+field of number theory is an ongoing study into the natural numbers
+and their close relatives, the integers
+\citep{ireland1982classical}. Nor are they born with even basic number
+knowledge. Instead, number is laboriously acquired over the course of
+early childhood, a process regularly stretching into grade school and
+beyond (citation needed). Even so, our earliest understanding of the
+natural numbers is among the first abstract, symbolic conceptual
+systems we acquire, with things like the alphabet, written language,
+and family trees coming later (citations needed). Understanding how
+number is acquired - on what basis representation and by what
+computational process - promises to increase our understanding of
+abstraction and conceptual development in a much deeper way than a
+typical case study.
+
+Natural number has accordingly been studied intensely for the last
+several decades, to great effect. Strong evidence suggests several
+innate systems, while not containing explicit natural number concepts,
+are important for scaffolding our initial representations of
+number. These include systems for parallel object individuation and
+approximate magnitude \citep{feigenson2004core}. One of the most
+well-established phenomena of number learning is that the ability to
+reliably count sets of objects develops in a highly stereotypical
+process, even among culture where number is traditionally unimportant
+(citations needed of Spelke, Julian, Carey, Wynn). Initially, children
+are completely unable to associate sets of a given size with the
+appropriate number word. Then, they can do so for sets no larger than
+one, followed some time later by sets no larger than two, followed
+again by sets no larger than three. Typically, children then appear to
+generalize the procedure to the other number words they know and can
+reliably count out sets of any size, provided they know a sufficiently
+large count list.
+
+Initial attempts to collate the decades of number research into a
+coherent theory or model have largely focused on the cognitive change
+that helps children move from counting sets of 1, 2, or 3 items to
+becoming what are variously called \emph{Cardinal Principle-knowers}
+or \emph{full counters} \citep{Car2009,PianGoodTen2012}(citations
+needed for Spelke). Recent work suggests, however, that the ability to
+reliably count sets of objects is closely related but undeniably
+distinct from our conceptual knowledge of numbers as representing
+cardinalities of exact sets \citep{DavEngBar2012,izard2014toward}
+(citations needed for Julian). Moreover, both prose and computational
+models of counting and number learning have focused almost exclusively
+on numbers between one and ten, presumably because it is during that
+interval that the transition to \emph{full counter} occurs. Most
+studies, then, have focused on the development of a specific skill
+involving a small subset of numbers.
+
+Children acquire far more than just the numbers one through ten: in
+fact, they eventually learn that the numbers are infinite and can be
+considered as compositionally constructed from a small set of number
+concepts according to a base system, typically base ten. Moreover,
+they learn many of these number concepts from linguistic utterances
+alone, without ever seeing them as explicitly counted,
+perceptually-grounded sets (When did you last see exactly 253
+objects?). They also learn far more than just the names of the numbers
+and their ordering on the number line. They learn significantly more
+complex operations like \emph{More Than} and \emph{Less Than}, as well
+as simple arithmetic in the form of addition, subtraction,
+multiplication and division. Indeed, they may eventually learn about
+negative and rational numbers, modular arithmetic, algebra, geometry,
+and myriad other mathematical disciplines.
+
+While the problems of how children link perceptually grounded sets
+with the counting routine and develop a concept of sets as exact
+collections are crucial, we direct our attention elsewhere in this
+paper. Specifically, we focus on how children might be able to acquire
+number knowledge from language, particularly for sets which they are
+unlikely to ever see counted out explicitly. We begin by discussing
+how to represent the sort of conceptual knowledge needed to describe
+an infinite number system, and showing how a particular formalism, the
+Probabilistic Range Concatenation Grammar (PRCG) can be used to
+represent number knowledge this way (citation of Boullier). We then show how portions of this
+grammar can be learned using Bayesian inference in a Latent Predicate
+Network (LPN), a learning framework for PRCGs which we have previously
+developed (citations needed from our work).
 
 \section{Representing Number Knowledge}
 
@@ -115,14 +203,16 @@ numbers.
 
 How can we hope to represent a conceptual system with these
 characteristics: 1) learnable without direct perceptual grounding; 2)
-concepts must be constructed compositionally; 3) concepts are defined
-relationally and without the use of a ``conceptual object''? We
-propose that the formal tool best suited to explaining this sort of
-structure is a grammar. Grammars can be induced...
-
-Specifically, we propose to use Range Concatenation Grammars, an
-expressive yet tractable formalism originally developed to explain
-context-sensitive phenomena in natural language.
+compositionally constructed concepts; 3) relationally-defined concepts
+that succeed without the use of a ``conceptual object''? We propose
+that the representation best suited to explaining this sort of
+structure is a grammar. Grammars can be induced ..., are highly
+compositional, and define their constituents based on their
+relationships to other components rather than through some independent
+``semantic object''. Specifically, we propose to use Range
+Concatenation Grammars, an expressive yet tractable formalism
+originally developed to explain context-sensitive phenomena in natural
+language.
 
 \subsection{Probabilistic Range Concatenation Grammars}
 
@@ -166,7 +256,7 @@ derivations of finite length.
 
 \begin{figure*}[t]
 		\includegraphics[width=\linewidth]{grammarOfNumber/gon.pdf}
-		\caption{The rules for a grammar of number words.}
+		\caption{A Range Concatenation Grammar whose strings are valid number words.}
 		\label{fig:gon}
 \end{figure*}
 
@@ -176,14 +266,102 @@ derivations of finite length.
 		\label{fig:parseNumber}
 \end{figure*}
 
-describe grammar of Number words and use description to highlight
-design principles of prefix/base/suffix, reuse, modularity
+\begin{figure*}[t]
+		\includegraphics[width=\linewidth]{parseTrees/parseSucc.pdf}
+		\caption{A parse for the fact that ``one-hundred'' immediately succeeds ``ninety-nine''.}
+		\label{fig:parseSucc}
+\end{figure*}
 
-highlight parses of each number concept
+\begin{figure*}[t]
+		\includegraphics[width=\linewidth]{parseTrees/parseMore.pdf}
+		\caption{A parse for the fact that ``one-hundred one'' is more than ``fifty-two''.}
+		\label{fig:parseMore}
+\end{figure*}
 
-describe less, pred, and equal as single-rule extensions of other concepts
+Having motivated our decision to model concepts with a formalism
+originally designed to describe natural language syntax, and having
+described RCGs as our formalism of choice, we now want to show that
+RCGs can in fact capture conceptual knowledge of the natural numbers.
 
-Point interested readers to the full grammar online
+In this initial exploration, we want to capture three kinds of number
+knowledge. First, we want to show that an RCG can capture the
+distinction between valid and invalid number words. While it may seem
+extraordinarily basic, the understanding that fifty-nine is a number
+while fifty-ten is not, is one which children struggle to learn.
+Second, we want to show that an RCG can capture predecessor and
+successor relationships. Unlike the proposed induction that children
+make between successive count and the addition of an item into a set,
+we do not attempt to link the physical and conceptual here. Instead,
+we are proposing a model for an earlier aspect of number learning,
+that of learning the count list itself. Which number follows which
+number? That is question we are trying to answer. Third, we want to
+show that an RCG can go beyond mere successor and predecessor
+relations to fully describe knowledge of more and less. These sorts of
+concepts require significantly greater generalization and thus seem
+signficantly more abstract or conceptual, as demonstrated by the
+following argument. For any set of n numbers, there are exactly n
+valid numbers. Because 1 has no predeccessor and we cannot concisely
+name the successor of the last number we can concisely name ({\it
+  e.g.} What comes after 999,999,999 if we do not know the word
+``billion''?), there are actually only n-1 valid successor or
+predecessor relations. There are, however, $\frac{n^2-n}{2}$ each of
+the more and less relations, respectively.
+
+Capturing these relations with an RCG is not only possible, but it can
+be done quite compactly. Our grammar for the concepts of Number,
+Successor, Predeccessor, Less Than, and More Than covers all numbers
+between 0 and 1 billion, exclusive, and requires only XXX
+rules. Figure \ref{fig:gon} shows a schematic of the rules concerned
+with determining valid and invalid numbers, while the rest, due to
+space constraints, can be found online
+(http://github.com/joshrule/GrammarInduction). Figure
+\ref{fig:parseNumber} shows how those rules can be applied to explain
+why some number word is a valid number word. Here, we show that
+six-hundred thirty-seven is a valid number word using the base word
+``hundred''. Our grammar makes use of a prefix-base-suffix
+understanding of number, where any number can be understood as some
+prefix multiplied by a base and added to a suffix. So ``six-hundred
+thirty-seven'' is ``six'' times a ``hundred'' plus ``thirty
+seven''. We prove that ``six-hundred thirty-seven'' is a valid number
+word by showing that ``six'' is a valid prefix for ``hundred'' and
+that ``thirty-seven'' is a valid suffix. We in turn show that ``six''
+is a valid prefix for ``hundred'' by showing that it is a number word
+representing a \emph{ones} number, that is, a number between one and
+nine. It would be incorrect to have no prefix, and it would also be
+incorrect to use a prefix larger than nine, at least for
+``hundred''. To show that ``thirty-seven'' is a valid suffix, we show
+that ``thirty-seven'' is a valid number for the previous base, in this
+case, the empty base, $\varnothing$. These are the numbers between one
+and ninety-nine. We prove that ``thirty-seven'' is one of these
+numbers by showing that it is merely the concatenation of a
+\emph{tens} word and a \emph{ones} word. Thus, the compositional use
+of relatively simple predicates helps us analyze the structure of a
+complex phrase like ``six hundred thirty seven'' and show that while
+it is a valid number word, ``hundred six seven thirty'' is not. Figures \ref{fig:parseSucc} and \ref{fig:parseMore} show how the Successor and More Than relations, respectively, can similarly be encoded. Note that the Predecessor and Less Than relations can be encded quite simply as something like $\text{Less}(X,Y) \leftarrow \text{More}(Y,X).$ and  $\text{Pred}(X,Y) \leftarrow \text{Succ}(Y,X).$
+
+These figures also provide a good place to clarify exactly what we
+propose for this grammar to represent, and how we accomplish that
+representation. First, while the conceptual grammar allows us to show
+that certain relations hold for the token ``fifty-two'', there is no
+content-filled object that in any sense \emph{is} ``fifty-two''. The
+meaning of ``fifty-two'' is simply the sum total of the relationships
+which hold for the token ``fifty-two''. Second, the grammar never
+produces nor parses anything resembling full English sentences. This
+is a grammar for the structure of concepts, not the structure of
+language. When attempting to parse something like ``Succ(ninety nine,
+one hundred)'', we are assuming that some other system, more directly
+involved in language processing, preprocesses linguistic utterances
+into a partially predicated state, which then needs to be checked
+against the current state of knowledge represented by the conceptual
+grammar. Third, the names given to specific predicates in these
+figures have no semantic meaning on their own. ``Number'' could just
+as easily be called ``Snickerdoodle'' or ``Dax''. What is important is
+not the name of a predicate, but the relations it enters into with
+other predicates and, as a result, the argument strings for which it
+holds. Similarly and crucially, individual words like ``hundred'' or
+``nine'' have no inherent meaning. They acquire their meaning because
+of the way particular relations allow them to combine with and stand
+in relation to other words.
 
 \section{Learning Number Knowledge}
 
@@ -214,12 +392,10 @@ extending to approximate magnitude, object tracking, and perceptual grounding
 
 CBMM, Tim O'Donnell, Leon Bergen?
 
-\section{References}
-
 \bibliographystyle{apacite}
 
 \setlength{\bibleftmargin}{.125in}
 \setlength{\bibindent}{-\bibleftmargin}
-% \bibliography{CogSci_Template}
+\bibliography{cogsci}
 
 \end{document}
