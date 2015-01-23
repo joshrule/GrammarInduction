@@ -29,12 +29,6 @@
     $\text{Decades}(\text{ninety}, \varnothing).$
   };
   \node [anchor=north west] (desc) at (3.5,0) {
-%%     $\text{LargerBase}(\text{million}, \text{thousand}).$\\
-%%     $\text{LargerBase}(\text{million},\text{hundred}).$\\
-%%     $\text{LargerBase}(\text{million}, \varnothing).$\\
-%%     $\text{LargerBase}(\text{thousand},\text{hundred}).$\\
-%%     $\text{LargerBase}(\text{thousand},\varnothing).$\\
-%%     $\text{LargerBase}(\text{hundred}, \varnothing).$\\
     $\text{LargerBase}(X,Z) \leftarrow \text{PrevBase(X,Y), PrevBase(Y,Z).}$\\
     $\text{LargerBase}(X,Y) \leftarrow \text{PrevBase}(X,Y).$\\
     \\
@@ -43,14 +37,14 @@
     $\text{PrevBase}(\text{hundred}, \varnothing).$\\
     \\
     $\text{Prefix}(P,B) \leftarrow \text{LargerBase}(B,\text{hundred}), \text{Number}(P,\text{hundred}).$\\
-    $\text{Prefix}(P,\text{hundred}) \leftarrow \text{Ones}(P,Y).$\\
+    $\text{Prefix}(P,\text{hundred}) \leftarrow \text{Ones}(P,\varnothing).$\\
     $\text{Prefix}(\varnothing, \varnothing).$
   };
   \node [anchor=north west] (desc) at (13.4,0) {
-    $\text{Number}(X,\varnothing) \leftarrow \text{Ones}(X,Y).$\\
-    $\text{Number}(X,\varnothing) \leftarrow \text{Teens}(X,Y).$\\
-    $\text{Number}(X,\varnothing) \leftarrow \text{Decades}(X,Y).$\\
-    $\text{Number}(X Y,\varnothing) \leftarrow \text{Decades}(X,U), \text{Ones}(Y,V).$\\
+    $\text{Number}(X,\varnothing) \leftarrow \text{Ones}(X,\varnothing).$\\
+    $\text{Number}(X,\varnothing) \leftarrow \text{Teens}(X,\varnothing).$\\
+    $\text{Number}(X,\varnothing) \leftarrow \text{Decades}(X,\varnothing).$\\
+    $\text{Number}(X Y,\varnothing) \leftarrow \text{Decades}(X,\varnothing), \text{Ones}(Y,\varnothing).$\\
     $\text{Number}(P B S,B) \leftarrow \text{Prefix}(P,B), \text{Suffix}(B,S).$\\
     $\text{Number}(S,B) \leftarrow \text{Suffix}(B,S).$\\
     $\text{Number}(P B,B) \leftarrow \text{Prefix}(P,B).$\\
