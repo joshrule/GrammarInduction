@@ -10,7 +10,7 @@ import LPN.Parse
 import LPN.Prismify
 
 
-ipaLexicon = do xs <- readFile "./experiments/prism/englishPhones.txt"
+ipaLexicon = do xs <- readFile "./experiments/prism/resources/englishPhones.txt"
                 return $ lines xs
 
 
@@ -48,29 +48,33 @@ buildGrammar n lexicon observed outpath = do
         ruleLex i w v = "A" ++ show i ++ "(" ++ w ++", " ++ v ++ ")."
 
 
-predicateNetwork :: Int -- ^ R: predicates per base level
+predicateNetwork :: Int -- ^ R: predicates in the base level
                  -> Int -- ^ S: predicates per level
                  -> Int -- ^ K: levels
                  -> [String] -- ^ lexicon
-                 -> [String] -- ^ list of observed unary predicates
+                 -> [String ] -- ^ list of observed unary predicates
+                 -> [String ] -- ^ list of observed binary predicates
                  -> FilePath
                  -> IO ()
-predicateNetwork _R _S _K lexicon observed outpath = do
+predicateNetwork _R _S _K lexicon observedUnary observedBinary outpath = do
   writeFile outpath $ show rs
   writeFile (outpath ++ ".psm") $ prismClauses rs
   where rs = fromRight $ parseSystem "buildGrammar" $ systemString
         fromRight (Right x) = x
         fromRight (Left err) = error $ show err
         systemString = unlines $
-                       [shuffleRule level i j k | level <- [1.._K], i <- [1.._S], j <-[1.._S], k <- [j.._S]] ++
-                       -- [reverseRule level i j | level <- [1.._K], i <- [1.._S], j <-[1.._S]] ++
-                       -- [idRule level i j | level <- [1.._K], i <- [1.._S], j <-[1.._S]] ++                       
+                       [shuffleRule level i j k | level <- [2.._K], i <- [1.._S], j <-[1.._S], k <- [j.._S]] ++
+                       [shuffleRule 1 i j k | i <- [1.._S], j <-[1.._R], k <- [j.._R]] ++                       
+                       [reverseRule level i j | level <- [1.._K], i <- [1.._S], j <-[1.._S]] ++
+                       [idRule level i j | level <- [1.._K], i <- [1.._S], j <-[1.._S]] ++                       
                        [ruleLex i w v | i <- [1.._R], w <- lexicon, v <-lexicon, w <= v] ++
                        [ruleLex i w "null" | i <- [1.._R], w <- lexicon] ++
                        [ruleLex i "null" w | i <- [1.._R], w <- lexicon] ++
                        [ruleLex i"null" "null" | i <- [1.._R]] ++ 
                        [pred ++ "(X Y) <-- A" ++ show _K ++ "i" ++ show i ++ "(X, Y)."
-                         | pred <- observed, i <- [1.._S]]
+                         | pred <- observedUnary, i <- [1.._S]] ++ 
+                       [pred ++ "(X, Y) <-- A" ++ show _K ++ "i" ++ show i ++ "(X, Y)."
+                         | pred <- observedBinary, i <- [1.._S]]
         shuffleRule level i j k = unlines $ [
             "A" ++ show level ++ "i" ++ show i ++ "(X Y, U V) <-- " ++
             "A" ++ show (level-1) ++ "i" ++ show j ++ "(X, Y)," ++
@@ -80,19 +84,19 @@ predicateNetwork _R _S _K lexicon observed outpath = do
             "A" ++ show (level-1) ++ "i" ++ show k ++ "(Y, V).", 
             "A" ++ show level ++ "i" ++ show i ++ "(X Y, U V) <-- " ++
             "A" ++ show (level-1) ++ "i" ++ show j ++ "(X, V)," ++ 
-            "A" ++ show (level-1) ++ "i" ++ show k ++ "(Y, U).",
-            "A" ++ show level ++ "i" ++ show i ++ "(X Y, U V) <-- " ++
-            "A" ++ show (level-1) ++ "i" ++ show j ++ "(Y, X)," ++ 
-            "A" ++ show (level-1) ++ "i" ++ show k ++ "(U, V).",
-            "A" ++ show level ++ "i" ++ show i ++ "(X Y, U V) <-- " ++
-            "A" ++ show (level-1) ++ "i" ++ show j ++ "(Y, X)," ++ 
-            "A" ++ show (level-1) ++ "i" ++ show k ++ "(V, U)."
+            "A" ++ show (level-1) ++ "i" ++ show k ++ "(Y, U)."
+            -- "A" ++ show level ++ "i" ++ show i ++ "(X Y, U V) <-- " ++
+            -- "A" ++ show (level-1) ++ "i" ++ show j ++ "(Y, X)," ++ 
+            -- "A" ++ show (level-1) ++ "i" ++ show k ++ "(U, V).",
+            -- "A" ++ show level ++ "i" ++ show i ++ "(X Y, U V) <-- " ++
+            -- "A" ++ show (level-1) ++ "i" ++ show j ++ "(Y, X)," ++ 
+            -- "A" ++ show (level-1) ++ "i" ++ show k ++ "(V, U)."
             ]
-        -- reverseRule level i j = 
-        --     "A" ++ show level ++ "i" ++ show i ++ "(X, Y) <-- " ++
-        --     "A" ++ show (level-1) ++ "i" ++ show j ++ "(Y, X)."
-        -- idRule level i j = 
-        --     "A" ++ show level ++ "i" ++ show i ++ "(X, Y) <-- " ++
-        --     "A" ++ show (level-1) ++ "i" ++ show j ++ "(X, Y)."
+        reverseRule level i j = 
+            "A" ++ show level ++ "i" ++ show i ++ "(X, Y) <-- " ++
+            "A" ++ show (level-1) ++ "i" ++ show j ++ "(Y, X)."
+        idRule level i j = 
+            "A" ++ show level ++ "i" ++ show i ++ "(X, Y) <-- " ++
+            "A" ++ show (level-1) ++ "i" ++ show j ++ "(X, Y)."
         ruleLex i w v = "A0i" ++ show i ++ "(" ++ w ++", " ++ v ++ ")."
 

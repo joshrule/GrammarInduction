@@ -9,14 +9,16 @@
 set_training_flags :-
     set_prism_flag(search_progress, 1), 
     set_prism_flag(em_progress, 1),
-    set_prism_flag(max_iterate, 50),
-    set_prism_flag(restart,1),
+    set_prism_flag(max_iterate, 1000),
+    set_prism_flag(default_sw_a, uniform(0.01)),
+    set_prism_flag(restart,10),
+    set_prism_flag(std_ratio, 50),
+    set_prism_flag(epsilon, 1.0e-3),
     set_prism_flag(learn_mode,vb),
     set_prism_flag(viterbi_mode,vb),
-    set_prism_flag(default_sw_a,uniform),
+    set_prism_flag(reset_hparams, on),
     set_prism_flag(log_scale,on), 
     set_prism_flag(learn_message, all).
-
 
 get_current_prism_flags(PrismFlags) :- findall(F\V, get_prism_flag(F, V), PrismFlags).
 
@@ -164,12 +166,16 @@ srs(P-IN) :- reduce(P-IN,V), msw(P,V).
 %%     assert(AssertTerm). 
 
 
+    
 
-%% prune all values for SwitchIn whose values 'a' values are really small 
 prune(switch(Sw, _, Vs, As)) :- 
-    atom(Sw), 
     length(Vs, NVals),
     AThresh is (2/NVals),
+    prune(switch(Sw, _, Vs, As), AThresh).
+
+%% prune all values for SwitchIn whose values 'a' values are really small 
+prune(switch(Sw, _, Vs, As), AThresh) :- 
+    atom(Sw), 
     write('AThresh: '), write(AThresh), nl,
     zip(Vs, As, VAs), 
     Filtered @= [V\A: V\A in VAs, A > AThresh],
@@ -184,9 +190,33 @@ prune(switch(Sw, _, Vs, As)) :-
          write(Sw), nl, 
          write('Set Values to '), write(ValuesOut), nl)).
 
+pruneAll(AThresh) :- 
+    findall(Info, get_sw_a(Info), Switches),  
+    foreach(Sw in Switches, (prune(Sw, AThresh))).
+
 pruneAll :- 
     findall(Info, get_sw_a(Info), Switches),  
     foreach(Sw in Switches, (prune(Sw))).
+
+%% prune values whose probabilities are really small
+prune_rules(switch(Sw, _, Vs, Ps), Thresh) :- 
+    atom(Sw), 
+    zip(Vs, Ps, VPs), 
+    Filtered @= [V\P: V\P in VPs, P > Thresh],
+    ValuesOut @= [V:V\_ in Filtered],
+    ProbsOut @= [P:_\P in Filtered],
+    write('Values Out: '), write(ValuesOut), nl, 
+    write('Probs Out: '), write(ProbsOut), nl, 
+    ((ProbsOut = []) -> 
+        (write(Sw), write('no values'), nl, 
+         lpn_set_sw_vp(Sw, [noValue], [1]));
+        (lpn_set_sw_vp(Sw, ValuesOut, ProbsOut),
+         write(Sw), nl, 
+         write('Set Values to '), write(ValuesOut), nl)).
+
+prune_rules(Thresh) :- 
+    findall(Info, get_sw(Info), Switches), 
+    foreach(Sw in Switches, prune_rules(Sw, Thresh)).
 
 :- dynamic switchVBInfo/3.
 recordExpectedCounts:- get_reg_sw_list(Switches), 

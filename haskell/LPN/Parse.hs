@@ -99,7 +99,13 @@ symbol = do x <- satisfy $ \c -> isAlphaNum c && (not . isUpper) c
             xs <- many alphaNum
             return $ x : xs
 
-element = do {v <- variable; return $ ElVar v} <|> do {s <- symbol; return (ElSym s)}
+quotedSymbol = do char '\''
+                  xs <- many alphaNum
+                  char '\''
+                  return $ "'" ++ xs ++ "'"
+                  
+
+element = do {v <- variable; return $ ElVar v} <|> do {s <- symbol <|> quotedSymbol; return (ElSym s)}
 
 argument = do x <- sepEndBy1 element inlineSpaces
               return $ Argument x

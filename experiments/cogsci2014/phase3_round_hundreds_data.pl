@@ -1,0 +1,9 @@
+phase3_train(count(prove('Number_1'-[[one,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[two,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[three,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[four,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[five,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[six,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[seven,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[eight,hundred]]), 1)).
+phase3_train(count(prove('Number_1'-[[nine,hundred]]), 1)).

@@ -52,7 +52,7 @@ mkRule rule i =  _H ++ if null (_B1 ++ _C ++ _B2) then "."
         ys = do (Argument els, k) <- zip (termArgs $ head rule) [(1::Int)..]
                 case els of
                   [ElSym "null"]  -> return $ ("[]", Nothing)
-                  [ElSym e] -> return $ ("[" ++ quoted e ++ "]", Nothing)
+                  [ElSym e] -> return $ ("[" ++ e ++ "]", Nothing)
                   [ElVar v] -> return $ (v, Nothing)                  
                   els ->
                     let v = "Z_" ++ show k 
@@ -65,9 +65,9 @@ mkRule rule i =  _H ++ if null (_B1 ++ _C ++ _B2) then "."
                 let as = do Argument els <- args
                             case els of
                               [ElSym "null"]  -> return $ "[]"
-                              [ElSym e] -> return $ "[" ++ quoted e ++ "]"
+                              [ElSym e] -> return $ "[" ++ e ++ "]"
                               [ElVar v] -> return $ v
-                              _ -> error $ "multiple variables in lhs terms."
+                              _ -> error $ "multiple variables in rhs terms."
                 return $ "prove(" ++ showQuoted p
                           ++ "-[" ++ (intercalate ", " as) ++ "])"
                 
@@ -90,8 +90,7 @@ mkPrismToLPN rule i = "prismToLPN(" ++ intercalate ", " args ++ ")."
 
 
 prismClauses :: RewriteSystem -> String
-prismClauses sys = unlines [":- include('prove.psm').",
-                            ":- include('util.pl').",
+prismClauses sys = unlines [":- include('/Users/edechter/Dropbox/Projects/GrammarInduction/prism/prove.psm').", 
                             mkAllValues ruleMap, "",
                             mkAllRules ruleMap, "",
                             mkAllPrismToLPN ruleMap]
@@ -103,6 +102,10 @@ prismify inpath outpath = do
   writeFile outpath $ prismClauses sys
 
 ------
-showQuoted x = "'" ++ show x ++ "'"
+showQuoted x = "'" ++ escape (show x) ++ "'"
+  where escape ('\'':ys) = '\\':'\'': escape ys 
+        escape (x:ys) = x: escape ys
+        escape [] = []
 quoted x = "'" ++ x ++ "'"
+
 

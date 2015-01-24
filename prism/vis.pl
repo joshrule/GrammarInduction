@@ -148,6 +148,32 @@ switch_va(Sw, V, A) :-
 show_lpn :- 
     findall(K, 
             (switch_va(S, V, A), 
-             prismToLPN(S, V, R), 
-             formatAtom("~w :: ~w\n", [R, A], K), 
-             write(K)), _Ks).
+             prismToLPN(S, V, R),              
+             formatString("~w :: ~w\n", [R, A], Codes), 
+             write_string(Codes)), _Ks).
+
+show_prove_node(prove(A-Xs), Codes) :-
+    formatString("~w(~w)", [A, Xs], Codes).
+show_rule_node(rule(A-Xs, _), Codes) :- 
+    formatString("~w(~w)", [A, Xs], Codes).
+show_derivation([], []).
+show_derivation([node(prove(_), _)|Nodes], RestCodes) :- !, 
+    show_derivation(Nodes, RestCodes).
+show_derivation([node(RuleNode, [path(ProveNodes, _)])|Nodes], Out) :- 
+    show_rule_node(RuleNode, RuleCodes), 
+    ProveCodes @= [Codes: ProveNode in ProveNodes, [Codes], 
+                   show_prove_node(ProveNode, Codes)],
+    atom_codes(', ', Cs),
+    intercalate(ProveCodes, Cs, ProveCodes1),
+    concat(ProveCodes1, RhsCodes),
+    formatString("~30s <- ~100s~n", [RuleCodes, RhsCodes], DerivationCodes), 
+    show_derivation(Nodes, RestCodes), 
+    append(DerivationCodes, RestCodes, Out).
+    
+intercalate([], _, []). 
+intercalate([X], _, [X]) :- !.
+intercalate([X|Xs], Y, [X, Y|Rest]) :- 
+    intercalate(Xs, Y, Rest).
+    
+    
+    

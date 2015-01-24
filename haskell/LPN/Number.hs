@@ -8,22 +8,28 @@ import LPN.TestTrain
 ones = ["one","two","three","four","five","six","seven","eight","nine"]
 tens = ["twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"]
 teens = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"]
+base = ["hundred", "thousand", "million"]
 digits = ["0","1","2","3","4","5","6","7","8","9"]
 functionals = ["than","is","equals","after","before","just","plus","minus","than","bigger","smaller","less","more","greater","lesser"]
 lexicon = ones ++ tens ++ teens ++ digits ++ functionals
 
 -- 2. define useful auxiliary lists
 ns :: [[String]]
-ns = first19 ++ theRest
+ns = first19 ++ n20to99
 
 parametricWeights :: Float -> Float -> Int -> [Float]
 parametricWeights p w l = map (\n -> (w*(1-p)**((fromIntegral n-1))*p) + (1-w)/(fromIntegral l)) [1..l]
 nWeights :: [Float]
 nWeights = parametricWeights 0.5 0.75 99
 
+first10 = [[o] | o <- ones] ++ [["ten"]]
 first19 = [[o] | o <- ones] ++ [[t] | t <- teens]
-theRest = concatMap theDecade tens
+n20to99 = concatMap theDecade tens
     where theDecade x = [[x]] ++ [[x,o] | o <- ones]
+n1to99 = first19 ++ n20to99
+n100to999 = [[o] ++ ["hundred"] ++ x | o <- ones, x <- ([]:n1to99)]
+n1to999 = n1to99 ++ n100to999
+n1000andUp = [x ++ ["thousand"] ++ y | x <- n1to99, y <- ([]:n1to999)] 
 
 digitNs :: [[String]]
 digitNs = (map (\x -> [x]) (drop 1 digits)) ++ concatMap theDecade (drop 1 digits)
@@ -95,3 +101,15 @@ numberTrainTestData path specs = mkTrainTestDataFile path ttSpecs
     ttSpecHelper :: [TrainTestSpec] -> NumberSpec -> [TrainTestSpec]
     ttSpecHelper acc (ss,bd,percs) = acc ++
       zip3 (repeatN (1 + (length bd)) "S_1") (sentencesToUnaryPredicates $ rmCompounds $ sortByWords bd ss) percs
+
+
+num2word :: Int -> [String]
+num2word i | i > 0 && i < 10 = [ones !! (i - 1)]
+           | i >= 10 && i < 20 = [teens !! (i - 10)]
+           | otherwise = let (d, y) = quotRem i 10
+                         in (tens !! (d-2)) :
+                            (if y == 0 then [] else [ones !! (y-1)])
+
+-- nexts :: [[String], [String]]
+-- nexts = [(num2word i, num2word (i+1)) | i <- [1..98]]
+
