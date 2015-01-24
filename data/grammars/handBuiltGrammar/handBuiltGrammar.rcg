@@ -1,0 +1,1188 @@
+Equal(X, X) <-- Number(X, B).
+Number(X,Y) <-- Ones(X,Y).
+Number(X,Y) <-- Teens(X,Y).
+Number(X,Y) <-- Decades(X,Y).
+Number(X Y,U V) <-- Decades(X,U), Ones(Y,V).
+Number(P B S,B) <-- Prefix(P,B), Suffix(B,S).
+Number(S,B) <-- Suffix(B,S).
+Number(P B,B) <-- Prefix(P,B).
+Base(million, null) <-- Lexicon(million, null).
+Base(thousand, null) <-- Lexicon(thousand, null).
+Base(hundred, null) <-- Lexicon(hundred, null).
+Base(null, null) <-- Lexicon(null, null).
+PrevBase(million, thousand) <-- Lexicon(million, thousand).
+PrevBase(thousand, hundred) <-- Lexicon(thousand, hundred).
+PrevBase(hundred, null)     <-- Lexicon(hundred, null).
+Prefix(P,B) <-- NormalBase(B,Y), Number(P,Z), Hundred(Z,Q).
+Prefix(P,B) <-- Ones(P,Y), Hundred(B,Z).
+Prefix(null, null) <-- Lexicon(null, null).
+Suffix(B,S) <-- PrevBase(B,C), Number(S,C).
+Null(null,null) <-- Lexicon(null,null).
+Hundred(hundred, null) <-- Lexicon(hundred, null).
+NormalBase(B,X) <-- MBase(B,H), Hundred(H,X).
+Ones(one, null) <-- Lexicon(one, null).
+Ones(two, null) <-- Lexicon(two, null).
+Ones(three, null) <-- Lexicon(three, null).
+Ones(four, null) <-- Lexicon(four, null).
+Ones(five, null) <-- Lexicon(five, null).
+Ones(six, null) <-- Lexicon(six, null).
+Ones(seven, null) <-- Lexicon(seven, null).
+Ones(eight, null) <-- Lexicon(eight, null).
+Ones(nine, null) <-- Lexicon(nine, null).
+Teens(ten, null) <-- Lexicon(ten, null).
+Teens(eleven, null) <-- Lexicon(eleven, null).
+Teens(twelve, null) <-- Lexicon(twelve, null).
+Teens(thirteen, null) <-- Lexicon(thirteen, null).
+Teens(fourteen, null) <-- Lexicon(fourteen, null).
+Teens(fifteen, null) <-- Lexicon(fifteen, null).
+Teens(sixteen, null) <-- Lexicon(sixteen, null).
+Teens(seventeen, null) <-- Lexicon(seventeen, null).
+Teens(eighteen, null) <-- Lexicon(eighteen, null).
+Teens(nineteen, null) <-- Lexicon(nineteen, null).
+Decades(twenty, null) <-- Lexicon(twenty, null).
+Decades(thirty, null) <-- Lexicon(thirty, null).
+Decades(forty, null) <-- Lexicon(forty, null).
+Decades(fifty, null) <-- Lexicon(fifty, null).
+Decades(sixty, null) <-- Lexicon(sixty, null).
+Decades(seventy, null) <-- Lexicon(seventy, null).
+Decades(eighty, null) <-- Lexicon(eighty, null).
+Decades(ninety, null) <-- Lexicon(ninety, null).
+SOnes(one, two) <-- Lexicon(one, two).
+SOnes(two, three) <-- Lexicon(two, three).
+SOnes(three, four) <-- Lexicon(three, four).
+SOnes(four, five) <-- Lexicon(four, five).
+SOnes(five, six) <-- Lexicon(five, six).
+SOnes(six, seven) <-- Lexicon(six, seven).
+SOnes(seven, eight) <-- Lexicon(seven, eight).
+SOnes(eight, nine) <-- Lexicon(eight, nine).
+STeens(ten, eleven) <-- Lexicon(ten, eleven).
+STeens(eleven, twelve) <-- Lexicon(eleven, twelve).
+STeens(twelve, thirteen) <-- Lexicon(twelve, thirteen).
+STeens(thirteen, fourteen) <-- Lexicon(thirteen, fourteen).
+STeens(fourteen, fifteen) <-- Lexicon(fourteen, fifteen).
+STeens(fifteen, sixteen) <-- Lexicon(fifteen, sixteen).
+STeens(sixteen, seventeen) <-- Lexicon(sixteen, seventeen).
+STeens(seventeen, eighteen) <-- Lexicon(seventeen, eighteen).
+STeens(eighteen, nineteen) <-- Lexicon(eighteen, nineteen).
+SDecades(twenty, thirty) <-- Lexicon(twenty, thirty).
+SDecades(thirty, forty) <-- Lexicon(thirty, forty).
+SDecades(forty, fifty) <-- Lexicon(forty, fifty).
+SDecades(fifty, sixty) <-- Lexicon(fifty, sixty).
+SDecades(sixty, seventy) <-- Lexicon(sixty, seventy).
+SDecades(seventy, eighty) <-- Lexicon(seventy, eighty).
+SDecades(eighty, ninety) <-- Lexicon(eighty, ninety).
+Succ(X,Y) <-- SOnes(X,Y).
+Succ(nine,ten) <-- Lexicon(nine,ten).
+Succ(X,Y) <-- STeens(X,Y).
+Succ(nineteen,twenty) <-- Lexicon(nineteen,twenty).
+Succ(X Y,X V) <-- Decades(X,U), Start(Y,V).
+Succ(X Y,X V) <-- Decades(X,U), SOnes(Y,V).
+Succ(X Y,U V) <-- SDecades(X,U), MaxOnes(Y,V).
+Succ(X,V C) <-- MaxForBase(X,B), Start(U,V), PrevBase(C,B).
+Succ(P B S,P B T) <-- Prefix(P,B), Start(S,T).
+Succ(P B S,P B T) <-- Prefix(P,B), Succ(S,T), Suffix(B,T).
+Succ(P B S,Q B) <-- PrevBase(B,C), MaxForBase(S,C), Succ(P,Q), Prefix(Q,B).
+Start(null,one) <-- Lexicon(null,one).
+MaxOnes(nine,null) <-- Lexicon(nine,null).
+MaxDecades(ninety,null) <-- Lexicon(ninety,null).
+MaxPrefix(W X Z,U) <-- NormalBase(U,V), MaxOnes(W,N), Hundred(X,T), PrevBase(X,Y), MaxForBase(Z,Y).
+MaxPrefix(U,X) <-- MaxOnes(U,V), Hundred(X,Y).
+MaxPrefix(null, null) <-- Lexicon(null, null).
+MaxForBase(P B S,B) <-- MaxPrefix(P,B), PrevBase(B,C), MaxForBase(S,C).
+MaxForBase(D O,X Y) <-- MaxDecades(D,X), MaxOnes(O,Y).
+Prev(X,Y) <-- Succ(Y,X).
+MOnes(two, one) <-- Lexicon(two, one).
+MOnes(three, one) <-- Lexicon(three, one).
+MOnes(three, two) <-- Lexicon(three, two).
+MOnes(four, one) <-- Lexicon(four, one).
+MOnes(four, two) <-- Lexicon(four, two).
+MOnes(four, three) <-- Lexicon(four, three).
+MOnes(five, one) <-- Lexicon(five, one).
+MOnes(five, two) <-- Lexicon(five, two).
+MOnes(five, three) <-- Lexicon(five, three).
+MOnes(five, four) <-- Lexicon(five, four).
+MOnes(six, one) <-- Lexicon(six, one).
+MOnes(six, two) <-- Lexicon(six, two).
+MOnes(six, three) <-- Lexicon(six, three).
+MOnes(six, four) <-- Lexicon(six, four).
+MOnes(six, five) <-- Lexicon(six, five).
+MOnes(seven, one) <-- Lexicon(seven, one).
+MOnes(seven, two) <-- Lexicon(seven, two).
+MOnes(seven, three) <-- Lexicon(seven, three).
+MOnes(seven, four) <-- Lexicon(seven, four).
+MOnes(seven, five) <-- Lexicon(seven, five).
+MOnes(seven, six) <-- Lexicon(seven, six).
+MOnes(eight, one) <-- Lexicon(eight, one).
+MOnes(eight, two) <-- Lexicon(eight, two).
+MOnes(eight, three) <-- Lexicon(eight, three).
+MOnes(eight, four) <-- Lexicon(eight, four).
+MOnes(eight, five) <-- Lexicon(eight, five).
+MOnes(eight, six) <-- Lexicon(eight, six).
+MOnes(eight, seven) <-- Lexicon(eight, seven).
+MOnes(nine, one) <-- Lexicon(nine, one).
+MOnes(nine, two) <-- Lexicon(nine, two).
+MOnes(nine, three) <-- Lexicon(nine, three).
+MOnes(nine, four) <-- Lexicon(nine, four).
+MOnes(nine, five) <-- Lexicon(nine, five).
+MOnes(nine, six) <-- Lexicon(nine, six).
+MOnes(nine, seven) <-- Lexicon(nine, seven).
+MOnes(nine, eight) <-- Lexicon(nine, eight).
+MTeens(eleven, ten) <-- Lexicon(eleven, ten).
+MTeens(twelve, ten) <-- Lexicon(twelve, ten).
+MTeens(twelve, eleven) <-- Lexicon(twelve, eleven).
+MTeens(thirteen, ten) <-- Lexicon(thirteen, ten).
+MTeens(thirteen, eleven) <-- Lexicon(thirteen, eleven).
+MTeens(thirteen, twelve) <-- Lexicon(thirteen, twelve).
+MTeens(fourteen, ten) <-- Lexicon(fourteen, ten).
+MTeens(fourteen, eleven) <-- Lexicon(fourteen, eleven).
+MTeens(fourteen, twelve) <-- Lexicon(fourteen, twelve).
+MTeens(fourteen, thirteen) <-- Lexicon(fourteen, thirteen).
+MTeens(fifteen, ten) <-- Lexicon(fifteen, ten).
+MTeens(fifteen, eleven) <-- Lexicon(fifteen, eleven).
+MTeens(fifteen, twelve) <-- Lexicon(fifteen, twelve).
+MTeens(fifteen, thirteen) <-- Lexicon(fifteen, thirteen).
+MTeens(fifteen, fourteen) <-- Lexicon(fifteen, fourteen).
+MTeens(sixteen, ten) <-- Lexicon(sixteen, ten).
+MTeens(sixteen, eleven) <-- Lexicon(sixteen, eleven).
+MTeens(sixteen, twelve) <-- Lexicon(sixteen, twelve).
+MTeens(sixteen, thirteen) <-- Lexicon(sixteen, thirteen).
+MTeens(sixteen, fourteen) <-- Lexicon(sixteen, fourteen).
+MTeens(sixteen, fifteen) <-- Lexicon(sixteen, fifteen).
+MTeens(seventeen, ten) <-- Lexicon(seventeen, ten).
+MTeens(seventeen, eleven) <-- Lexicon(seventeen, eleven).
+MTeens(seventeen, twelve) <-- Lexicon(seventeen, twelve).
+MTeens(seventeen, thirteen) <-- Lexicon(seventeen, thirteen).
+MTeens(seventeen, fourteen) <-- Lexicon(seventeen, fourteen).
+MTeens(seventeen, fifteen) <-- Lexicon(seventeen, fifteen).
+MTeens(seventeen, sixteen) <-- Lexicon(seventeen, sixteen).
+MTeens(eighteen, ten) <-- Lexicon(eighteen, ten).
+MTeens(eighteen, eleven) <-- Lexicon(eighteen, eleven).
+MTeens(eighteen, twelve) <-- Lexicon(eighteen, twelve).
+MTeens(eighteen, thirteen) <-- Lexicon(eighteen, thirteen).
+MTeens(eighteen, fourteen) <-- Lexicon(eighteen, fourteen).
+MTeens(eighteen, fifteen) <-- Lexicon(eighteen, fifteen).
+MTeens(eighteen, sixteen) <-- Lexicon(eighteen, sixteen).
+MTeens(eighteen, seventeen) <-- Lexicon(eighteen, seventeen).
+MTeens(nineteen, ten) <-- Lexicon(nineteen, ten).
+MTeens(nineteen, eleven) <-- Lexicon(nineteen, eleven).
+MTeens(nineteen, twelve) <-- Lexicon(nineteen, twelve).
+MTeens(nineteen, thirteen) <-- Lexicon(nineteen, thirteen).
+MTeens(nineteen, fourteen) <-- Lexicon(nineteen, fourteen).
+MTeens(nineteen, fifteen) <-- Lexicon(nineteen, fifteen).
+MTeens(nineteen, sixteen) <-- Lexicon(nineteen, sixteen).
+MTeens(nineteen, seventeen) <-- Lexicon(nineteen, seventeen).
+MTeens(nineteen, eighteen) <-- Lexicon(nineteen, eighteen).
+MDecades(thirty, twenty) <-- Lexicon(thirty, twenty).
+MDecades(forty, twenty) <-- Lexicon(forty, twenty).
+MDecades(forty, thirty) <-- Lexicon(forty, thirty).
+MDecades(fifty, twenty) <-- Lexicon(fifty, twenty).
+MDecades(fifty, thirty) <-- Lexicon(fifty, thirty).
+MDecades(fifty, forty) <-- Lexicon(fifty, forty).
+MDecades(sixty, twenty) <-- Lexicon(sixty, twenty).
+MDecades(sixty, thirty) <-- Lexicon(sixty, thirty).
+MDecades(sixty, forty) <-- Lexicon(sixty, forty).
+MDecades(sixty, fifty) <-- Lexicon(sixty, fifty).
+MDecades(seventy, twenty) <-- Lexicon(seventy, twenty).
+MDecades(seventy, thirty) <-- Lexicon(seventy, thirty).
+MDecades(seventy, forty) <-- Lexicon(seventy, forty).
+MDecades(seventy, fifty) <-- Lexicon(seventy, fifty).
+MDecades(seventy, sixty) <-- Lexicon(seventy, sixty).
+MDecades(eighty, twenty) <-- Lexicon(eighty, twenty).
+MDecades(eighty, thirty) <-- Lexicon(eighty, thirty).
+MDecades(eighty, forty) <-- Lexicon(eighty, forty).
+MDecades(eighty, fifty) <-- Lexicon(eighty, fifty).
+MDecades(eighty, sixty) <-- Lexicon(eighty, sixty).
+MDecades(eighty, seventy) <-- Lexicon(eighty, seventy).
+MDecades(ninety, twenty) <-- Lexicon(ninety, twenty).
+MDecades(ninety, thirty) <-- Lexicon(ninety, thirty).
+MDecades(ninety, forty) <-- Lexicon(ninety, forty).
+MDecades(ninety, fifty) <-- Lexicon(ninety, fifty).
+MDecades(ninety, sixty) <-- Lexicon(ninety, sixty).
+MDecades(ninety, seventy) <-- Lexicon(ninety, seventy).
+MDecades(ninety, eighty) <-- Lexicon(ninety, eighty).
+More(X,Y) <-- MOnes(X,Y).
+More(X,Y) <-- MTeens(X,Y).
+More(X,Y) <-- MDecades(X,Y).
+More(X Y,U V) <-- Teens(X,Y), Ones(U,V).
+More(X Y,U V) <-- Decades(X,Y), Ones(U,V).
+More(X Y,U V) <-- Decades(X,Y), Teens(U,V).
+More(X Y,U V) <-- Decades(X,Z), Ones(Y,T), Ones(U,V).
+More(X Y,U V) <-- Decades(X,Z), Ones(Y,T), Teens(U,V).
+More(X Y,X V) <-- Decades(X,U), Ones(Y,V).
+More(X Y,X V) <-- Decades(X,U), MOnes(Y,V).
+More(X Y,U V) <-- MDecades(X,U), Ones(Y,V).
+More(X Y,U V) <-- MDecades(X,U), Ones(V,Y).
+More(X V,U W) <-- MDecades(X,U), Ones(V,Y), Ones(W,Z).
+More(P B S,T) <-- Prefix(P,B), Suffix(B,S), Null(D,D), Number(T,D).
+More(P B S,Q C T) <-- MBase(B,C), Prefix(P,B), Suffix(B,S), Prefix(Q,C), Suffix(C,T).
+More(P B S,Q B T) <-- Prefix(P,B), Prefix(Q,B), More(P,Q), Suffix(B,S), Suffix(B,T).
+More(P B S,P B T) <-- Prefix(P,B), Suffix(B,S), Suffix(B,T), More(S,T).
+More(P B S,P B) <-- Prefix(P,B), Suffix(B,S).
+MBase(million, thousand) <-- Lexicon(million, thousand).
+MBase(million, hundred) <-- Lexicon(million, hundred).
+MBase(million, null) <-- Lexicon(million, null).
+MBase(thousand,hundred) <-- Lexicon(thousand,hundred).
+MBase(thousand,null) <-- Lexicon(thousand, null).
+Mbase(hundred, null) <-- Lexicon(hundred, null).
+Less(X,Y) <-- More(Y,X).
+Lexicon(one,one).
+Lexicon(one,two).
+Lexicon(one,three).
+Lexicon(one,four).
+Lexicon(one,five).
+Lexicon(one,six).
+Lexicon(one,seven).
+Lexicon(one,eight).
+Lexicon(one,nine).
+Lexicon(one,twenty).
+Lexicon(one,thirty).
+Lexicon(one,forty).
+Lexicon(one,fifty).
+Lexicon(one,sixty).
+Lexicon(one,seventy).
+Lexicon(one,eighty).
+Lexicon(one,ninety).
+Lexicon(one,ten).
+Lexicon(one,eleven).
+Lexicon(one,twelve).
+Lexicon(one,thirteen).
+Lexicon(one,fourteen).
+Lexicon(one,fifteen).
+Lexicon(one,sixteen).
+Lexicon(one,seventeen).
+Lexicon(one,eighteen).
+Lexicon(one,nineteen).
+Lexicon(one,hundred).
+Lexicon(one,thousand).
+Lexicon(one,million).
+Lexicon(one,null).
+Lexicon(two,one).
+Lexicon(two,two).
+Lexicon(two,three).
+Lexicon(two,four).
+Lexicon(two,five).
+Lexicon(two,six).
+Lexicon(two,seven).
+Lexicon(two,eight).
+Lexicon(two,nine).
+Lexicon(two,twenty).
+Lexicon(two,thirty).
+Lexicon(two,forty).
+Lexicon(two,fifty).
+Lexicon(two,sixty).
+Lexicon(two,seventy).
+Lexicon(two,eighty).
+Lexicon(two,ninety).
+Lexicon(two,ten).
+Lexicon(two,eleven).
+Lexicon(two,twelve).
+Lexicon(two,thirteen).
+Lexicon(two,fourteen).
+Lexicon(two,fifteen).
+Lexicon(two,sixteen).
+Lexicon(two,seventeen).
+Lexicon(two,eighteen).
+Lexicon(two,nineteen).
+Lexicon(two,hundred).
+Lexicon(two,thousand).
+Lexicon(two,million).
+Lexicon(two,null).
+Lexicon(three,one).
+Lexicon(three,two).
+Lexicon(three,three).
+Lexicon(three,four).
+Lexicon(three,five).
+Lexicon(three,six).
+Lexicon(three,seven).
+Lexicon(three,eight).
+Lexicon(three,nine).
+Lexicon(three,twenty).
+Lexicon(three,thirty).
+Lexicon(three,forty).
+Lexicon(three,fifty).
+Lexicon(three,sixty).
+Lexicon(three,seventy).
+Lexicon(three,eighty).
+Lexicon(three,ninety).
+Lexicon(three,ten).
+Lexicon(three,eleven).
+Lexicon(three,twelve).
+Lexicon(three,thirteen).
+Lexicon(three,fourteen).
+Lexicon(three,fifteen).
+Lexicon(three,sixteen).
+Lexicon(three,seventeen).
+Lexicon(three,eighteen).
+Lexicon(three,nineteen).
+Lexicon(three,hundred).
+Lexicon(three,thousand).
+Lexicon(three,million).
+Lexicon(three,null).
+Lexicon(four,one).
+Lexicon(four,two).
+Lexicon(four,three).
+Lexicon(four,four).
+Lexicon(four,five).
+Lexicon(four,six).
+Lexicon(four,seven).
+Lexicon(four,eight).
+Lexicon(four,nine).
+Lexicon(four,twenty).
+Lexicon(four,thirty).
+Lexicon(four,forty).
+Lexicon(four,fifty).
+Lexicon(four,sixty).
+Lexicon(four,seventy).
+Lexicon(four,eighty).
+Lexicon(four,ninety).
+Lexicon(four,ten).
+Lexicon(four,eleven).
+Lexicon(four,twelve).
+Lexicon(four,thirteen).
+Lexicon(four,fourteen).
+Lexicon(four,fifteen).
+Lexicon(four,sixteen).
+Lexicon(four,seventeen).
+Lexicon(four,eighteen).
+Lexicon(four,nineteen).
+Lexicon(four,hundred).
+Lexicon(four,thousand).
+Lexicon(four,million).
+Lexicon(four,null).
+Lexicon(five,one).
+Lexicon(five,two).
+Lexicon(five,three).
+Lexicon(five,four).
+Lexicon(five,five).
+Lexicon(five,six).
+Lexicon(five,seven).
+Lexicon(five,eight).
+Lexicon(five,nine).
+Lexicon(five,twenty).
+Lexicon(five,thirty).
+Lexicon(five,forty).
+Lexicon(five,fifty).
+Lexicon(five,sixty).
+Lexicon(five,seventy).
+Lexicon(five,eighty).
+Lexicon(five,ninety).
+Lexicon(five,ten).
+Lexicon(five,eleven).
+Lexicon(five,twelve).
+Lexicon(five,thirteen).
+Lexicon(five,fourteen).
+Lexicon(five,fifteen).
+Lexicon(five,sixteen).
+Lexicon(five,seventeen).
+Lexicon(five,eighteen).
+Lexicon(five,nineteen).
+Lexicon(five,hundred).
+Lexicon(five,thousand).
+Lexicon(five,million).
+Lexicon(five,null).
+Lexicon(six,one).
+Lexicon(six,two).
+Lexicon(six,three).
+Lexicon(six,four).
+Lexicon(six,five).
+Lexicon(six,six).
+Lexicon(six,seven).
+Lexicon(six,eight).
+Lexicon(six,nine).
+Lexicon(six,twenty).
+Lexicon(six,thirty).
+Lexicon(six,forty).
+Lexicon(six,fifty).
+Lexicon(six,sixty).
+Lexicon(six,seventy).
+Lexicon(six,eighty).
+Lexicon(six,ninety).
+Lexicon(six,ten).
+Lexicon(six,eleven).
+Lexicon(six,twelve).
+Lexicon(six,thirteen).
+Lexicon(six,fourteen).
+Lexicon(six,fifteen).
+Lexicon(six,sixteen).
+Lexicon(six,seventeen).
+Lexicon(six,eighteen).
+Lexicon(six,nineteen).
+Lexicon(six,hundred).
+Lexicon(six,thousand).
+Lexicon(six,million).
+Lexicon(six,null).
+Lexicon(seven,one).
+Lexicon(seven,two).
+Lexicon(seven,three).
+Lexicon(seven,four).
+Lexicon(seven,five).
+Lexicon(seven,six).
+Lexicon(seven,seven).
+Lexicon(seven,eight).
+Lexicon(seven,nine).
+Lexicon(seven,twenty).
+Lexicon(seven,thirty).
+Lexicon(seven,forty).
+Lexicon(seven,fifty).
+Lexicon(seven,sixty).
+Lexicon(seven,seventy).
+Lexicon(seven,eighty).
+Lexicon(seven,ninety).
+Lexicon(seven,ten).
+Lexicon(seven,eleven).
+Lexicon(seven,twelve).
+Lexicon(seven,thirteen).
+Lexicon(seven,fourteen).
+Lexicon(seven,fifteen).
+Lexicon(seven,sixteen).
+Lexicon(seven,seventeen).
+Lexicon(seven,eighteen).
+Lexicon(seven,nineteen).
+Lexicon(seven,hundred).
+Lexicon(seven,thousand).
+Lexicon(seven,million).
+Lexicon(seven,null).
+Lexicon(eight,one).
+Lexicon(eight,two).
+Lexicon(eight,three).
+Lexicon(eight,four).
+Lexicon(eight,five).
+Lexicon(eight,six).
+Lexicon(eight,seven).
+Lexicon(eight,eight).
+Lexicon(eight,nine).
+Lexicon(eight,twenty).
+Lexicon(eight,thirty).
+Lexicon(eight,forty).
+Lexicon(eight,fifty).
+Lexicon(eight,sixty).
+Lexicon(eight,seventy).
+Lexicon(eight,eighty).
+Lexicon(eight,ninety).
+Lexicon(eight,ten).
+Lexicon(eight,eleven).
+Lexicon(eight,twelve).
+Lexicon(eight,thirteen).
+Lexicon(eight,fourteen).
+Lexicon(eight,fifteen).
+Lexicon(eight,sixteen).
+Lexicon(eight,seventeen).
+Lexicon(eight,eighteen).
+Lexicon(eight,nineteen).
+Lexicon(eight,hundred).
+Lexicon(eight,thousand).
+Lexicon(eight,million).
+Lexicon(eight,null).
+Lexicon(nine,one).
+Lexicon(nine,two).
+Lexicon(nine,three).
+Lexicon(nine,four).
+Lexicon(nine,five).
+Lexicon(nine,six).
+Lexicon(nine,seven).
+Lexicon(nine,eight).
+Lexicon(nine,nine).
+Lexicon(nine,twenty).
+Lexicon(nine,thirty).
+Lexicon(nine,forty).
+Lexicon(nine,fifty).
+Lexicon(nine,sixty).
+Lexicon(nine,seventy).
+Lexicon(nine,eighty).
+Lexicon(nine,ninety).
+Lexicon(nine,ten).
+Lexicon(nine,eleven).
+Lexicon(nine,twelve).
+Lexicon(nine,thirteen).
+Lexicon(nine,fourteen).
+Lexicon(nine,fifteen).
+Lexicon(nine,sixteen).
+Lexicon(nine,seventeen).
+Lexicon(nine,eighteen).
+Lexicon(nine,nineteen).
+Lexicon(nine,hundred).
+Lexicon(nine,thousand).
+Lexicon(nine,million).
+Lexicon(nine,null).
+Lexicon(twenty,one).
+Lexicon(twenty,two).
+Lexicon(twenty,three).
+Lexicon(twenty,four).
+Lexicon(twenty,five).
+Lexicon(twenty,six).
+Lexicon(twenty,seven).
+Lexicon(twenty,eight).
+Lexicon(twenty,nine).
+Lexicon(twenty,twenty).
+Lexicon(twenty,thirty).
+Lexicon(twenty,forty).
+Lexicon(twenty,fifty).
+Lexicon(twenty,sixty).
+Lexicon(twenty,seventy).
+Lexicon(twenty,eighty).
+Lexicon(twenty,ninety).
+Lexicon(twenty,ten).
+Lexicon(twenty,eleven).
+Lexicon(twenty,twelve).
+Lexicon(twenty,thirteen).
+Lexicon(twenty,fourteen).
+Lexicon(twenty,fifteen).
+Lexicon(twenty,sixteen).
+Lexicon(twenty,seventeen).
+Lexicon(twenty,eighteen).
+Lexicon(twenty,nineteen).
+Lexicon(twenty,hundred).
+Lexicon(twenty,thousand).
+Lexicon(twenty,million).
+Lexicon(twenty,null).
+Lexicon(thirty,one).
+Lexicon(thirty,two).
+Lexicon(thirty,three).
+Lexicon(thirty,four).
+Lexicon(thirty,five).
+Lexicon(thirty,six).
+Lexicon(thirty,seven).
+Lexicon(thirty,eight).
+Lexicon(thirty,nine).
+Lexicon(thirty,twenty).
+Lexicon(thirty,thirty).
+Lexicon(thirty,forty).
+Lexicon(thirty,fifty).
+Lexicon(thirty,sixty).
+Lexicon(thirty,seventy).
+Lexicon(thirty,eighty).
+Lexicon(thirty,ninety).
+Lexicon(thirty,ten).
+Lexicon(thirty,eleven).
+Lexicon(thirty,twelve).
+Lexicon(thirty,thirteen).
+Lexicon(thirty,fourteen).
+Lexicon(thirty,fifteen).
+Lexicon(thirty,sixteen).
+Lexicon(thirty,seventeen).
+Lexicon(thirty,eighteen).
+Lexicon(thirty,nineteen).
+Lexicon(thirty,hundred).
+Lexicon(thirty,thousand).
+Lexicon(thirty,million).
+Lexicon(thirty,null).
+Lexicon(forty,one).
+Lexicon(forty,two).
+Lexicon(forty,three).
+Lexicon(forty,four).
+Lexicon(forty,five).
+Lexicon(forty,six).
+Lexicon(forty,seven).
+Lexicon(forty,eight).
+Lexicon(forty,nine).
+Lexicon(forty,twenty).
+Lexicon(forty,thirty).
+Lexicon(forty,forty).
+Lexicon(forty,fifty).
+Lexicon(forty,sixty).
+Lexicon(forty,seventy).
+Lexicon(forty,eighty).
+Lexicon(forty,ninety).
+Lexicon(forty,ten).
+Lexicon(forty,eleven).
+Lexicon(forty,twelve).
+Lexicon(forty,thirteen).
+Lexicon(forty,fourteen).
+Lexicon(forty,fifteen).
+Lexicon(forty,sixteen).
+Lexicon(forty,seventeen).
+Lexicon(forty,eighteen).
+Lexicon(forty,nineteen).
+Lexicon(forty,hundred).
+Lexicon(forty,thousand).
+Lexicon(forty,million).
+Lexicon(forty,null).
+Lexicon(fifty,one).
+Lexicon(fifty,two).
+Lexicon(fifty,three).
+Lexicon(fifty,four).
+Lexicon(fifty,five).
+Lexicon(fifty,six).
+Lexicon(fifty,seven).
+Lexicon(fifty,eight).
+Lexicon(fifty,nine).
+Lexicon(fifty,twenty).
+Lexicon(fifty,thirty).
+Lexicon(fifty,forty).
+Lexicon(fifty,fifty).
+Lexicon(fifty,sixty).
+Lexicon(fifty,seventy).
+Lexicon(fifty,eighty).
+Lexicon(fifty,ninety).
+Lexicon(fifty,ten).
+Lexicon(fifty,eleven).
+Lexicon(fifty,twelve).
+Lexicon(fifty,thirteen).
+Lexicon(fifty,fourteen).
+Lexicon(fifty,fifteen).
+Lexicon(fifty,sixteen).
+Lexicon(fifty,seventeen).
+Lexicon(fifty,eighteen).
+Lexicon(fifty,nineteen).
+Lexicon(fifty,hundred).
+Lexicon(fifty,thousand).
+Lexicon(fifty,million).
+Lexicon(fifty,null).
+Lexicon(sixty,one).
+Lexicon(sixty,two).
+Lexicon(sixty,three).
+Lexicon(sixty,four).
+Lexicon(sixty,five).
+Lexicon(sixty,six).
+Lexicon(sixty,seven).
+Lexicon(sixty,eight).
+Lexicon(sixty,nine).
+Lexicon(sixty,twenty).
+Lexicon(sixty,thirty).
+Lexicon(sixty,forty).
+Lexicon(sixty,fifty).
+Lexicon(sixty,sixty).
+Lexicon(sixty,seventy).
+Lexicon(sixty,eighty).
+Lexicon(sixty,ninety).
+Lexicon(sixty,ten).
+Lexicon(sixty,eleven).
+Lexicon(sixty,twelve).
+Lexicon(sixty,thirteen).
+Lexicon(sixty,fourteen).
+Lexicon(sixty,fifteen).
+Lexicon(sixty,sixteen).
+Lexicon(sixty,seventeen).
+Lexicon(sixty,eighteen).
+Lexicon(sixty,nineteen).
+Lexicon(sixty,hundred).
+Lexicon(sixty,thousand).
+Lexicon(sixty,million).
+Lexicon(sixty,null).
+Lexicon(seventy,one).
+Lexicon(seventy,two).
+Lexicon(seventy,three).
+Lexicon(seventy,four).
+Lexicon(seventy,five).
+Lexicon(seventy,six).
+Lexicon(seventy,seven).
+Lexicon(seventy,eight).
+Lexicon(seventy,nine).
+Lexicon(seventy,twenty).
+Lexicon(seventy,thirty).
+Lexicon(seventy,forty).
+Lexicon(seventy,fifty).
+Lexicon(seventy,sixty).
+Lexicon(seventy,seventy).
+Lexicon(seventy,eighty).
+Lexicon(seventy,ninety).
+Lexicon(seventy,ten).
+Lexicon(seventy,eleven).
+Lexicon(seventy,twelve).
+Lexicon(seventy,thirteen).
+Lexicon(seventy,fourteen).
+Lexicon(seventy,fifteen).
+Lexicon(seventy,sixteen).
+Lexicon(seventy,seventeen).
+Lexicon(seventy,eighteen).
+Lexicon(seventy,nineteen).
+Lexicon(seventy,hundred).
+Lexicon(seventy,thousand).
+Lexicon(seventy,million).
+Lexicon(seventy,null).
+Lexicon(eighty,one).
+Lexicon(eighty,two).
+Lexicon(eighty,three).
+Lexicon(eighty,four).
+Lexicon(eighty,five).
+Lexicon(eighty,six).
+Lexicon(eighty,seven).
+Lexicon(eighty,eight).
+Lexicon(eighty,nine).
+Lexicon(eighty,twenty).
+Lexicon(eighty,thirty).
+Lexicon(eighty,forty).
+Lexicon(eighty,fifty).
+Lexicon(eighty,sixty).
+Lexicon(eighty,seventy).
+Lexicon(eighty,eighty).
+Lexicon(eighty,ninety).
+Lexicon(eighty,ten).
+Lexicon(eighty,eleven).
+Lexicon(eighty,twelve).
+Lexicon(eighty,thirteen).
+Lexicon(eighty,fourteen).
+Lexicon(eighty,fifteen).
+Lexicon(eighty,sixteen).
+Lexicon(eighty,seventeen).
+Lexicon(eighty,eighteen).
+Lexicon(eighty,nineteen).
+Lexicon(eighty,hundred).
+Lexicon(eighty,thousand).
+Lexicon(eighty,million).
+Lexicon(eighty,null).
+Lexicon(ninety,one).
+Lexicon(ninety,two).
+Lexicon(ninety,three).
+Lexicon(ninety,four).
+Lexicon(ninety,five).
+Lexicon(ninety,six).
+Lexicon(ninety,seven).
+Lexicon(ninety,eight).
+Lexicon(ninety,nine).
+Lexicon(ninety,twenty).
+Lexicon(ninety,thirty).
+Lexicon(ninety,forty).
+Lexicon(ninety,fifty).
+Lexicon(ninety,sixty).
+Lexicon(ninety,seventy).
+Lexicon(ninety,eighty).
+Lexicon(ninety,ninety).
+Lexicon(ninety,ten).
+Lexicon(ninety,eleven).
+Lexicon(ninety,twelve).
+Lexicon(ninety,thirteen).
+Lexicon(ninety,fourteen).
+Lexicon(ninety,fifteen).
+Lexicon(ninety,sixteen).
+Lexicon(ninety,seventeen).
+Lexicon(ninety,eighteen).
+Lexicon(ninety,nineteen).
+Lexicon(ninety,hundred).
+Lexicon(ninety,thousand).
+Lexicon(ninety,million).
+Lexicon(ninety,null).
+Lexicon(ten,one).
+Lexicon(ten,two).
+Lexicon(ten,three).
+Lexicon(ten,four).
+Lexicon(ten,five).
+Lexicon(ten,six).
+Lexicon(ten,seven).
+Lexicon(ten,eight).
+Lexicon(ten,nine).
+Lexicon(ten,twenty).
+Lexicon(ten,thirty).
+Lexicon(ten,forty).
+Lexicon(ten,fifty).
+Lexicon(ten,sixty).
+Lexicon(ten,seventy).
+Lexicon(ten,eighty).
+Lexicon(ten,ninety).
+Lexicon(ten,ten).
+Lexicon(ten,eleven).
+Lexicon(ten,twelve).
+Lexicon(ten,thirteen).
+Lexicon(ten,fourteen).
+Lexicon(ten,fifteen).
+Lexicon(ten,sixteen).
+Lexicon(ten,seventeen).
+Lexicon(ten,eighteen).
+Lexicon(ten,nineteen).
+Lexicon(ten,hundred).
+Lexicon(ten,thousand).
+Lexicon(ten,million).
+Lexicon(ten,null).
+Lexicon(eleven,one).
+Lexicon(eleven,two).
+Lexicon(eleven,three).
+Lexicon(eleven,four).
+Lexicon(eleven,five).
+Lexicon(eleven,six).
+Lexicon(eleven,seven).
+Lexicon(eleven,eight).
+Lexicon(eleven,nine).
+Lexicon(eleven,twenty).
+Lexicon(eleven,thirty).
+Lexicon(eleven,forty).
+Lexicon(eleven,fifty).
+Lexicon(eleven,sixty).
+Lexicon(eleven,seventy).
+Lexicon(eleven,eighty).
+Lexicon(eleven,ninety).
+Lexicon(eleven,ten).
+Lexicon(eleven,eleven).
+Lexicon(eleven,twelve).
+Lexicon(eleven,thirteen).
+Lexicon(eleven,fourteen).
+Lexicon(eleven,fifteen).
+Lexicon(eleven,sixteen).
+Lexicon(eleven,seventeen).
+Lexicon(eleven,eighteen).
+Lexicon(eleven,nineteen).
+Lexicon(eleven,hundred).
+Lexicon(eleven,thousand).
+Lexicon(eleven,million).
+Lexicon(eleven,null).
+Lexicon(twelve,one).
+Lexicon(twelve,two).
+Lexicon(twelve,three).
+Lexicon(twelve,four).
+Lexicon(twelve,five).
+Lexicon(twelve,six).
+Lexicon(twelve,seven).
+Lexicon(twelve,eight).
+Lexicon(twelve,nine).
+Lexicon(twelve,twenty).
+Lexicon(twelve,thirty).
+Lexicon(twelve,forty).
+Lexicon(twelve,fifty).
+Lexicon(twelve,sixty).
+Lexicon(twelve,seventy).
+Lexicon(twelve,eighty).
+Lexicon(twelve,ninety).
+Lexicon(twelve,ten).
+Lexicon(twelve,eleven).
+Lexicon(twelve,twelve).
+Lexicon(twelve,thirteen).
+Lexicon(twelve,fourteen).
+Lexicon(twelve,fifteen).
+Lexicon(twelve,sixteen).
+Lexicon(twelve,seventeen).
+Lexicon(twelve,eighteen).
+Lexicon(twelve,nineteen).
+Lexicon(twelve,hundred).
+Lexicon(twelve,thousand).
+Lexicon(twelve,million).
+Lexicon(twelve,null).
+Lexicon(thirteen,one).
+Lexicon(thirteen,two).
+Lexicon(thirteen,three).
+Lexicon(thirteen,four).
+Lexicon(thirteen,five).
+Lexicon(thirteen,six).
+Lexicon(thirteen,seven).
+Lexicon(thirteen,eight).
+Lexicon(thirteen,nine).
+Lexicon(thirteen,twenty).
+Lexicon(thirteen,thirty).
+Lexicon(thirteen,forty).
+Lexicon(thirteen,fifty).
+Lexicon(thirteen,sixty).
+Lexicon(thirteen,seventy).
+Lexicon(thirteen,eighty).
+Lexicon(thirteen,ninety).
+Lexicon(thirteen,ten).
+Lexicon(thirteen,eleven).
+Lexicon(thirteen,twelve).
+Lexicon(thirteen,thirteen).
+Lexicon(thirteen,fourteen).
+Lexicon(thirteen,fifteen).
+Lexicon(thirteen,sixteen).
+Lexicon(thirteen,seventeen).
+Lexicon(thirteen,eighteen).
+Lexicon(thirteen,nineteen).
+Lexicon(thirteen,hundred).
+Lexicon(thirteen,thousand).
+Lexicon(thirteen,million).
+Lexicon(thirteen,null).
+Lexicon(fourteen,one).
+Lexicon(fourteen,two).
+Lexicon(fourteen,three).
+Lexicon(fourteen,four).
+Lexicon(fourteen,five).
+Lexicon(fourteen,six).
+Lexicon(fourteen,seven).
+Lexicon(fourteen,eight).
+Lexicon(fourteen,nine).
+Lexicon(fourteen,twenty).
+Lexicon(fourteen,thirty).
+Lexicon(fourteen,forty).
+Lexicon(fourteen,fifty).
+Lexicon(fourteen,sixty).
+Lexicon(fourteen,seventy).
+Lexicon(fourteen,eighty).
+Lexicon(fourteen,ninety).
+Lexicon(fourteen,ten).
+Lexicon(fourteen,eleven).
+Lexicon(fourteen,twelve).
+Lexicon(fourteen,thirteen).
+Lexicon(fourteen,fourteen).
+Lexicon(fourteen,fifteen).
+Lexicon(fourteen,sixteen).
+Lexicon(fourteen,seventeen).
+Lexicon(fourteen,eighteen).
+Lexicon(fourteen,nineteen).
+Lexicon(fourteen,hundred).
+Lexicon(fourteen,thousand).
+Lexicon(fourteen,million).
+Lexicon(fourteen,null).
+Lexicon(fifteen,one).
+Lexicon(fifteen,two).
+Lexicon(fifteen,three).
+Lexicon(fifteen,four).
+Lexicon(fifteen,five).
+Lexicon(fifteen,six).
+Lexicon(fifteen,seven).
+Lexicon(fifteen,eight).
+Lexicon(fifteen,nine).
+Lexicon(fifteen,twenty).
+Lexicon(fifteen,thirty).
+Lexicon(fifteen,forty).
+Lexicon(fifteen,fifty).
+Lexicon(fifteen,sixty).
+Lexicon(fifteen,seventy).
+Lexicon(fifteen,eighty).
+Lexicon(fifteen,ninety).
+Lexicon(fifteen,ten).
+Lexicon(fifteen,eleven).
+Lexicon(fifteen,twelve).
+Lexicon(fifteen,thirteen).
+Lexicon(fifteen,fourteen).
+Lexicon(fifteen,fifteen).
+Lexicon(fifteen,sixteen).
+Lexicon(fifteen,seventeen).
+Lexicon(fifteen,eighteen).
+Lexicon(fifteen,nineteen).
+Lexicon(fifteen,hundred).
+Lexicon(fifteen,thousand).
+Lexicon(fifteen,million).
+Lexicon(fifteen,null).
+Lexicon(sixteen,one).
+Lexicon(sixteen,two).
+Lexicon(sixteen,three).
+Lexicon(sixteen,four).
+Lexicon(sixteen,five).
+Lexicon(sixteen,six).
+Lexicon(sixteen,seven).
+Lexicon(sixteen,eight).
+Lexicon(sixteen,nine).
+Lexicon(sixteen,twenty).
+Lexicon(sixteen,thirty).
+Lexicon(sixteen,forty).
+Lexicon(sixteen,fifty).
+Lexicon(sixteen,sixty).
+Lexicon(sixteen,seventy).
+Lexicon(sixteen,eighty).
+Lexicon(sixteen,ninety).
+Lexicon(sixteen,ten).
+Lexicon(sixteen,eleven).
+Lexicon(sixteen,twelve).
+Lexicon(sixteen,thirteen).
+Lexicon(sixteen,fourteen).
+Lexicon(sixteen,fifteen).
+Lexicon(sixteen,sixteen).
+Lexicon(sixteen,seventeen).
+Lexicon(sixteen,eighteen).
+Lexicon(sixteen,nineteen).
+Lexicon(sixteen,hundred).
+Lexicon(sixteen,thousand).
+Lexicon(sixteen,million).
+Lexicon(sixteen,null).
+Lexicon(seventeen,one).
+Lexicon(seventeen,two).
+Lexicon(seventeen,three).
+Lexicon(seventeen,four).
+Lexicon(seventeen,five).
+Lexicon(seventeen,six).
+Lexicon(seventeen,seven).
+Lexicon(seventeen,eight).
+Lexicon(seventeen,nine).
+Lexicon(seventeen,twenty).
+Lexicon(seventeen,thirty).
+Lexicon(seventeen,forty).
+Lexicon(seventeen,fifty).
+Lexicon(seventeen,sixty).
+Lexicon(seventeen,seventy).
+Lexicon(seventeen,eighty).
+Lexicon(seventeen,ninety).
+Lexicon(seventeen,ten).
+Lexicon(seventeen,eleven).
+Lexicon(seventeen,twelve).
+Lexicon(seventeen,thirteen).
+Lexicon(seventeen,fourteen).
+Lexicon(seventeen,fifteen).
+Lexicon(seventeen,sixteen).
+Lexicon(seventeen,seventeen).
+Lexicon(seventeen,eighteen).
+Lexicon(seventeen,nineteen).
+Lexicon(seventeen,hundred).
+Lexicon(seventeen,thousand).
+Lexicon(seventeen,million).
+Lexicon(seventeen,null).
+Lexicon(eighteen,one).
+Lexicon(eighteen,two).
+Lexicon(eighteen,three).
+Lexicon(eighteen,four).
+Lexicon(eighteen,five).
+Lexicon(eighteen,six).
+Lexicon(eighteen,seven).
+Lexicon(eighteen,eight).
+Lexicon(eighteen,nine).
+Lexicon(eighteen,twenty).
+Lexicon(eighteen,thirty).
+Lexicon(eighteen,forty).
+Lexicon(eighteen,fifty).
+Lexicon(eighteen,sixty).
+Lexicon(eighteen,seventy).
+Lexicon(eighteen,eighty).
+Lexicon(eighteen,ninety).
+Lexicon(eighteen,ten).
+Lexicon(eighteen,eleven).
+Lexicon(eighteen,twelve).
+Lexicon(eighteen,thirteen).
+Lexicon(eighteen,fourteen).
+Lexicon(eighteen,fifteen).
+Lexicon(eighteen,sixteen).
+Lexicon(eighteen,seventeen).
+Lexicon(eighteen,eighteen).
+Lexicon(eighteen,nineteen).
+Lexicon(eighteen,hundred).
+Lexicon(eighteen,thousand).
+Lexicon(eighteen,million).
+Lexicon(eighteen,null).
+Lexicon(nineteen,one).
+Lexicon(nineteen,two).
+Lexicon(nineteen,three).
+Lexicon(nineteen,four).
+Lexicon(nineteen,five).
+Lexicon(nineteen,six).
+Lexicon(nineteen,seven).
+Lexicon(nineteen,eight).
+Lexicon(nineteen,nine).
+Lexicon(nineteen,twenty).
+Lexicon(nineteen,thirty).
+Lexicon(nineteen,forty).
+Lexicon(nineteen,fifty).
+Lexicon(nineteen,sixty).
+Lexicon(nineteen,seventy).
+Lexicon(nineteen,eighty).
+Lexicon(nineteen,ninety).
+Lexicon(nineteen,ten).
+Lexicon(nineteen,eleven).
+Lexicon(nineteen,twelve).
+Lexicon(nineteen,thirteen).
+Lexicon(nineteen,fourteen).
+Lexicon(nineteen,fifteen).
+Lexicon(nineteen,sixteen).
+Lexicon(nineteen,seventeen).
+Lexicon(nineteen,eighteen).
+Lexicon(nineteen,nineteen).
+Lexicon(nineteen,hundred).
+Lexicon(nineteen,thousand).
+Lexicon(nineteen,million).
+Lexicon(nineteen,null).
+Lexicon(hundred,one).
+Lexicon(hundred,two).
+Lexicon(hundred,three).
+Lexicon(hundred,four).
+Lexicon(hundred,five).
+Lexicon(hundred,six).
+Lexicon(hundred,seven).
+Lexicon(hundred,eight).
+Lexicon(hundred,nine).
+Lexicon(hundred,twenty).
+Lexicon(hundred,thirty).
+Lexicon(hundred,forty).
+Lexicon(hundred,fifty).
+Lexicon(hundred,sixty).
+Lexicon(hundred,seventy).
+Lexicon(hundred,eighty).
+Lexicon(hundred,ninety).
+Lexicon(hundred,ten).
+Lexicon(hundred,eleven).
+Lexicon(hundred,twelve).
+Lexicon(hundred,thirteen).
+Lexicon(hundred,fourteen).
+Lexicon(hundred,fifteen).
+Lexicon(hundred,sixteen).
+Lexicon(hundred,seventeen).
+Lexicon(hundred,eighteen).
+Lexicon(hundred,nineteen).
+Lexicon(hundred,hundred).
+Lexicon(hundred,thousand).
+Lexicon(hundred,million).
+Lexicon(hundred,null).
+Lexicon(thousand,one).
+Lexicon(thousand,two).
+Lexicon(thousand,three).
+Lexicon(thousand,four).
+Lexicon(thousand,five).
+Lexicon(thousand,six).
+Lexicon(thousand,seven).
+Lexicon(thousand,eight).
+Lexicon(thousand,nine).
+Lexicon(thousand,twenty).
+Lexicon(thousand,thirty).
+Lexicon(thousand,forty).
+Lexicon(thousand,fifty).
+Lexicon(thousand,sixty).
+Lexicon(thousand,seventy).
+Lexicon(thousand,eighty).
+Lexicon(thousand,ninety).
+Lexicon(thousand,ten).
+Lexicon(thousand,eleven).
+Lexicon(thousand,twelve).
+Lexicon(thousand,thirteen).
+Lexicon(thousand,fourteen).
+Lexicon(thousand,fifteen).
+Lexicon(thousand,sixteen).
+Lexicon(thousand,seventeen).
+Lexicon(thousand,eighteen).
+Lexicon(thousand,nineteen).
+Lexicon(thousand,hundred).
+Lexicon(thousand,thousand).
+Lexicon(thousand,million).
+Lexicon(thousand,null).
+Lexicon(million,one).
+Lexicon(million,two).
+Lexicon(million,three).
+Lexicon(million,four).
+Lexicon(million,five).
+Lexicon(million,six).
+Lexicon(million,seven).
+Lexicon(million,eight).
+Lexicon(million,nine).
+Lexicon(million,twenty).
+Lexicon(million,thirty).
+Lexicon(million,forty).
+Lexicon(million,fifty).
+Lexicon(million,sixty).
+Lexicon(million,seventy).
+Lexicon(million,eighty).
+Lexicon(million,ninety).
+Lexicon(million,ten).
+Lexicon(million,eleven).
+Lexicon(million,twelve).
+Lexicon(million,thirteen).
+Lexicon(million,fourteen).
+Lexicon(million,fifteen).
+Lexicon(million,sixteen).
+Lexicon(million,seventeen).
+Lexicon(million,eighteen).
+Lexicon(million,nineteen).
+Lexicon(million,hundred).
+Lexicon(million,thousand).
+Lexicon(million,million).
+Lexicon(million,null).
+Lexicon(null,one).
+Lexicon(null,two).
+Lexicon(null,three).
+Lexicon(null,four).
+Lexicon(null,five).
+Lexicon(null,six).
+Lexicon(null,seven).
+Lexicon(null,eight).
+Lexicon(null,nine).
+Lexicon(null,twenty).
+Lexicon(null,thirty).
+Lexicon(null,forty).
+Lexicon(null,fifty).
+Lexicon(null,sixty).
+Lexicon(null,seventy).
+Lexicon(null,eighty).
+Lexicon(null,ninety).
+Lexicon(null,ten).
+Lexicon(null,eleven).
+Lexicon(null,twelve).
+Lexicon(null,thirteen).
+Lexicon(null,fourteen).
+Lexicon(null,fifteen).
+Lexicon(null,sixteen).
+Lexicon(null,seventeen).
+Lexicon(null,eighteen).
+Lexicon(null,nineteen).
+Lexicon(null,hundred).
+Lexicon(null,thousand).
+Lexicon(null,million).
+Lexicon(null,null).

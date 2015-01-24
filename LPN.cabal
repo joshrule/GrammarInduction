@@ -56,7 +56,8 @@ library
                        LPN.TestTrain,
                        LPN.Network,
                        LPN.Number,
-                       LPN.Architecture
+                       LPN.Architecture,
+                       LPN.HandBuiltNumber
 
                        
   -- Modules included in this library but not exported.
@@ -93,7 +94,7 @@ library
                        text >=1.1.1.3,
                        unordered-containers >=0.2.3.0
   -- Directories containing source 
-  hs-source-dirs: haskell, scratch
+  hs-source-dirs: haskell
   
   -- Base language which the package is written in.
   default-language:    Haskell2010
