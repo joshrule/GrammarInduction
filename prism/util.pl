@@ -200,7 +200,9 @@ set_switch_probs_from_sw_a_mean :-
 load_prism(PATH) :- 
     formatAtom("~w.out", [PATH], PATH_OUT), 
     (file_exists(PATH_OUT) -> prism([load], PATH); prism(PATH)).
-                       
+
+
+    
     
     
     

@@ -67,7 +67,7 @@ predicateNetwork _R _S _K lexicon observedUnary observedBinary outpath = do
                        [shuffleRule 1 i j k | i <- [1.._S], j <-[1.._R], k <- [j.._R]] ++                       
                        [reverseRule level i j | level <- [1.._K], i <- [1.._S], j <-[1.._S]] ++
                        [idRule level i j | level <- [1.._K], i <- [1.._S], j <-[1.._S]] ++                       
-                       [ruleLex i w v | i <- [1.._R], w <- lexicon, v <-lexicon, w <= v] ++
+                       [ruleLex i w v | i <- [1.._R], w <- lexicon, v <-lexicon] ++
                        [ruleLex i w "null" | i <- [1.._R], w <- lexicon] ++
                        [ruleLex i "null" w | i <- [1.._R], w <- lexicon] ++
                        [ruleLex i"null" "null" | i <- [1.._R]] ++ 

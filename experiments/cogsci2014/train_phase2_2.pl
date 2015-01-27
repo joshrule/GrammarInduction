@@ -20,7 +20,7 @@ load_sys_psm :- expand_environment('$GIJOE_ROOT/experiments/cogsci2014/number_5_
 init :- 
     load_sys_psm, 
     set_training_flags, 
-    set_prism_flag(epsilon, 0.01), 
+    set_prism_flag(epsilon, 0.1), 
     set_prism_flag(default_sw_a, uniform), 
     set_prism_flag(std_ratio, 1000.0), 
     set_prism_flag(reset_hparams, off), 
