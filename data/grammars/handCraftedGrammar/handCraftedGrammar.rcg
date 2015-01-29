@@ -1,0 +1,216 @@
+Decades(twenty).
+Decades(thirty).
+Decades(forty).
+Decades(fifty).
+Decades(sixty).
+Decades(seventy).
+Decades(eighty).
+Decades(ninety).
+Teens(ten).
+Teens(eleven).
+Teens(twelve).
+Teens(thirteen).
+Teens(fourteen).
+Teens(fifteen).
+Teens(sixteen).
+Teens(seventeen).
+Teens(eighteen).
+Teens(nineteen).
+Ones(one).
+Ones(two).
+Ones(three).
+Ones(four).
+Ones(five).
+Ones(six).
+Ones(seven).
+Ones(eight).
+Ones(nine).
+PrevBase(million, thousand).
+PrevBase(thousand, hundred).
+PrevBase(hundred, null).
+LargerBase(X, Z) <-- LargerBase(X, Y), LargerBase(Y, Z).
+LargerBase(X, Y) <-- PrevBase(X, Y).
+Prefix(P,B) <-- LargerBase(B,hundred), NormalPrefix(P).
+Prefix(P,hundred) <-- Ones(P).
+Prefix(P, null) <-- Ones(P).
+Prefix(P, null) <-- Teens(P).
+Prefix(P, null) <-- Decades(P).
+Prefix(P Q, null) <-- Decades(P), Ones(Q).
+NormalPrefix(S) <-- Suffix(thousand,S).
+Suffix(B,S) <-- LargerBase(B,C), NumberOfBase(S,C).
+Suffix(null, null).
+Number(P B S) <-- Prefix(P,B), Suffix(B,S).
+Number(P B) <-- Prefix(P,B).
+NumberOfBase(P C S, C) <-- Prefix(P,C), Suffix(C,S).
+NumberOfBase(P C, C) <-- Prefix(P,C).
+Equal(X, X) <-- Number(X).
+SOnes(one, two).
+SOnes(two, three).
+SOnes(three, four).
+SOnes(four, five).
+SOnes(five, six).
+SOnes(six, seven).
+SOnes(seven, eight).
+SOnes(eight, nine).
+STeens(ten, eleven).
+STeens(eleven, twelve).
+STeens(twelve, thirteen).
+STeens(thirteen, fourteen).
+STeens(fourteen, fifteen).
+STeens(fifteen, sixteen).
+STeens(sixteen, seventeen).
+STeens(seventeen, eighteen).
+STeens(eighteen, nineteen).
+SDecades(twenty, thirty).
+SDecades(thirty, forty).
+SDecades(forty, fifty).
+SDecades(fifty, sixty).
+SDecades(sixty, seventy).
+SDecades(seventy, eighty).
+SDecades(eighty, ninety).
+Succ(X,Y) <-- SOnes(X,Y).
+Succ(nine,ten).
+Succ(X,Y) <-- STeens(X,Y).
+Succ(nineteen,twenty).
+Succ(X,X one) <-- Decades(X).
+Succ(X Y,X V) <-- Decades(X), SOnes(Y,V).
+Succ(X Y,U) <-- SDecades(X,U), MaxOnes(Y).
+Succ(X,one C) <-- MaxForBase(X,B), PrevBase(C,B).
+Succ(P B,P B one) <-- Prefix(P,B), LargerBase(B, null).
+Succ(P B S,P B T) <-- Prefix(P,B), Succ(S,T), Suffix(B,T).
+Succ(P B S,Q B) <-- PrevBase(B,C), MaxForBase(S,C), Succ(P,Q), Prefix(Q,B).
+MaxOnes(nine).
+MaxDecades(ninety).
+MaxPrefix(W,U) <-- LargerBase(U,hundred), MaxForBase(W,hundred).
+MaxPrefix(O,hundred) <-- MaxOnes(O).
+MaxPrefix(D O, null) <-- MaxDecades(D), MaxOnes(O).
+MaxForBase(P B S,B) <-- MaxPrefix(P,B), PrevBase(B,C), MaxForBase(S,C).
+MaxForBase(P, null) <-- MaxPrefix(P, null).
+Pred(X,Y) <-- Succ(Y,X).
+MOnes(two, one).
+MOnes(three, one).
+MOnes(three, two).
+MOnes(four, one).
+MOnes(four, two).
+MOnes(four, three).
+MOnes(five, one).
+MOnes(five, two).
+MOnes(five, three).
+MOnes(five, four).
+MOnes(six, one).
+MOnes(six, two).
+MOnes(six, three).
+MOnes(six, four).
+MOnes(six, five).
+MOnes(seven, one).
+MOnes(seven, two).
+MOnes(seven, three).
+MOnes(seven, four).
+MOnes(seven, five).
+MOnes(seven, six).
+MOnes(eight, one).
+MOnes(eight, two).
+MOnes(eight, three).
+MOnes(eight, four).
+MOnes(eight, five).
+MOnes(eight, six).
+MOnes(eight, seven).
+MOnes(nine, one).
+MOnes(nine, two).
+MOnes(nine, three).
+MOnes(nine, four).
+MOnes(nine, five).
+MOnes(nine, six).
+MOnes(nine, seven).
+MOnes(nine, eight).
+MTeens(eleven, ten).
+MTeens(twelve, ten).
+MTeens(twelve, eleven).
+MTeens(thirteen, ten).
+MTeens(thirteen, eleven).
+MTeens(thirteen, twelve).
+MTeens(fourteen, ten).
+MTeens(fourteen, eleven).
+MTeens(fourteen, twelve).
+MTeens(fourteen, thirteen).
+MTeens(fifteen, ten).
+MTeens(fifteen, eleven).
+MTeens(fifteen, twelve).
+MTeens(fifteen, thirteen).
+MTeens(fifteen, fourteen).
+MTeens(sixteen, ten).
+MTeens(sixteen, eleven).
+MTeens(sixteen, twelve).
+MTeens(sixteen, thirteen).
+MTeens(sixteen, fourteen).
+MTeens(sixteen, fifteen).
+MTeens(seventeen, ten).
+MTeens(seventeen, eleven).
+MTeens(seventeen, twelve).
+MTeens(seventeen, thirteen).
+MTeens(seventeen, fourteen).
+MTeens(seventeen, fifteen).
+MTeens(seventeen, sixteen).
+MTeens(eighteen, ten).
+MTeens(eighteen, eleven).
+MTeens(eighteen, twelve).
+MTeens(eighteen, thirteen).
+MTeens(eighteen, fourteen).
+MTeens(eighteen, fifteen).
+MTeens(eighteen, sixteen).
+MTeens(eighteen, seventeen).
+MTeens(nineteen, ten).
+MTeens(nineteen, eleven).
+MTeens(nineteen, twelve).
+MTeens(nineteen, thirteen).
+MTeens(nineteen, fourteen).
+MTeens(nineteen, fifteen).
+MTeens(nineteen, sixteen).
+MTeens(nineteen, seventeen).
+MTeens(nineteen, eighteen).
+MDecades(thirty, twenty).
+MDecades(forty, twenty).
+MDecades(forty, thirty).
+MDecades(fifty, twenty).
+MDecades(fifty, thirty).
+MDecades(fifty, forty).
+MDecades(sixty, twenty).
+MDecades(sixty, thirty).
+MDecades(sixty, forty).
+MDecades(sixty, fifty).
+MDecades(seventy, twenty).
+MDecades(seventy, thirty).
+MDecades(seventy, forty).
+MDecades(seventy, fifty).
+MDecades(seventy, sixty).
+MDecades(eighty, twenty).
+MDecades(eighty, thirty).
+MDecades(eighty, forty).
+MDecades(eighty, fifty).
+MDecades(eighty, sixty).
+MDecades(eighty, seventy).
+MDecades(ninety, twenty).
+MDecades(ninety, thirty).
+MDecades(ninety, forty).
+MDecades(ninety, fifty).
+MDecades(ninety, sixty).
+MDecades(ninety, seventy).
+MDecades(ninety, eighty).
+More(X,Y) <-- MOnes(X,Y).
+More(X,Y) <-- MTeens(X,Y).
+More(X,Y) <-- MDecades(X,Y).
+More(X,Y) <-- Teens(X),   Ones(Y).
+More(X,Y) <-- Decades(X), Ones(Y).
+More(X,Y) <-- Decades(X), Teens(Y).
+More(X Y,U) <-- Decades(X), Ones(Y), Ones(U).
+More(X Y,U) <-- Decades(X), Ones(Y), Teens(U).
+More(X Y,X) <-- Decades(X), Ones(Y).
+More(X Y,X U) <-- Decades(X,), MOnes(Y,U).
+More(X Y,U) <-- MDecades(X,U), Ones(Y).
+More(X,U Y) <-- MDecades(X,U), Ones(Y).
+More(X V,U Y) <-- MDecades(X,U), Ones(V), Ones(Y).
+More(X,Y) <-- LargerBase(B,C), NumberOfBase(X,B), NumberOfBase(Y,C).
+More(P B S,Q B T) <-- LargerBase(B,null), Prefix(P,B), Prefix(Q,B), More(P,Q), Suffix(B,S), Suffix(B,T).
+More(P B S,P B T) <-- LargerBase(B,null), Prefix(P,B), Suffix(B,S), Suffix(B,T), More(S,T).
+More(P B S,P B) <-- Prefix(P,B), Suffix(B,S).
+Less(X,Y) <-- More(Y,X).

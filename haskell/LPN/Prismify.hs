@@ -57,7 +57,7 @@ mkRule rule i =  _H ++ if null (_B1 ++ _C ++ _B2) then "."
                   els ->
                     let v = "Z_" ++ show k 
                     in return $ (v, Just $ "append(" ++
-                                    intercalate ", " (map show els ++ [v]) ++ ")")
+                                    intercalate ", " (map localShow els ++ [v]) ++ ")")
                                     
                                                  
 
@@ -79,6 +79,9 @@ mkRule rule i =  _H ++ if null (_B1 ++ _C ++ _B2) then "."
         isJust (Just _) = True
         isJust _ = False
         fromJust (Just x) = x
+        localShow :: Element -> String
+        localShow (ElSym x) = "[" ++ x ++ "]"
+        localShow (ElVar x) = x
 
         _C = intercalate ", " $ ts
                 

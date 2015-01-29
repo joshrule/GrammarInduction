@@ -57,7 +57,7 @@ library
                        LPN.Network,
                        LPN.Number,
                        LPN.Architecture,
-                       LPN.HandBuiltNumber
+                       LPN.HandCraftedNumber
 
                        
   -- Modules included in this library but not exported.
