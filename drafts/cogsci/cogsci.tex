@@ -59,11 +59,11 @@
 \section{Introduction}
 
 The natural numbers (1, 2, 3, $\ldots$) are some of the most powerful
-concepts that humans have discovered. They allow precise
-quantification over finite sets and thus form a foundation on which
-nearly all mathematical and scientific intuition is built. They are
-among the simplest of abstract, symbolic structures, yet their
-usefulness is literally infinite.
+concepts yet discovered. They allow precise quantification over finite
+sets and thus form a foundation on which nearly all mathematical and
+scientific intuition is built. They are among the simplest of
+abstract, symbolic structures, yet their usefulness is literally
+infinite.
 
 Despite this pivotal role, current evidence suggests that humans
 aren't born with any innate understanding of the natural numbers
@@ -135,13 +135,12 @@ paper. Specifically, we focus on how children might be able to acquire
 number knowledge from language, particularly for sets which they are
 unlikely to ever see counted out explicitly. We begin by discussing
 how to represent the sort of conceptual knowledge needed to describe
-an infinite number system, and showing how a particular formalism,
-\citeauthor{boullier2005range}'s (\citeyear{boullier2005range})
-Probabilistic Range Concatenation Grammar (PRCG) can be used to
-represent number knowledge this way. We then show how portions of this
-grammar can be learned using Bayesian inference in a Latent Predicate
-Network (LPN), a learning framework for PRCGs which we have previously
-developed \citep{DecRulTenming}.
+an infinite number system, and showing how a particular formalism, the
+Probabilistic Range Concatenation Grammar (PRCG) can represent number
+knowledge this way \citep{boullier2005range}. We then show how
+portions of this grammar can be learned using Bayesian inference in a
+Latent Predicate Network (LPN), a learning framework for PRCGs which
+we have previously developed \citep{DecRulTenming}.
 
 \section{Representing Number Knowledge}
 
@@ -149,10 +148,10 @@ To show how a system of concepts like number might be learned, we must
 first understand what that system of concepts is and how it might be
 represented. We begin by describing several challenges a
 representation of number must overcome. We then formally introduce
-Probabilistic Range Concatenation Grammars as an answer to these
-challenges. Finally, we show how this formalism, initially developed
-to explain syntactic structures in natural language, can explain the
-conceptual structure of number words.
+PRCGs as an answer to these challenges. Finally, we show how this
+formalism, initially developed to explain syntactic structures in
+natural language, can explain the conceptual structure of number
+words.
 
 \subsection{The Challenges of Number}
 
@@ -160,19 +159,19 @@ Relative to many other semantic fields a child encounters early in
 life ({\it e.g.} the parts of the body, types of furniture in a
 house), the natural numbers are highly distinctive.
 
-First, whereas many other semantic fields refer to particular,
-relatively concrete classes of objects or object parts, the natural
-numbers refer to an abstract property (cardinality) of an abstract
-entity (sets). Where semantic fields like the parts of the body are
+First, whereas many other semantic fields refer to relatively concrete
+classes of objects or object parts, the natural numbers refer
+primarily to an abstract property (cardinality) of an abstract entity
+(sets). Semantic fields like the parts of the body also tend to be
 relatively limited in scope, applying primarily, in this case, to
 physical parts of vertebrates. By contrast, natural number is
-incredibly broad, applying not only to concrete objects, but also to,
-among other things, sets of objects ({\it i.e.}  three pairs of
-socks), sounds, events, time periods, people and other agents, and
-numbers themselves ({\it i.e.}  three threes makes nine). This
-incredibly broad applicability means that number concepts can often be
-used, and thus must be understood and represented, without direct
-perceptual grounding.
+incredibly broad, applying not only to concrete objects, but also to
+things like sets of objects ({\it i.e.}  three pairs of socks),
+sounds, events, time periods, people and other agents, and numbers
+themselves ({\it i.e.}  three threes makes nine). This incredibly
+broad applicability means that number concepts can often be used, and
+thus must be understood and represented, without direct perceptual
+grounding.
 
 Second, there are infinitely many number concepts. Even though there
 is a practically infinite number of instantiated body parts ({\it
@@ -191,35 +190,34 @@ measuring, as well as many types of non-numerical meanings ({\it e.g.}
 in telephone numbers) (Fuson, Richards, Briar, 1982). Even when
 numbers do describe cardinalities, those cardinalities may not be
 determined by simple counting, but by removing items from a known set,
-combining multiple sets into a single set, or any number of other
-ooperations. This hugely diverse range of meanings makes it impossible
-to fully describe the meaning of ``three'' without reference to
+combining multiple sets into a single set, or any number of
+operations. This hugely diverse range of meanings makes it impossible
+to fully describe the meaning of ``three'' without referencing
 ``two'', ``four'', and potentially all other numbers. The concept of
-``two'' (or any other number), we contend, is not rightly understood
-as a single object, but rather as a web of relationships that hold for
-some unique token ``two''. The sum collection of these relationships,
-which include \emph{More Than}, \emph{Half Of}, \emph{Immediately Preceding},
-and \emph{Is Prime}, is what defines a number.
+``two'' (or any other number) is not rightly understood as a single
+object, but rather as a web of relationships that hold for some unique
+token ``two''. The sum collection of these relationships is what
+defines a number.
 
 How can we hope to represent a systems of concepts which are: 1)
 learnable without direct perceptual grounding; 2) compositionally
-constructed; and 3) relationally-defined? We propose that the
-representation best suited to explaining this sort of structure is a
+constructed; and 3) relationally defined? We propose that the
+representation best suited to this sort of structure is a
 grammar. Grammars can be induced directly from a stream of utterances,
-are highly compositional, and define their constituents ({\it e.g.}
-noun phrases) based on their relationships to other components rather
-than as discrete objects. Specifically, we propose to use Range
-Concatenation Grammars, an expressive yet tractable formalism
-originally developed to explain context-sensitive phenomena in natural
-language syntax.
+are highly compositional, and define their constituents based on their
+relationships to other components rather than as discrete
+objects. Specifically, we propose to use Range Concatenation Grammars,
+an expressive yet tractable formalism originally developed to model
+context-sensitive phenomena in natural language syntax.
 
 \subsection{Probabilistic Range Concatenation Grammars}
 
 Range Concatenation Grammars (RCGs) describe precisely those string
 languages whose parse time is polynomial in the length of the target
-string~\citep{boullier2005range}. An RCG is a 5-tuple $G=(N, T, V, P, S)$, where $N$ is a finite set of predicate symbols, $T$ is a set
-of terminal symbols, $V$ is a set of variable symbols, P is a finite
-set of $M \geq 0$ clauses of the form $\psi_0 \rightarrow \psi_1 \dots
+string~\citep{boullier2005range}. An RCG is a 5-tuple $G=(N, T, V, P,
+S)$, where $N$ is a finite set of predicate symbols, $T$ is a set of
+terminal symbols, $V$ is a set of variable symbols, P is a finite set
+of $M \geq 0$ clauses of the form $\psi_0 \rightarrow \psi_1 \dots
 \psi_M$, and $S \in N$ is the \emph{axiom}. Each $\psi_m$ is a term of
 the form $A(\alpha_1, \dots, \alpha_{\mathcal{A}(A)})$, where $A \in
 N$, $\mathcal{A}(A)$ is the arity of $A$, and each $\alpha_i \in (T
@@ -233,12 +231,11 @@ which substrings of the left hand side argument string are bound to
 the variables of the head of some clause, thus determining the
 arguments in the clause body. If a clause has no body terms, then its
 head is derived; otherwise, its head is derived if its body clauses
-are derived.\footnote{This description of the language of an RCG
-  technically only holds for \emph{non-combinatory} RCGs, in which the
-  arguments of body terms can only contain single variables. Since any
-  \emph{combinatory} RCG can be converted into a non-combinatory RCG
-  and we only consider non-combinatory RCGs here, this description
-  suffices.}
+are derived.\footnote{This description of an RCG language technically
+  only holds for \emph{non-combinatory} RCGs, in which the arguments
+  of body terms contain only single variables. Since any
+  \emph{combinatory} RCG can be converted into a non-combinatory RCG,
+  this description suffices.}
 
 PRCGs are RCGs where each clause $C_k \in P$ is annotated with
 a probability $p_k$ such that ${\forall A \in N, \,
@@ -252,23 +249,32 @@ derivations of finite length.}
 \subsection{A Grammar for Number Concepts}
 
 \begin{figure*}[t]
-		\includegraphics[width=\linewidth]{grammarOfNumber/gon.pdf}
-		\caption{A Range Concatenation Grammar whose strings are valid number words.}
-		\label{fig:gon}
+  \begin{centering}
+    \includegraphics[width=0.9\linewidth]{grammarOfNumber/gon.pdf}
+    \caption{A Range Concatenation Grammar whose strings are valid number words.}
+    \label{fig:gon}
+  \end{centering}
 \end{figure*}
 
+\begin{figure*}[t]
+  \begin{centering}
+    \includegraphics[width=\linewidth]{parseTrees/parse.pdf}
+    \caption{RCG parses for \emph{Number} (Blue), \emph{Successor} (Red), and \emph{More Than} (Green).}
+    \label{fig:parse}
+  \end{centering}
+\end{figure*}
 
 Having motivated our decision to model concepts with a formalism
 originally designed to describe natural language syntax, and having
-described RCGs as our formalism of choice, we now want to show that
-RCGs can in fact capture conceptual knowledge of the natural numbers.
+described RCGs as our formalism of choice, we now show that RCGs can
+in fact capture the conceptual structure of the natural numbers.
 
 In this initial exploration, we want to capture three kinds of number
 knowledge. First, we want to show that an RCG can capture the
-distinction between valid and invalid number words. While it may seem
-extraordinarily basic, the understanding that fifty-nine is a number
-while fifty-ten is not, is one which children struggle to learn
-\citep{FusRicBriar1982}.  Second, we want to show that an RCG can
+distinction between valid and invalid number words. While a seemingly
+basic task, the understanding that twenty-nine is a number while
+twenty-ten is not, is one which children struggle to learn
+\citep{FusRicBriar1982}. Second, we want to show that an RCG can
 capture predecessor and successor relationships. Unlike the proposed
 induction that children make between successive count and the addition
 of an item into a set, we do not attempt to link the physical and
@@ -277,15 +283,14 @@ aspect of number learning, that of learning the count list
 itself. Third, we want to show that an RCG can go beyond mere
 successor and predecessor relations to describe more complex aspects
 of number such as \emph{More Than} and \emph{Less Than}. These sorts
-of concepts require significantly greater generalization and thus are
-signficantly more abstract, as demonstrated by the following
-argument. For any set of $n$ numbers, there are exactly $n$ valid
+of concepts require significantly greater generalization and are thus
+more abstract. For any set of $n$ numbers, there are exactly $n$ valid
 number words. Because $1$ has no predeccessor and we cannot concisely
 name the successor of the last number for which we know the number
 word ({\it e.g.}  What comes after 999,999,999 if we do not know the
 word ``billion''?), there are actually only $n-1$ valid successor or
-predecessor relations. There are, however, $(n^2-n)/2$ each of
-the more and less relations, respectively.
+predecessor relations. There are, however, $(n^2-n)/2$ each of the
+more and less relations, respectively.
 
 Capturing these relations with an RCG is not only possible, but it can
 be done quite compactly. Our grammar for the concepts of \emph{Is A
@@ -296,75 +301,79 @@ schematic of the rules concerned with determining valid and invalid
 numbers, while the rest, due to space constraints, can be found
 online.\footnote{http://github.com/joshrule/GrammarInduction}
 
-\begin{figure*}[t]
-		\includegraphics[width=\linewidth]{parseTrees/parseNumber.pdf}
-		\caption{A parse for the fact that ``six-hundred thirty-seven'' is a valid number word.}
-		\label{fig:parseNumber}
-\end{figure*}
+Intuitively, a number word like six-hundred thirty-seven is a valid
+number word because we have six units of one hundred each and
+thirty-seven remaining units of one each. That is, we have some base
+unit larger than one (hundred) and we track both how many of those we
+have (six), and how many of the next smallest base unit (one) we have
+(thirty-seven). We denote the sum of these (six-hundred +
+thirty-seven) simply by concatenating the two terms from largest to
+smallest base (six-hundred thirty-seven). This structure can be grown
+recursively. Nine-thousand seven-hundred sixteen is created by taking
+nine thousands units and tacking on the remainder, which is seven
+hundreds, plus its remainder of sixteen ones: ``nine'' $\times$
+``thousand'' $+$ (``seven'' $\times$ ``hundred'' + (``sixteen''
+$\times$ ``one'')). Note that there is no explicit mention of the base
+``one'' in the final number word - it is implied and can be marked by
+appending $\varnothing$, the empty string, instead of ``one''.
 
-\begin{figure*}[t]
-		\includegraphics[width=\linewidth]{parseTrees/parseSucc.pdf}
-		\caption{A parse for the fact that ``one-hundred'' immediately succeeds ``ninety-nine''.}
-		\label{fig:parseSucc}
-\end{figure*}
-
-\begin{figure*}[t]
-		\includegraphics[width=\linewidth]{parseTrees/parseMore.pdf}
-		\caption{A parse for the fact that ``one-hundred one'' is more than ``fifty-two''.}
-		\label{fig:parseMore}
-\end{figure*}
-
-Figure \ref{fig:parseNumber} shows how those rules can be applied to
-explain why six-hundred thirty-seven is a valid number word using the
-base word ``hundred''. Our grammar makes use of a prefix-base-suffix
-understanding of number, where any number can be understood as some
-prefix multiplied by a base and added to a suffix; ``six-hundred
-thirty-seven'' is ``six'' $\times$ ``hundred'' $+$ ``thirty
-seven''. We prove that ``six-hundred thirty-seven'' is a valid number
-word by showing that ``six'' is a valid prefix for ``hundred'' and
-that ``thirty-seven'' is a valid suffix. We in turn show that ``six''
-is a valid prefix for ``hundred'' by showing that it is a number word
-representing a \emph{ones} number, that is, a number between one and
-nine. It would be incorrect for ``hundred'' to have no prefix, and it
-would also be incorrect to use a prefix larger than nine. To show that
-``thirty-seven'' is a valid suffix, we show that ``thirty-seven'' is a
-valid number for the previous base, in this case, the empty base,
-$\varnothing$. These are the numbers between one and ninety-nine. We
-prove that ``thirty-seven'' is one of these numbers by showing that it
-is merely the concatenation of a \emph{tens} word and a \emph{ones}
+Our grammar similarly uses a prefix-base-suffix description of
+number. For example, to conclude that ``six-hundred thirty-seven'' is
+a valid number word (Figure \ref{fig:parse}), we must show that
+``six'' is a valid prefix for ``hundred'' and ``thirty-seven'' is a
+valid suffix. We must show that our use of the largest base is legal,
+as well as show recursively that the rest of the number is
+legal. ``six'' is a valid prefix for ``hundred'' because it is a
+number word representing a \emph{ones} number, a number between one
+and nine. It would be incorrect for ``hundred'' to have no prefix, and
+it would also be incorrect to use a prefix larger than
+``nine''. ``thirty-seven'' is a valid suffix because it is a valid
+number for a previous base, in this case $\varnothing$, the ones
+base. ``thirty-seven'' is one of these numbers because it is merely
+the concatenation of a \emph{decade} word and a \emph{ones}
 word. Thus, the compositional use of relatively simple predicates
 helps us analyze the structure of a complex phrase like ``six hundred
 thirty seven'' and show that while it is a valid number word,
-``hundred six seven thirty'' is not. Figures \ref{fig:parseSucc} and
-\ref{fig:parseMore} show how \emph{Successor} and \emph{More Than},
-respectively, can similarly be encoded. Note that \emph{Predecessor}
-and \emph{Less Than} can be encoded quite simply as $\text{Less}(X,Y)
-\leftarrow \text{More}(Y,X).$ and $\text{Pred}(X,Y) \leftarrow
-\text{Succ}(Y,X).$
+``hundred six seven thirty'' is not. \emph{Successor} and \emph{More
+  Than} can similarly be encoded (Figure \ref{fig:parse}), while
+\emph{Predecessor} and \emph{Less Than} can be encoded quite simply as
+$\text{Less}(X,Y) \leftarrow \text{More}(Y,X)$ and $\text{Pred}(X,Y)
+\leftarrow \text{Succ}(Y,X)$.
 
-These figures also provide a good place to clarify exactly what we
-propose for this grammar to represent and how we accomplish that
-representation. First, while the conceptual grammar allows us to show
-that certain relations hold for the token ``fifty-two'', there is no
-object that in any sense \emph{contains the full meaning of}
+These examples help clarify what this grammar represents and how we
+accomplish that representation. First, and perhaps most importantly,
+what might be considered core to the understanding of \emph{Number} or
+\emph{More Than} is missing here. That is, \emph{Number} contains no
+grounding or potential grounding between cardinalities for sets of
+objects and number words, and \emph{More Than} lacks a connection to
+the approximate magnitude of contrasting sets. We intend to explore
+these connections in future work and are confident they can be
+included, but we are focusing here on how purely symbolic learning can
+be accomplished for a large set of numbers given non-grounded
+linguistic data. Second, while the conceptual grammar allows us to
+show that certain relations hold for the token ``fifty-two'', there is
+no object that in any sense \emph{contains the full meaning of}
 ``fifty-two''. The meaning is simply the sum total of the
-relationships which hold for the token ``fifty-two''. Second, the
+relationships which hold for the token ``fifty-two''. Third, the
 grammar never produces nor parses anything resembling full English
 sentences. This is a grammar for the structure of concepts, not the
 structure of language. When attempting to parse something like
-``Succ(ninety nine, one hundred)'', we are assuming that some other
+\emph{Succ(ninety nine, one hundred)}, we are assuming that some other
 system, more directly involved in language processing, preprocesses
 linguistic utterances into a partially predicated state, which is then
-checked against the current state of knowledge represented by the
-conceptual grammar. Third, the names given to specific predicates in
-these figures have no semantic meaning on their own. ``Number'' could
-just as easily be called ``Snickerdoodle'' or ``Dax''. What is
-important is not the name of a predicate, but the relations it enters
-into with other predicates and, as a result, the argument strings for
-which it holds. Similarly and crucially, individual words like
-``hundred'' or ``nine'' have no inherent meaning. They acquire their
-meaning because of the way each predicate combines or contrasts them
-with other words.
+checked against the knowledge encoded in our conceptual
+grammar. Fourth, the names given to specific predicates in these
+figures have no semantic meaning on their own. \emph{Number} could
+just as easily be called \emph{Wug} or \emph{Dax}. What is important
+is not a predicate's name, but the relations it enters into with other
+predicates and thus the argument strings for which it holds. Similarly
+and crucially, individual words like ``hundred'' or ``nine'' have no
+inherent meaning. They acquire their meaning because of the way each
+predicate combines or contrasts them with other words. Finally, we
+provide a grammar explaining number relations in terms of English
+rules for expressing cardinalities, but that grammar could easily be
+modified to model different counting systems, such as those used in
+French or Mandarin.
 
 \section{Learning Number Knowledge}
 
@@ -396,9 +405,8 @@ extending to approximate magnitude, object tracking, and perceptual grounding
 The authors benefited significantly from conversations with Timothy
 O'Donnell and Leon Bergen. This material is based upon work supported
 by the Center for Minds, Brains and Machines (CBMM), funded by NSF STC
-award CCF-1231216. Funding for this work was also received from an NSF
-Graduate Research Fellowship, and the Eugene Stark Graduate
-Fellowship.
+award CCF-1231216, an NSF Graduate Research Fellowship, and the Eugene
+Stark Graduate Fellowship.
 
 
 \bibliographystyle{apacite}
