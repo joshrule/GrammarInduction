@@ -1,0 +1,313 @@
+## What follows is a handbuilt grammar describing several key
+## relations over the number words:
+##   - Number: What are the valid number words?
+##   - Equal: Which number words are equivalent?
+##   - Pred/Succ: Which number word, X, precedes/succeeds Y?
+##   - Less/More: Which number words, X, are smaller/larger than Y?
+
+## This grammar was introduced in the following paper:
+##
+## Joshua Rule, Eyal Dechter, Joshua B. Tenenbaum (in preparation)
+## Representing and Learning a Large System of Number Concepts using
+## Latent Predicate Networks
+
+## This grammar is an RCG and serves as a constructive proof that
+## fundamental number concepts can be represented as an RCG. In the
+## paper introducing this grammar, we also show that these same
+## concepts can be learned using an RCG grammar induction system we
+## have developed, called a Latent Predicate Network (LPN).  As a
+## technical matter, this RCG is non-combinatory, while the one in the
+## paper is combinatory. However, combinatory grammars can be
+## converted to non-combinatory ones, as done here. This conversion is
+## desirable because non-combinatory grammars are simpler to
+## parse. Both this grammar and the presentation in the paper are
+## erasing and non-linear, preventing them from being simple RCGs,
+## which are yet simpler to parse.
+
+## Overall, this grammar uses 11+9+5 = 25 concepts in addition to the
+## base lexicon. It also uses only 216 rules. It is unlikely to be the
+## most efficient grammar for these concepts, in part because I
+## attempted in writing it to provide some room for generalization.
+## We'd like to see this grammar generalize in the same way a human
+## might, given roughly equivalent information. Also, the grammar has
+## no notion of arithmetic, the base-10 Indian/Arabic numeral
+## notation, or of grounding in perceived sets or approximate
+## magnitudes, all of which might simplify many of these
+## concepts. Finally, I wrote the grammar with very imperfect
+## consideration of human psychology. For example, while I do use
+## non-transitive algorithms for "more" (even though it's the
+## transitive closure of "succ"), I don't, as mentioned, use anything
+## resembling a parallel object tracking system or provided any sort
+## of perceptual grounding.
+
+# # # # # Number (10) # # # # #
+
+# the decade words
+Decades(twenty).
+Decades(thirty).
+Decades(forty).
+Decades(fifty).
+Decades(sixty).
+Decades(seventy).
+Decades(eighty).
+Decades(ninety).
+
+# the -teen words
+Teens(ten).
+Teens(eleven).
+Teens(twelve).
+Teens(thirteen).
+Teens(fourteen).
+Teens(fifteen).
+Teens(sixteen).
+Teens(seventeen).
+Teens(eighteen).
+Teens(nineteen).
+
+# the ones words
+Ones(one).
+Ones(two).
+Ones(three).
+Ones(four).
+Ones(five).
+Ones(six).
+Ones(seven).
+Ones(eight).
+Ones(nine).
+
+# the chain of base words
+PrevBase(million, thousand).
+PrevBase(thousand, hundred).
+PrevBase(hundred, null).
+
+# a transitive closure over the base word chain
+LargerBase(X, Z) <-- LargerBase(X, Y), LargerBase(Y, Z).
+LargerBase(X, Y) <-- PrevBase(X, Y).
+
+# Using Prefix-Base-Suffix number words, what prefixes are allowed?
+Prefix(P,B) <-- LargerBase(B,hundred), NormalPrefix(P).
+Prefix(P,hundred) <-- Ones(P).
+Prefix(P, null) <-- Ones(P).
+Prefix(P, null) <-- Teens(P).
+Prefix(P, null) <-- Decades(P).
+Prefix(P Q, null) <-- Decades(P), Ones(Q).
+
+# prefixes for bases greater than "hundred" are any number less than 1000.
+NormalPrefix(S) <-- Suffix(thousand,S).
+
+# Using Prefix-Base-Suffix number words, what suffixes are allowed?
+Suffix(B,S) <-- LargerBase(B,C), NumberOfBase(S,C).
+Suffix(null, null).
+
+# Finally, what number words are valid?
+Number(P B S) <-- Prefix(P,B), Suffix(B,S).
+Number(P B) <-- Prefix(P,B).
+
+# An additional rule used to maintain a non-combinatory grammar
+NumberOfBase(P C S, C) <-- Prefix(P,C), Suffix(C,S).
+NumberOfBase(P C, C) <-- Prefix(P,C).
+
+# Two numbers are equal if they are the same number
+Equal(X, X) <-- Number(X).
+
+# # # # # Successor Predicates (9) # # # # #
+
+# Succession on the ones
+SOnes(one, two).
+SOnes(two, three).
+SOnes(three, four).
+SOnes(four, five).
+SOnes(five, six).
+SOnes(six, seven).
+SOnes(seven, eight).
+SOnes(eight, nine).
+
+# Succession on the teens
+STeens(ten, eleven).
+STeens(eleven, twelve).
+STeens(twelve, thirteen).
+STeens(thirteen, fourteen).
+STeens(fourteen, fifteen).
+STeens(fifteen, sixteen).
+STeens(sixteen, seventeen).
+STeens(seventeen, eighteen).
+STeens(eighteen, nineteen).
+
+# Succession on the decades
+SDecades(twenty, thirty).
+SDecades(thirty, forty).
+SDecades(forty, fifty).
+SDecades(fifty, sixty).
+SDecades(sixty, seventy).
+SDecades(seventy, eighty).
+SDecades(eighty, ninety).
+
+# The rules for succession
+Succ(X,Y) <-- SOnes(X,Y).
+Succ(nine,ten).
+Succ(X,Y) <-- STeens(X,Y).
+Succ(nineteen,twenty).
+Succ(X,X one) <-- Decades(X).
+Succ(X Y,X V) <-- Decades(X), SOnes(Y,V).
+Succ(X Y,U) <-- SDecades(X,U), MaxOnes(Y).
+Succ(X,one C) <-- MaxForBase(X,B), PrevBase(C,B).
+Succ(P B,P B one) <-- Prefix(P,B), LargerBase(B, null).
+Succ(P B S,P B T) <-- Prefix(P,B), Succ(S,T), Suffix(B,T).
+Succ(P B S,Q B) <-- PrevBase(B,C), MaxForBase(S,C), Succ(P,Q), Prefix(Q,B).
+
+# The largest ones word is "nine"
+MaxOnes(nine).
+
+# The largest decade is "ninety"
+MaxDecades(ninety).
+
+# For any given base, there is a largest prefix
+MaxPrefix(W,U) <-- LargerBase(U,hundred), MaxForBase(W,hundred).
+MaxPrefix(O,hundred) <-- MaxOnes(O).
+MaxPrefix(D O, null) <-- MaxDecades(D), MaxOnes(O).
+
+# For any given base, there is a largest number
+MaxForBase(P B S,B) <-- MaxPrefix(P,B), PrevBase(B,C), MaxForBase(S,C).
+MaxForBase(P, null) <-- MaxPrefix(P, null).
+
+# Predecession is the reverse of Succession
+Pred(X,Y) <-- Succ(Y,X).
+
+# # # # # More Predicates (5) # # # # #
+
+# More over the ones
+MOnes(two, one).
+MOnes(three, one).
+MOnes(three, two).
+MOnes(four, one).
+MOnes(four, two).
+MOnes(four, three).
+MOnes(five, one).
+MOnes(five, two).
+MOnes(five, three).
+MOnes(five, four).
+MOnes(six, one).
+MOnes(six, two).
+MOnes(six, three).
+MOnes(six, four).
+MOnes(six, five).
+MOnes(seven, one).
+MOnes(seven, two).
+MOnes(seven, three).
+MOnes(seven, four).
+MOnes(seven, five).
+MOnes(seven, six).
+MOnes(eight, one).
+MOnes(eight, two).
+MOnes(eight, three).
+MOnes(eight, four).
+MOnes(eight, five).
+MOnes(eight, six).
+MOnes(eight, seven).
+MOnes(nine, one).
+MOnes(nine, two).
+MOnes(nine, three).
+MOnes(nine, four).
+MOnes(nine, five).
+MOnes(nine, six).
+MOnes(nine, seven).
+MOnes(nine, eight).
+
+# More over the teens
+MTeens(eleven, ten).
+MTeens(twelve, ten).
+MTeens(twelve, eleven).
+MTeens(thirteen, ten).
+MTeens(thirteen, eleven).
+MTeens(thirteen, twelve).
+MTeens(fourteen, ten).
+MTeens(fourteen, eleven).
+MTeens(fourteen, twelve).
+MTeens(fourteen, thirteen).
+MTeens(fifteen, ten).
+MTeens(fifteen, eleven).
+MTeens(fifteen, twelve).
+MTeens(fifteen, thirteen).
+MTeens(fifteen, fourteen).
+MTeens(sixteen, ten).
+MTeens(sixteen, eleven).
+MTeens(sixteen, twelve).
+MTeens(sixteen, thirteen).
+MTeens(sixteen, fourteen).
+MTeens(sixteen, fifteen).
+MTeens(seventeen, ten).
+MTeens(seventeen, eleven).
+MTeens(seventeen, twelve).
+MTeens(seventeen, thirteen).
+MTeens(seventeen, fourteen).
+MTeens(seventeen, fifteen).
+MTeens(seventeen, sixteen).
+MTeens(eighteen, ten).
+MTeens(eighteen, eleven).
+MTeens(eighteen, twelve).
+MTeens(eighteen, thirteen).
+MTeens(eighteen, fourteen).
+MTeens(eighteen, fifteen).
+MTeens(eighteen, sixteen).
+MTeens(eighteen, seventeen).
+MTeens(nineteen, ten).
+MTeens(nineteen, eleven).
+MTeens(nineteen, twelve).
+MTeens(nineteen, thirteen).
+MTeens(nineteen, fourteen).
+MTeens(nineteen, fifteen).
+MTeens(nineteen, sixteen).
+MTeens(nineteen, seventeen).
+MTeens(nineteen, eighteen).
+
+# More over the decades
+MDecades(thirty, twenty).
+MDecades(forty, twenty).
+MDecades(forty, thirty).
+MDecades(fifty, twenty).
+MDecades(fifty, thirty).
+MDecades(fifty, forty).
+MDecades(sixty, twenty).
+MDecades(sixty, thirty).
+MDecades(sixty, forty).
+MDecades(sixty, fifty).
+MDecades(seventy, twenty).
+MDecades(seventy, thirty).
+MDecades(seventy, forty).
+MDecades(seventy, fifty).
+MDecades(seventy, sixty).
+MDecades(eighty, twenty).
+MDecades(eighty, thirty).
+MDecades(eighty, forty).
+MDecades(eighty, fifty).
+MDecades(eighty, sixty).
+MDecades(eighty, seventy).
+MDecades(ninety, twenty).
+MDecades(ninety, thirty).
+MDecades(ninety, forty).
+MDecades(ninety, fifty).
+MDecades(ninety, sixty).
+MDecades(ninety, seventy).
+MDecades(ninety, eighty).
+
+# The high-level rules for More
+More(X,Y) <-- MOnes(X,Y).
+More(X,Y) <-- MTeens(X,Y).
+More(X,Y) <-- MDecades(X,Y).
+More(X,Y) <-- Teens(X),   Ones(Y).
+More(X,Y) <-- Decades(X), Ones(Y).
+More(X,Y) <-- Decades(X), Teens(Y).
+More(X Y,U) <-- Decades(X), Ones(Y), Ones(U).
+More(X Y,U) <-- Decades(X), Ones(Y), Teens(U).
+More(X Y,X) <-- Decades(X), Ones(Y).
+More(X Y,X U) <-- Decades(X,), MOnes(Y,U).
+More(X Y,U) <-- MDecades(X,U), Ones(Y).
+More(X,U Y) <-- MDecades(X,U), Ones(Y).
+More(X V,U Y) <-- MDecades(X,U), Ones(V), Ones(Y).
+More(X,Y) <-- LargerBase(B,C), NumberOfBase(X,B), NumberOfBase(Y,C).
+More(P B S,Q B T) <-- LargerBase(B,null), Prefix(P,B), Prefix(Q,B), More(P,Q), Suffix(B,S), Suffix(B,T).
+More(P B S,P B T) <-- LargerBase(B,null), Prefix(P,B), Suffix(B,S), Suffix(B,T), More(S,T).
+More(P B S,P B) <-- Prefix(P,B), Suffix(B,S).
+
+# Less is the reverse of More
+Less(X,Y) <-- More(Y,X).
