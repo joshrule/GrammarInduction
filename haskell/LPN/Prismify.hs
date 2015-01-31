@@ -91,9 +91,15 @@ mkPrismToLPN rule i = "prismToLPN(" ++ intercalate ", " args ++ ")."
         ruleString = showQuoted rule
         args = [switch, show i, ruleString]
 
+lpnValuePredDef :: String
+lpnValuePredDef = unlines [":- dynamic lpn_value_pred/2.",
+                           "lpn_value_pred(Switch, _) :- throw(lpn_value_pred_not_found(Switch)).",
+                           "assert_lpn_value_pred(Switch, Pred) :- asserta(lpn_value_pred(Switch, Pred))."]
+
 
 prismClauses :: RewriteSystem -> String
-prismClauses sys = unlines [":- include('/Users/edechter/Dropbox/Projects/GrammarInduction/prism/prove.psm').", 
+prismClauses sys = unlines [":- include('/Users/edechter/Dropbox/Projects/GrammarInduction/prism/prove.psm').", "",
+                            lpnValuePredDef, "", 
                             mkAllValues ruleMap, "",
                             mkAllRules ruleMap, "",
                             mkAllPrismToLPN ruleMap]

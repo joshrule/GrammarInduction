@@ -6,7 +6,7 @@
    cl(P).
 
 %% load .sys.psm file.
-load_sys_psm :- expand_environment('$GIJOE_ROOT/experiments/cogsci2014/number_8_8_3_lpn.sys.psm', 
+load_sys_psm :- expand_environment('$GIJOE_ROOT/experiments/cogsci2014/number_5_5_2_lpn.sys.psm', 
                                    P),
                 prism([load], P).
 
@@ -218,7 +218,7 @@ init_sw_a(_, _) :- true.
     
 
 
-go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount) :- 
+go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, SaveDir) :- 
     load_sys_psm,
     init, 
     Eps is CountBase/10000,
@@ -232,27 +232,25 @@ go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount) :-
     show_prism_flags,
     init_sw_a(0.1, 0.01),
     learn(Data),
-    go_file(CountBase, [F1, F2]), 
+    go_file(SaveDir, CountBase, [F1, F2]), 
     save_sw_pa(F1, F2), 
     pruneAll(0.5).
 
-go_file(N, [F, Fa]) :- 
+go_file(SaveDir, N, [F, Fa]) :- 
     number_chars(N,X), 
-    atom_concats([sw_p_|X], F),
-    atom_concats([sw_a_|X], Fa).
+    atom_concats([SaveDir, '/', sw_p_|X], F),
+    atom_concats([SaveDir, '/', sw_a_|X], Fa).
 
-
-
-run(Lo, Hi, Decay, Counts, DecadeRatio, PredecadeRatio, ListProbabilities) :-
+run(Lo, Hi, Decay, Counts, DecadeRatio, PredecadeRatio, ListProbabilities, SaveDir) :-
     ListProbabilities 
         @= [Ps : C in Counts, [Ps],
-            run1(Lo, Hi, Decay, C, DecadeRatio, PredecadeRatio, Ps)].
+            run1(Lo, Hi, Decay, C, DecadeRatio, PredecadeRatio, Ps, SaveDir)].
             
                           
-run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeRatio, Ps) :- 
+run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeRatio, Ps, SaveDir) :- 
     DecadeCount is round(Count * DecadeRatio),
     PredecadeCount is round(Count * PredecadeRatio),
-    go(Lo, Hi, Count, Decay, DecadeCount, PredecadeCount),
+    go(Lo, Hi, Count, Decay, DecadeCount, PredecadeCount, SaveDir),
     count_list_probability(Lo, Hi, Ps, 5, 2, 2).
 
     
