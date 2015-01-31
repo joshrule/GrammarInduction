@@ -3,7 +3,7 @@ README.txt
 Simulation 
 
 
-git hash: d38dc95
+git hash: 0bcaf3b
 
 Summary: created data using script sparsity.pl and test.pl.
 >>run(1, 99, 2, [10, 100], 0, 0, LPs, './data/counting_simulation_3')
