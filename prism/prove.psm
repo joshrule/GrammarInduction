@@ -1,7 +1,8 @@
 
 %% prove(P-[Xs]) :- rule(P-[Xs], V), msw(P, V).
 prove(P-[]) :- rule(P-[], V), msw(P, V).
-prove(P-[X|XS]) :- 
-    (var(X) ->  (msw(P, V), rule(P-[X|XS], V)); 
-                (rule(P-[X|XS], V), msw(P, V))).
+prove(P-[X|XS]) :- (rule(P-[X|XS], V), msw(P, V)).
+%% prove(P-[X|XS]) :- 
+%%     (var(X) ->  (msw(P, V), rule(P-[X|XS], V)); 
+%%                 (rule(P-[X|XS], V), msw(P, V))).
 

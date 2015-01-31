@@ -260,17 +260,17 @@ atom_number(N, Atom) :- number_codes(N, Codes),
 %%             (saveDir(SaveDir), 
 %%              go(SaveDir, NEx, Rep, NPred, RunInfo))].
 
-go(SaveDir, TrainSetId, Level, NPred, RunInfo) :-
-            atom_number(TrainSetId, TrainSetId_a),
-            atom_number(Level, Level_a), 
-            atom_number(NPred, NPred_a), 
-            atom_concats([SaveDir, '/', 'results',
-                           '_trainSetId', TrainSetId_a, 
-                           '_level_', Level_a, 
-                           '_nPred_', NPred_a 
-                           ], FileName), 
-            write(FileName), nl,
-            execTrainTestLevels(TrainSetId, Level, NPred, RunInfo, FileName),  nl, !.
+%% go(SaveDir, TrainSetId, Level, NPred, RunInfo) :-
+%%             atom_number(TrainSetId, TrainSetId_a),
+%%             atom_number(Level, Level_a), 
+%%             atom_number(NPred, NPred_a), 
+%%             atom_concats([SaveDir, '/', 'results',
+%%                            '_trainSetId', TrainSetId_a, 
+%%                            '_level_', Level_a, 
+%%                            '_nPred_', NPred_a 
+%%                            ], FileName), 
+%%             write(FileName), nl,
+%%             execTrainTestLevels(TrainSetId, Level, NPred, RunInfo, FileName),  nl, !.
 
 %%%%%%%%%%%
 prism_main([TrainSetId_a, Level_a, NPred_a, SaveDir]) :- 

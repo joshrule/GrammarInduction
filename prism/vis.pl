@@ -143,13 +143,25 @@ switch_va(Sw, V, A) :-
     zip(Vs, As, VAs), 
     member(V\A, VAs).
 
+switch_vp(Sw, V, P) :- 
+    get_sw(Sw, [_, Vs, Ps]), 
+    zip(Vs, Ps, VPs), 
+    member(V\P, VPs).
+
 
     
-show_lpn :- 
+show_lpn_a :- 
     findall(K, 
             (switch_va(S, V, A), 
              prismToLPN(S, V, R),              
              formatString("~w :: ~w\n", [R, A], Codes), 
+             write_string(Codes)), _Ks).
+
+show_lpn_p :- 
+    findall(K, 
+            (switch_vp(S, V, P), 
+             prismToLPN(S, V, R),              
+             formatString("~w :: ~w\n", [R, P], Codes), 
              write_string(Codes)), _Ks).
 
 show_prove_node(prove(A-Xs), Codes) :-
