@@ -199,7 +199,7 @@ init :-
     set_prism_flag(learn_mode, vb),
     set_prism_flag(std_ratio, 1), 
     set_prism_flag(reset_hparams, off), 
-    set_prism_flag(restart, 1), 
+    set_prism_flag(restart, 10), 
     set_prism_flag(verb, em), 
     set_prism_flag(clean_table, on), 
     set_prism_flag(init, random). 
