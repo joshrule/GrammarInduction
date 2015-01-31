@@ -74,8 +74,8 @@ mkRule rule i =  _H ++ if null (_B1 ++ _C ++ _B2) then "."
                                     
         _H = "rule(" ++ _A ++ "-[" ++ intercalate ", " (map fst ys) ++ "], "
              ++ show i ++ ")"
-        _B1 =  intercalate ", " $ ["(var(" ++ v ++ ") -> true; " ++ fromJust y ++ ")"| (v, y) <- ys, isJust y]
-        _B2 =  intercalate ", " $ ["(var(" ++ v ++ ") -> " ++ fromJust y ++ "; true)"| (v, y) <- ys, isJust y]
+        _B1 =  intercalate ", " $ [fromJust y| (v, y) <- ys, isJust y]
+        _B2 =  "" -- intercalate ", " $ ["(var(" ++ v ++ ") -> " ++ fromJust y ++ "; true)"| (v, y) <- ys, isJust y]
         isJust (Just _) = True
         isJust _ = False
         fromJust (Just x) = x
