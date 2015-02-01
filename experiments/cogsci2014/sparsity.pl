@@ -269,7 +269,7 @@ run(Lo, Hi, Decay, Counts, DecadeRatio, PredecadeCounts, ListProbabilities, Save
 run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeCount, Ps, SaveDir) :- 
     DecadeCount is round(Count * DecadeRatio),
     go(Lo, Hi, Count, Decay, DecadeCount, PredecadeCount, SaveDir),
-    count_list_transition_probabilities(Lo, Hi, Ps, 5, 3, 1).
+    count_list_transition_probabilities(Lo, Hi, Ps, 5, 2, 2).
 
     
     

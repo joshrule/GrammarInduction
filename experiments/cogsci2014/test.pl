@@ -135,13 +135,17 @@ successor_distributions(_, _, _) :- true.
 
 
 count_list_transition_probabilities(Lo, Hi, Ps, N, MaxWordLength, Exp) :- 
+    set_prism_flag(clean_table, on), 
     Ps @= [P: I in Lo..Hi, [P, I1, W, W1], 
            (number(I, W), 
             I1 is I+1, 
             number(I1, W1),
-            succ_probability(W, W1, P, N, MaxWordLength, Exp))], 
+            succ_probability(W, W1, P, N, MaxWordLength, Exp), 
+            set_prism_flag(clean_table, off) 
+          )], 
     write('Count list transition probabilities:'), nl, 
-    write(count_list_transition_probabilities(Lo, Hi, Ps, N, MaxWordLength, Exp)), nl.
+    write(count_list_transition_probabilities(Lo, Hi, Ps, N, MaxWordLength, Exp)), nl, 
+    set_prism_flag(clean_table, off).
             
 count_list_probability(Lo, Hi, Ps, N, MaxWordLength, Exp) :- 
     count_list_transition_probabilities(Lo, Hi, Ts, N, MaxWordLength, Exp), 
