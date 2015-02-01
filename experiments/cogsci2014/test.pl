@@ -98,7 +98,7 @@ get_successor_distribution(X, Distr1, N, MaxWordLength, Exp) :-
 get_successor_distribution_sub(X, Distr, N, Length) :- 
     length(Y, Length),
     findall(Y\LogP, 
-            n_viterbig(N, prove('Succ_2'-[Y, X]), LogP),
+            (n_viterbig(N, prove('Succ_2'-[Y, X]), LogP)),             
             Distr).
 
 sample_successor(X, Y, N, MaxWordLength, Exp) :- 
