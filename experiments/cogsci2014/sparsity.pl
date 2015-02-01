@@ -183,8 +183,8 @@ decade_goal(Goal) :-
     number(N1, W1), 
     Goal = prove('Succ10_2'-[W1, W]).
 
-predecade_goal(Goal) :- 
-    between(3, 10, I), 
+predecade_goal(Goal) :-
+   ( number_language(english) -> between(3, 9, I); between(2, 9, I)),
     N is (I * 10) -1, 
     N1 is N + 1, 
     number(N, W), 
@@ -238,9 +238,7 @@ mk_data(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, Data) :-
     append(PredecadeData, Data0, Data).
 
 
-go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, SaveDir) :- 
-    load_sys_psm,
-    init, 
+go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, SaveDir, TransProbs) :- 
     sequence_goals(CountBase, Decay, Lo, Hi, SequenceData), 
     decade_goals(DecadeCount, DecadeData), 
     predecade_goals(PredecadeCount, PredecadeData),
@@ -248,11 +246,15 @@ go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, SaveDir) :-
     append(PredecadeData, Data0, Data),
     write(Data),
     show_prism_flags,
-    init_sw_a(0.1, 0.01),
     learn(Data),
     go_file(SaveDir, CountBase, [F1, F2]), 
     save_sw_pa(F1, F2), 
-    pruneAll(0.5).
+    pruneAll(0.5), 
+    count_list_transition_probabilities(Lo, Hi, TransProbs, 5, 2, 1), 
+    load_sys_psm,
+    init,
+    restore_sw_pa(F1, F2).
+    
 
 go_file(SaveDir, N, [F, Fa]) :- 
     number_chars(N,X), 
@@ -260,16 +262,19 @@ go_file(SaveDir, N, [F, Fa]) :-
     atom_concats([SaveDir, '/', sw_a_|X], Fa).
 
 run(Lo, Hi, Decay, Counts, DecadeRatio, PredecadeCounts, ListProbabilities, SaveDir) :-
+    load_sys_psm, 
+    init,
+    init_sw_a(0.1, 0.01),
     zip(Counts, PredecadeCounts, CPairs), 
     ListProbabilities 
         @= [Ps : C\PredecadeCount in CPairs, [Ps, C, PredecadeCount],
             run1(Lo, Hi, Decay, C, DecadeRatio, PredecadeCount, Ps, SaveDir)].
             
                           
-run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeCount, Ps, SaveDir) :- 
+run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeCount, TransProbs, SaveDir) :- 
     DecadeCount is round(Count * DecadeRatio),
-    go(Lo, Hi, Count, Decay, DecadeCount, PredecadeCount, SaveDir),
-    count_list_transition_probabilities(Lo, Hi, Ps, 5, 3, 1).
+    go(Lo, Hi, Count, Decay, DecadeCount, PredecadeCount, SaveDir, TransProbs).
+
 
     
     

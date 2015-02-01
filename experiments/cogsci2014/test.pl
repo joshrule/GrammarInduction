@@ -72,6 +72,10 @@ gt_negInfty(A, B) :-
 
 
 
+succ_word(U, W) :- 
+    number_word(N, U), 
+    number_word(N1, W), 
+    N1 is N + 1.
 
 
 
@@ -81,6 +85,8 @@ get_successor_distribution(X, Distr1, N, MaxWordLength, Exp) :-
             (between(1, MaxWordLength, L), 
              get_successor_distribution_sub(X, D, N, L), 
              member(Y\LogP0, D), 
+             %% succ_word(U, X), 
+             %% Y\=U, 
              LogP is Exp*LogP0
             ), Distr), 
     assoc_to_lists(Distr, Ys, LogPs),
@@ -108,7 +114,7 @@ sample_successor(X, Y, N, MaxWordLength, Exp) :-
 
 succ_probability(W,Succ, P, N, MaxWordLength, Exp) :-
     get_successor_distribution(W, Distr, N, MaxWordLength, Exp), 
-    findall(P, member(Succ\P, Distr), Ps), 
+    findall(P, (member(Succ\P, Distr)), Ps), 
     P is sum(Ps).
 
 successor_distribution(W, Distr, N, MaxWordLength) :- 
