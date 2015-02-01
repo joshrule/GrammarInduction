@@ -13,31 +13,44 @@ load_sys_psm :- expand_environment('$GIJOE_ROOT/experiments/cogsci2014/number_5_
 :- ['numbers.pl'].
 :- ['test.pl'].
 
+%% what language? 
+:- dynamic number_language/1.
+number_language(english).
+
+set_language(Lang) :- 
+    retractall(number_language(_)), 
+    asserta(number_language(Lang)).
+
+number(N, W) :- 
+    number_language(Lang), 
+    number_word(N, W, Lang).
+
+
 %% generating goals
 
 number_goal(Ns, Ps, prove('Number_1'-[X])) :- 
     random_select(Ns,Ps,N),
-    number_word(N, X).
+    number(N, X).
 
 succ_goal(Ns, Ps, prove('Succ_2'-[X, Y])) :- 
     random_select(Ns,Ps,N),
     N1 is N + 1, 
-    number_word(N,  X),
-    number_word(N1, Y).
+    number(N,  X),
+    number(N1, Y).
 
 succ10_goal(Ns, Ps, prove('Succ10_2'-[X, Y])) :-
     random_select(Ns,Ps,N),
     0 is N mod 10,
     N1 is N + 10,
-    number_word(N,  X),
-    number_word(N1, Y).
+    number(N,  X),
+    number(N1, Y).
 
 succ100_goal(Ns, Ps, prove('Succ100_2'-[X, Y])) :-
     random_select(Ns,Ps,N),
     0 is N mod 100,
     N1 is N + 100,
-    number_word(N,  X),
-    number_word(N1, Y).
+    number(N,  X),
+    number(N1, Y).
 
 more_goal(Ns, Ps, prove('More_2'-[X, Y])) :-
     more_goal(Ns, Ps, X, Y).
@@ -45,10 +58,10 @@ more_goal(Ns, Ps, prove('More_2'-[X, Y])) :-
 more_goal(Ns, Ps, X, Y) :-
     random_select(Ns,Ps,N1),
     random_select(Ns,Ps,N2),
-    (N1 > N2 -> number_word(N1, X),
-                number_word(N2, Y);
-     (N2 > N1 -> number_word(N2, X),
-                 number_word(N1, Y);
+    (N1 > N2 -> number(N1, X),
+                number(N2, Y);
+     (N2 > N1 -> number(N2, X),
+                 number(N1, Y);
       more_goal(Ns, Ps, X, Y))).
 
 %% This function takes a list of Predicate information and generates a
@@ -135,7 +148,7 @@ goal_number(count(G, _), N) :-
     !, 
     goal_number(G, N). 
 goal_number(prove(_-[X|_]), N) :- 
-    number_word(N, X).
+    number(N, X).
                                
 
 %% Generate goal sequences 
@@ -148,9 +161,9 @@ sequence_goals(CountBase, Exponent, Lo, Hi, Goals) :-
             Goals).
     
 sequence_goals_sub(CountBase, Exponent, Number, Index, Goal) :- 
-    number_word(Number, Word), 
+    number(Number, Word), 
     NextNumber is Number + 1, 
-    number_word(NextNumber, NextWord), 
+    number(NextNumber, NextWord), 
     Count is round(CountBase / (Index ** Exponent)), 
     Count > 0, 
     Goal = count(prove('Succ_2'-[NextWord, Word]), Count).
@@ -165,17 +178,17 @@ decade_goals(Count, Goals) :-
 decade_goal(Goal) :- 
     between(1, 9, I), 
     N is I * 10, 
-    number_word(N, W), 
+    number(N, W), 
     N1 is N + 10, 
-    number_word(N1, W1), 
+    number(N1, W1), 
     Goal = prove('Succ10_2'-[W1, W]).
 
 predecade_goal(Goal) :- 
     between(3, 10, I), 
     N is (I * 10) -1, 
     N1 is N + 1, 
-    number_word(N, W), 
-    number_word(N1, W1),
+    number(N, W), 
+    number(N1, W1),
     Goal = prove('Succ_2'-[W1, W]).
 
 predecade_goals(0, []) :- !.
@@ -191,15 +204,15 @@ predecade_goals(Count, Goals) :-
 init :- 
     set_prism_flag(search_progress, 1), 
     set_prism_flag(em_progress, 1),
-    set_prism_flag(max_iterate, 1000),
+    set_prism_flag(max_iterate, 200),
     set_prism_flag(viterbi_mode,vb),
     set_prism_flag(log_scale,on), 
     set_prism_flag(learn_message, all),
-    set_prism_flag(epsilon, 1), 
+    set_prism_flag(epsilon, 0.00001), 
     set_prism_flag(learn_mode, vb),
     set_prism_flag(std_ratio, 1), 
     set_prism_flag(reset_hparams, off), 
-    set_prism_flag(restart, 10), 
+    set_prism_flag(restart, 1), 
     set_prism_flag(verb, em), 
     set_prism_flag(clean_table, on), 
     set_prism_flag(init, random). 
@@ -217,12 +230,17 @@ init_sw_a(Mu, Sigma) :-
 init_sw_a(_, _) :- true.
     
 
+mk_data(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, Data) :- 
+    sequence_goals(CountBase, Decay, Lo, Hi, SequenceData), 
+    decade_goals(DecadeCount, DecadeData), 
+    predecade_goals(PredecadeCount, PredecadeData),
+    append(DecadeData, SequenceData, Data0),
+    append(PredecadeData, Data0, Data).
+
 
 go(Lo, Hi, CountBase, Decay, DecadeCount, PredecadeCount, SaveDir) :- 
     load_sys_psm,
     init, 
-    Eps is CountBase/10000,
-    set_prism_flag(epsilon, Eps),
     sequence_goals(CountBase, Decay, Lo, Hi, SequenceData), 
     decade_goals(DecadeCount, DecadeData), 
     predecade_goals(PredecadeCount, PredecadeData),
@@ -241,17 +259,17 @@ go_file(SaveDir, N, [F, Fa]) :-
     atom_concats([SaveDir, '/', sw_p_|X], F),
     atom_concats([SaveDir, '/', sw_a_|X], Fa).
 
-run(Lo, Hi, Decay, Counts, DecadeRatio, PredecadeRatio, ListProbabilities, SaveDir) :-
+run(Lo, Hi, Decay, Counts, DecadeRatio, PredecadeCounts, ListProbabilities, SaveDir) :-
+    zip(Counts, PredecadeCounts, CPairs), 
     ListProbabilities 
-        @= [Ps : C in Counts, [Ps],
-            run1(Lo, Hi, Decay, C, DecadeRatio, PredecadeRatio, Ps, SaveDir)].
+        @= [Ps : C\PredecadeCount in CPairs, [Ps, C, PredecadeCount],
+            run1(Lo, Hi, Decay, C, DecadeRatio, PredecadeCount, Ps, SaveDir)].
             
                           
-run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeRatio, Ps, SaveDir) :- 
+run1(Lo, Hi, Decay, Count, DecadeRatio, PredecadeCount, Ps, SaveDir) :- 
     DecadeCount is round(Count * DecadeRatio),
-    PredecadeCount is round(Count * PredecadeRatio),
     go(Lo, Hi, Count, Decay, DecadeCount, PredecadeCount, SaveDir),
-    count_list_probability(Lo, Hi, Ps, 5, 2, 2).
+    count_list_transition_probabilities(Lo, Hi, Ps, 5, 3, 1).
 
     
     

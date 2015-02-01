@@ -1,3 +1,6 @@
+number_word(N, W, english) :- number_word(N, W). 
+number_word(N, W, chinese) :- chinese_number(N, W).
+
 number_word(1, [one]).
 number_word(2, [two]).
 number_word(3, [three]).
@@ -998,3 +1001,37 @@ number_word(997, [nine,hundred,ninety,seven]).
 number_word(998, [nine,hundred,ninety,eight]).
 number_word(999, [nine,hundred,ninety,nine]).
 number_word(1000, [one,thousand]).
+
+
+%%% ----------------------------
+%% chinese numbers
+
+chinese_number(1, [one]).
+chinese_number(2, [two]).
+chinese_number(3, [three]).
+chinese_number(4, [four]).
+chinese_number(5, [five]).
+chinese_number(6, [six]).
+chinese_number(7, [seven]).
+chinese_number(8, [eight]).
+chinese_number(9, [nine]).
+chinese_number(10, [ten]).
+chinese_number(N, W) :- 
+    N >= 10, 
+    DecadesUnit is N div 10, 
+    OnesUnit is N mod 10,
+    (OnesUnit = 0 -> O = []; chinese_number(OnesUnit, O)), 
+    (
+        (DecadesUnit = 0, !, D = []), !; 
+        (DecadesUnit = 1, !, D = [ten]), !; 
+        chinese_number(DecadesUnit, [WD]),
+        D = [WD, ten]
+    ),
+    append(D, O, W).
+      
+     
+         
+         
+    
+    
+    

@@ -136,13 +136,17 @@ successor_distributions(_, _, _) :- true.
 
 count_list_transition_probabilities(Lo, Hi, Ps, N, MaxWordLength, Exp) :- 
     Ps @= [P: I in Lo..Hi, [P, I1, W, W1], 
-           (number_word(I, W), 
+           (number(I, W), 
             I1 is I+1, 
-            number_word(I1, W1),
-            succ_probability(W, W1, P, N, MaxWordLength, Exp))].
+            number(I1, W1),
+            succ_probability(W, W1, P, N, MaxWordLength, Exp))], 
+    write('Count list transition probabilities:'), nl, 
+    write(count_list_transition_probabilities(Lo, Hi, Ps, N, MaxWordLength, Exp)), nl.
             
 count_list_probability(Lo, Hi, Ps, N, MaxWordLength, Exp) :- 
     count_list_transition_probabilities(Lo, Hi, Ts, N, MaxWordLength, Exp), 
+    write('Count list transition probabilities:'), nl, 
+    write(Ts), nl, 
     inits(Ts, Tss),
     maplist(prodlist, Tss, Ps).
     
