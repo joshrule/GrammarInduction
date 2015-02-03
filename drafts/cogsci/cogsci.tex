@@ -373,13 +373,83 @@ such as those used in French or Mandarin.
 
 \section{Learning Number Knowledge}
 
-%% Eyal
+How might children learn the knowledge about number that is captured
+in the representation presented above? In this section, we present a
+computational model of learning over RCGs and take a first step
+towards evaluating this model against the learning trajectories and
+patterns of error reported in the literature on counting. 
+
+Because the learning problem is computationally challenging and
+because much of the focus in the literature on exact number knowledge
+has been on counting, we restrict our experiments here to the
+successor relation, and, in particular, to learning how to count from
+one to a hundred.
+
+Learning to count up to a hundred does not come easily. Studies of
+counting in children between three and six years of age, suggests that
+although some children are able to count up to a hundred shortly
+before entering kindergarten, many have trouble with the task at least
+as late as first
+grade~\cite{FusRicBriar1982,miller1987counting}. These studies suggest
+that children do not learn to count to a hundred by memorizing the
+sequence of numbers between on and a hundred. As might be expected of
+a system that will eventually be able to count to arbitrarily large
+numbers, learning to count to a hundred involves discovering the
+pattern that successive number words follow. 
+
+We will model this process of pattern discovery as probabilistic
+inference over RCGs and show that some of the interesting phenomena
+described in these studies is captured by this model. 
+
+\subsection{Latent Predicate Networks}
+Latent Predicate Networks (LPNs) are probabilistic context senstive
+
+\citet{FusRicBriar1982} describe several qualitative phenomena of
+count sequence aquisiton and elaboration based on several surveys in
+which they asked American children between three and five years of age
+to count (either while counting a collection of objects or just
+reciting the count world sequence). The learning trajectories and
+error patterns they describe have inspired computation modeling
+efforts using connectionist networks; for example,
+\citet{ma1989modeling} use an associative network to model the errors
+that young children typically make when learning the count sequence up
+to twenty or thirty. But, to our knowledge, such models have not been
+used to study how children acquire the count sequence beyond twenty.
+
+Figure~\ref{fig:fusonTable} shows the highest number correctly reached
+by children in various age ranges, as presented in
+\citet{FusRicBriar1982}.
+
+\begin{figure}[t]
+\includegraphics[width=\linewidth]{figures/fuson_table}
+\caption{Data from~\citet{FusRicBriar1982} on children's ability to recite the count list. The x-axis shows the highest number correctly reached when children were asked to count starting at ``one.'' Boxes correspond to the standard deviation, central bands to the means, and the whiskers to the range. 
+\label{fig:fuson_count_data}}. 
+\end{figure}
+
+\begin{figure*}[t]
+\includegraphics[width=\linewidth]{figures/counting_grid2}
+\caption{Our model's performance correctly reciting the count sequence
+  having learned with various quantities and types of evidence. Each
+  line corresponds to a single run of the learning algorithm given the
+  distribution of data shown in the histogram directly above it. For
+  each number along the x-axis the y-axis corresponds to the
+  probability that model correctly counts from one up to that
+  number. The y-axes on the data histograms are shown on a logarthmic
+  scale. The simulations in a) were trained on the least data and
+  those in b-d) on increasing quantities of data. Those in e) and f)
+  were trained on the same data as those in c) and d), respectively,
+  with the modification that extra emphasis was placed on the decade
+  transitions. \label{fig:counting_grid}}
+\end{figure*}
+
+We being by discussing Latent Predicate Networks
+(LPNs), our modeling framework.
 
 \subsection{Latent Predicate Networks}
 
-%% Eyal
+%% 
 
-\subsection{Method}
+\subsection{}
 
 %% Eyal
 
