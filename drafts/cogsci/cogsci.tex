@@ -332,10 +332,16 @@ numbers, learning to count to a hundred involves discovering the
 pattern that successive number words follow. 
 
 We will model this process of pattern discovery as probabilistic
-inference over RCGs and show that some of the interesting phenomena
+inference over RCGs and show that the generalization phenomena
 described in these studies is captured by this model. 
 
 \subsection{Latent Predicate Networks}
+
+\begin{figure}[t]
+\includegraphics[width=0.9\linewidth]{figures/lpn}
+\caption{A schematic LPN for number knowledge learning.}
+\end{figure}
+
 Latent Predicate Networks (LPNs) are PRCGs with a large number of
 rules connected in a layered fashion. An schematic of the LPN used in
 the following learning experiments and simulations is show in
@@ -348,18 +354,39 @@ that are not directly observable in the data and whose meanings are
 determined through learning. For example, the Decade predicate, which
 is true for ``ten'', ``twenty'', etc., might correspond to one of the
 latent predicates after learning on successor pair data. The lowest
-level of latent predicates is defined in terms of a collection of
-\emph{lexicon} predicates, each of which is a unary gpredicate that is
+layer of latent predicates is defined in terms of a collection of
+\emph{lexicon} predicates, each of which is a unary predicate that is
 true of the atomic units (the words) of the system.
 
-\begin{figure}[t]
-\includegraphics[width=0.9\linewidth]{figures/lpn}
-\end{figure}
+Given a collection of observations, our model assumes that there is a
+setting of the parameters of the LPN that gave rise to those
+observations. The model's goal is to infer what those parameters
+are. This inference is conducting via hierarchical Bayesian
+inference~(CITATION): the model assumes that there is a prior
+distribution over the parameters of the LPN and that given those
+parameters the LPN induces a distribution over observations. Using
+Bayes' rule, the model infers a distribution over parameter values
+that balances the fit of the observations against the prior. We use a
+sparsity inducing prior distribution which formalizes the intuition
+that latent predicates and rules should be shared in order to learn
+grammars that can generalize beyond the observed data.
 
+Exact inference in probabilistic grammars is computationally
+intractable. We use the common ``variational'' approximation
+implemented using Variational Bayes EM algorithm~(CITATION), which has
+been widely used in approximate inference of probabilsitic context
+free grammars~(CITATION). All the computations in this paper were done
+using the PRISM probabilistic logic programming language~(CITATION).
 
+All the simulations below were run on an LPN with three layers of five
+predicates each. The learning algorithm was run for a single
+iteration, a concentration parameter $alpha=0.1$, and a convergence
+criterion of $\epsilon=1e-4$.
+
+\subsection{Modeling the acquisition and elaboration of the count sequence}
 
 \citet{FusRicBriar1982} describe qualitative phenomena of
-count sequence aquisiton and elaboration based on several surveys in
+count sequence acquisition and elaboration based on several surveys in
 which they asked American children between three and five years of age
 to count (either while counting a collection of objects or just
 reciting the count world sequence). The learning trajectories and
@@ -370,18 +397,49 @@ that young children typically make when learning the count sequence up
 to twenty or thirty. But, to our knowledge, such models have not been
 used to study how children acquire the count sequence beyond twenty.
 
-Figure~\ref{fig:fusonTable} shows the highest number correctly reached
-by children in various age ranges~\cite{FusRicBriar1982}. 
 
-\begin{figure}[t]
-\includegraphics[width=\linewidth]{figures/fuson_table}
+\begin{figure*}[t]
+\includegraphics[width=0.9\linewidth]{figures/modelboxplot}
 \caption{Data from~\citet{FusRicBriar1982} on children's ability to
   recite the count list. The x-axis shows the highest number correctly
   reached when children were asked to count starting at ``one.'' Boxes
   correspond to the standard deviation, central bands to the means,
   and the whiskers to the range.
 \label{fig:fuson_count_data}}. 
-\end{figure}
+\end{figure*}
+
+Figure~\ref{fig:fusonTable} shows the highest number correctly reached
+by children in various age ranges~\cite{FusRicBriar1982}. The authors
+hypothesize that the large jump in range between the young three year
+olds and the older four year olds and year olds is due to the older
+children partially solving what they term ``the decade problem.'' --
+i.e. recognizing both that there is a repetitive pattern of that
+repeats across decades beyond twenty and learning that there is a
+particular sequence to the decade words.
+
+We asked whether our model goes through a similar transition. To
+simulate learning, we generated data sets consisting of successor
+pairs between one and a hundred, with the number of examples of each
+pair $Succ(i+1, i)$ following the power law $N=\frac{K}{i}$, where $K$
+determines the overall size of the data set. To simulate the different
+overall quantities of data that children are exposed to by different
+ages, we generated data sets for $K=10, 100, 1000, 10000$. The
+resulting histograms of data are shown in
+Figure~\ref{fig:counting_grid}a-d (the y-axes are logarithmically
+scaled). 
+
+For each of these data sets we ran our learning algorithm ten times,
+generating ten simulated children at each stage (the simualations
+differ due to different random parameter intiailizations). In
+Figure~\ref{fig:counting_grid}a-d, each line corresponds to one of the
+simulated children and shows the probability that the child will
+correctly count to the corresponding number on the x-axis. To generate
+this counting simulations, we asked the model for the distribution of
+successors for a given number and used a simple soft max decision procedure
+to determine the probability of the simulated child reporting each
+word. Specifically, the p(
+
+ 
 
 
 \subsection{Results}
@@ -407,6 +465,14 @@ by children in various age ranges~\cite{FusRicBriar1982}.
 \begin{figure}
 \includegraphics[width=0.9\linewidth]{figures/after29}
 \caption{The distribution over successors of ``twenty nine'' given learning on the evidence corresponding to Figure~\ref{fig:counting_grid}b. \label{fig:after29}}
+\end{figure}
+
+
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{figures/inventedWords}
+\caption{The distribution over invented words for simulated child
+  learner at stage
+  3 (see Figure~\ref{fig:counting_grid}c). \label{fig:inventedWords}}
 \end{figure}
 
 
