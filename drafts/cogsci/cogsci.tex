@@ -441,7 +441,7 @@ using the PRISM probabilistic logic programming language~(CITATION).
 All the simulations below were run on an LPN with three layers of five
 predicates each. The learning algorithm was run for a single
 iteration, a concentration parameter $alpha=0.1$, and a convergence
-criterion of $\episilon=1e-4$.
+criterion of $\epsilon=1e-4$.
 
 \subsection{Modeling the acquisition and elaboration of the count sequence}
 
@@ -458,15 +458,15 @@ to twenty or thirty. But, to our knowledge, such models have not been
 used to study how children acquire the count sequence beyond twenty.
 
 
-\begin{figure}[h]
-\includegraphics[width=\linewidth]{figures/fuson_table}
+\begin{figure*}[t]
+\includegraphics[width=0.9\linewidth]{figures/modelboxplot}
 \caption{Data from~\citet{FusRicBriar1982} on children's ability to
   recite the count list. The x-axis shows the highest number correctly
   reached when children were asked to count starting at ``one.'' Boxes
   correspond to the standard deviation, central bands to the means,
   and the whiskers to the range.
 \label{fig:fuson_count_data}}. 
-\end{figure}
+\end{figure*}
 
 Figure~\ref{fig:fusonTable} shows the highest number correctly reached
 by children in various age ranges~\cite{FusRicBriar1982}. The authors
@@ -488,12 +488,18 @@ resulting histograms of data are shown in
 Figure~\ref{fig:counting_grid}a-d (the y-axes are logarithmically
 scaled). 
 
-For each of these data sets we ran out learning algorithm ten times,
+For each of these data sets we ran our learning algorithm ten times,
 generating ten simulated children at each stage (the simualations
 differ due to different random parameter intiailizations). In
 Figure~\ref{fig:counting_grid}a-d, each line corresponds to one of the
 simulated children and shows the probability that the child will
-correctly count to the corresponding number on the x-axis. 
+correctly count to the corresponding number on the x-axis. To generate
+this counting simulations, we asked the model for the distribution of
+successors for a given number and used a simple soft max decision procedure
+to determine the probability of the simulated child reporting each
+word. Specifically, the p(
+
+ 
 
 
 \subsection{Results}
