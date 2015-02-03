@@ -180,11 +180,11 @@ decade_goal(Goal) :-
     N is I * 10, 
     number(N, W), 
     N1 is N + 10, 
-    number(N1, W1), 
+    number(N1, W), 
     Goal = prove('Succ10_2'-[W1, W]).
 
 predecade_goal(Goal) :- 
-    between(3, 10, I), 
+    between(3, 9, I), 
     N is (I * 10) -1, 
     N1 is N + 1, 
     number(N, W), 

@@ -176,19 +176,17 @@ prune(switch(Sw, _, Vs, As)) :-
 %% prune all values for SwitchIn whose values 'a' values are really small 
 prune(switch(Sw, _, Vs, As), AThresh) :- 
     atom(Sw), 
-    write('AThresh: '), write(AThresh), nl,
+     %% write('AThresh: '), write(AThresh), nl,
     zip(Vs, As, VAs), 
     Filtered @= [V\A: V\A in VAs, A > AThresh],
     ValuesOut @= [V:V\_ in Filtered],
     AlphaOut @= [A:_\A in Filtered],
-    write('Values Out: '), write(ValuesOut), nl, 
-    write('Alpha Out: '), write(AlphaOut), nl, 
+     %% write('Values Out: '), write(ValuesOut), nl, 
+     %% write('Alpha Out: '), write(AlphaOut), nl, 
     ((AlphaOut = []) -> 
-        (write(Sw), write('no values'), nl, 
-         lpn_set_sw_va(Sw, [noValue], [1]));
-        (lpn_set_sw_va(Sw, ValuesOut, AlphaOut),
-         write(Sw), nl, 
-         write('Set Values to '), write(ValuesOut), nl)).
+         lpn_set_sw_va(Sw, [noValue], [1]);
+         lpn_set_sw_va(Sw, ValuesOut, AlphaOut)).
+
 
 pruneAll(AThresh) :- 
     findall(Info, get_sw_a(Info), Switches),  
@@ -205,8 +203,8 @@ prune_rules(switch(Sw, _, Vs, Ps), Thresh) :-
     Filtered @= [V\P: V\P in VPs, P > Thresh],
     ValuesOut @= [V:V\_ in Filtered],
     ProbsOut @= [P:_\P in Filtered],
-    write('Values Out: '), write(ValuesOut), nl, 
-    write('Probs Out: '), write(ProbsOut), nl, 
+     %% write('Values Out: '), write(ValuesOut), nl, 
+     %% write('Probs Out: '), write(ProbsOut), nl, 
     ((ProbsOut = []) -> 
         (write(Sw), write('no values'), nl, 
          lpn_set_sw_vp(Sw, [noValue], [1]));

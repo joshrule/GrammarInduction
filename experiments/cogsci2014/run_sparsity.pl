@@ -6,7 +6,7 @@
 :- ['sparsity.pl'].
 
 %% ---------------------------
-%% Execution Options
+% Execution Options
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 :- set_option(language, english). 
 :- set_option(default_sw_a, 0.1).
@@ -22,7 +22,7 @@
 :- set_option(n_viterbi_bound, 5).
 :- set_option(soft_max_exponent, 2). 
 :- set_option(lo, 1). 
-:- set_option(hi, 99).
+:- set_option(hi, 200).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -64,10 +64,10 @@ run_trials(TrialIds) :-
 
 %% get successor distribution for a single number
 run_successor_distribution(I, Distr) :- 
-    get_option(n_viterbi_bound, N), 
-    get_option(max_word_length, MaxWordLength),
-    number(I, Word), 
-    successor_distribution(Word, Distr, N, MaxWordLength). 
+     get_option(n_viterbi_bound, N), 
+     get_option(max_word_length, MaxWordLength),
+     number(I, Word), 
+     successor_distribution(Word, Distr, N, MaxWordLength). 
     
 run_transition_probability(I, Distr, P) :- 
     I1 is I + 1, 
@@ -86,8 +86,8 @@ run_trial_analysis(TrialId) :-
     restore_switch_alphas(TrialId), 
     pruneAll(Thresh),
     foreach(I in Lo..Hi, [Distr, Trans],
-            (run_successor_distribution(I, Distr), 
-             run_transition_probability(I, Distr, Trans),
+            (?? run_successor_distribution(I, Distr), 
+             ?? run_transition_probability(I, Distr, Trans),
              save_analysis_data(TrialId, I\Distr, I\Trans))
             ).
 
@@ -109,10 +109,33 @@ run_simulation :-
 
 init_simulation :- 
     set_prism_flags_from_options,
-    retractall(saved_switch_alphas(_, _)), 
+    retractall(saved_switch_alpha(_, _)), 
     retractall(saved_analysis_data(_, _, _)).
 
+%%% Sample counting sequence
+sample_count_seq(TrialId, StartAt, SeqLength, NSeq, Sequences) :- 
+    set_prism_flag(clean_table, on), 
+    load_sys_psm, 
+    set_prism_flags_from_options, 
+    restore_switch_alphas(TrialId), 
+    get_option(prune_threshold, Thresh), 
+    pruneAll(Thresh), 
+    get_option(max_word_length, MaxWordLength), 
+    get_option(n_viterbi_bound, N), 
+    get_option(soft_max_exponent, Exp),
+    sample_count_list(StartAt, 1, _,  N,  MaxWordLength, 1), 
+    set_prism_flag(clean_table, off), !, 
+    findall(Sequence, (
+             between(1, NSeq, X), 
+             sample_count_list(StartAt, SeqLength, 
+                               Sequence, N, MaxWordLength, Exp)), 
+            Sequences).
+                
+    
+    
+    
 
+%% ------------------------------------------------
 save_switch_alphas(TrialId) :- 
     findall(Sw\Alpha, get_sw_a(Sw, _, _, Alpha), SwitchInfo), 
     asserta(saved_switch_alpha(TrialId, SwitchInfo)), 
@@ -122,6 +145,14 @@ save_switch_alphas(TrialId) :-
             saved_switch_alpha(T, Info), 
             Clauses), 
     save_clauses(Path, Clauses, []). 
+
+load_switch_alphas(Path) :- 
+    [Path], 
+    (
+    switch_alpha(T, Info), 
+    asserta(saved_switch_alpha(T, Info)), 
+    fail; 
+    true).
 
 save_analysis_data(TrialId, Distr, TransitionProbs) :-   
     asserta(saved_analysis_data(TrialId, Distr, TransitionProbs)), 
@@ -150,7 +181,7 @@ get_dataset(DataSetId, Data) :-
 
 set_dataset(DataSetId, Data) :- 
     retractall(dataset(DataSetId, _)), 
-    ?? assert(dataset(DataSetId, Data)).
+     assert(dataset(DataSetId, Data)).
 
 
 
@@ -159,8 +190,9 @@ set_dataset(DataSetId, Data) :-
 %% ---------------------------
 %% Option Defaults
 get_option_default(max_word_length, V) :- 
+    get_option(language, Language), 
     (get_option(language, english), !, V = 2);
-    (get_option(langauge, chinese), !, V = 3).
+    (get_option(language, chinese), !, V = 3).
 
 
 %% ---------------------------

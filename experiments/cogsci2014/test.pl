@@ -104,7 +104,19 @@ get_successor_distribution_sub(X, Distr, N, Length) :-
 sample_successor(X, Y, N, MaxWordLength, Exp) :- 
     get_successor_distribution(X, Distr, N, MaxWordLength, Exp), 
     assoc_to_lists(Distr, Ys, Ps), 
-    random_select(Ys, Ps, Y).
+    (Ys = [] -> fail; 
+               random_select(Ys, Ps, Y)).
+
+sample_count_list(_, 0, [], _, _, _) :- !.
+sample_count_list(StartingAt, L, Out, N, MaxWordLength, Exp) :- 
+    sample_successor(StartingAt, Next, N, MaxWordLength, Exp), !, 
+    L1 is L - 1,
+    sample_count_list(Next, L1, Out1, N, MaxWordLength, Exp), 
+    Out = [StartingAt| Out1].
+sample_count_list(_, _, [], _, _, _).
+    
+    
+    
 
 succ_probability(W,Succ, P, N, MaxWordLength, Exp) :-
     get_successor_distribution(W, Distr, N, MaxWordLength, Exp), 
@@ -131,7 +143,6 @@ successor_distributions(Ws, N, MaxWordLength) :-
     write_assoc(Distr), 
     fail.
 successor_distributions(_, _, _) :- true.
-
 
 
 count_list_transition_probabilities(Lo, Hi, Ps, N, MaxWordLength, Exp) :- 
@@ -215,4 +226,14 @@ sum_over_keys(AssocIn, AssocOut) :-
              sum_over_key(AssocIn, K, S)), 
             AssocOut).
              
+
+write_number_word([W]) :- !,
+    format("~w", W).
+write_number_word([]).
+write_number_word([W|Ws]) :- 
+    format("~w ", W), 
+    write_number_word(Ws).
+                      
+
+              
                 
