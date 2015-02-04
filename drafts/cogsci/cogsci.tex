@@ -7,7 +7,8 @@
 \usepackage{apacite}
 \usepackage{graphicx}
 \usepackage{floatrow}
-\usepackage{amsmath,amssymb}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
 \usepackage[longnamesfirst]{natbib}
 \usepackage{url}
 
@@ -199,8 +200,8 @@ context-sensitive while remaining relatively tractable
 
 \begin{figure*}[t]
   \begin{centering}
-    \includegraphics[width=0.9\linewidth]{grammarOfNumber/gon.pdf}
-    \caption{A Range Concatenation Grammar whose strings are valid number words.}
+    \includegraphics[width=\linewidth]{grammarOfNumber/gon.pdf}
+    \caption{An RCG whose strings are valid number words. Numbered rules correspond to Figure \ref{fig:parse}.}
     \label{fig:gon}
   \end{centering}
 \end{figure*}
@@ -208,7 +209,7 @@ context-sensitive while remaining relatively tractable
 \begin{figure*}[t]
   \begin{centering}
     \includegraphics[width=\linewidth]{parseTrees/parse.pdf}
-    \caption{RCG parses for \emph{Number} (Blue), \emph{Successor} (Red), and \emph{More} (Green).}
+    \caption{RCG parses for \emph{Number} (Blue) and \emph{Successor} (Red).}
     \label{fig:parse}
   \end{centering}
 \end{figure*}
@@ -268,53 +269,46 @@ Our grammar similarly uses a prefix-base-suffix system, and Figure
 \emph{six-hundred thirty-seven} is a valid number word. As in our
 example above, we must show that \emph{six} is a valid prefix for
 \emph{hundred} and \emph{thirty-seven} is a valid suffix or remainder:
-
-\vspace{.5em}
-\emph{Number(six hundred thirty seven) $\leftarrow$}
-
-\emph{Prefix(six, hundred), Suffix(hundred, thirty seven).}
-\vspace{.5em}
+\begin{align}
+  & \text{Number}(\text{six hundred thirty seven}) \leftarrow\\
+  & \text{Prefix}(\text{six}, \text{hundred}), \text{Suffix}(\text{hundred}, \text{thirty seven}).\notag
+\end{align}
 
 \noindent\emph{Six} is a valid prefix for \emph{hundred} because it is
 a number word representing a \emph{ones} number, a number between one
 and nine. It would be incorrect for \emph{hundred} to have no prefix,
 and it would also be incorrect to use a prefix larger than
 \emph{nine}:
-
-\vspace{.5em}
-\emph{ Prefix(six, hundred) $\leftarrow$ Ones(six).}
-\vspace{.5em}
+\begin{align}
+  & \text{Prefix}(\text{six}, \text{hundred}) \leftarrow \text{Ones}(\text{six}).
+\end{align}
 
 \noindent\emph{Thirty-seven} is a valid suffix because it is a valid
 number for a previous base, in this case $\varnothing$, the ones base:
-
-\vspace{.5em}
-\emph{Suffix(hundred, thirty seven) $\leftarrow$}
-
-\emph{LargerBase(hundred, $\varnothing$), Number(thirty seven).}
-\vspace{.5em}
+\begin{align}
+  & \text{Suffix}(\text{hundred}, \text{thirty seven}) \leftarrow\\
+  & \text{LargerBase}(\text{hundred}, \varnothing), \text{Number}(\text{thirty seven}).\notag
+\end{align}
 
 \noindent and
-
-\vspace{.5em}
-\emph{LargerBase(hundred, $\varnothing$) $\leftarrow$ PrevBase(hundred, $\varnothing$).}
-\vspace{.5em}
+\begin{align}
+  \text{LargerBase}(\text{hundred}, \varnothing) \leftarrow \text{PrevBase}(\text{hundred}, \varnothing).
+\end{align}
 
 \noindent\emph{Thirty-seven} is one of these numbers because it is
 merely the concatenation of a \emph{decade} word and a \emph{ones}
 word:
-
-\vspace{.5em}
-\emph{ Number(thirty seven) $\leftarrow$}
-
-\emph{Prefix(thirty seven, $\varnothing$), Suffix($\varnothing$,$\varnothing$)}.}
-\vspace{.5em}        
+\begin{align}
+  & \text{Number}(\text{thirty seven}) \leftarrow\\
+  & \text{Prefix}(\text{thirty seven}, \varnothing), \text{Suffix}(\varnothing,\varnothing).\notag
+\end{align}
 
 \noindent and
+\begin{align}
+  & \text{Prefix}(\text{thirty seven}, \varnothing) \leftarrow\\
+  & \text{Decades}(\text{thirty}), \text{Ones}(\text{seven}).\notag
+\end{align}
 
-\vspace{.5em}
-\emph{ Prefix(thirty seven, $\varnothing$) $\leftarrow$ Decades(thirty), Ones(seven). }
-\vspace{.5em}
 
 \noindent The compositional use of simple predicates thus helps us
 analyze the structure of a complex phrase like \emph{six hundred

@@ -28,7 +28,12 @@
     $\cdots$\\
     $\text{Decades}(\text{ninety}).$
   };
-  \node [anchor=north west] (desc) at (5,0) {
+  \node [anchor=east] (l1) at (3.6,-.29) {(1,5)};
+  \node [anchor=east] (l2) at (13.1,-1.13) {(2)};
+  \node [anchor=east] (l3) at (13.1,-4.09) {(3)};
+  \node [anchor=east] (l4) at (3.6,-1.97) {(4)};
+  \node [anchor=east] (l6) at (13.1,-2.39) {(6)};
+  \node [anchor=north west] (desc) at (3.5,0) {
     $\text{Number}(P B S) \leftarrow \text{Prefix}(P,B), \text{Suffix}(B,S).$\\
     $\text{Number}(P B) \leftarrow \text{Prefix}(P,B).$\\
     \\
@@ -39,7 +44,7 @@
     $\text{PrevBase}(\text{thousand}, \text{hundred}).$\\
     $\text{PrevBase}(\text{hundred}, \varnothing).$
   };
-  \node [anchor=north west] (desc) at (16,0) {
+  \node [anchor=north west] (desc) at (13,0) {
     $\text{Prefix}(P,B) \leftarrow \text{LargerBase}(B,\text{hundred}), \text{NormalPrefix}(P).$\\
     $\text{Prefix}(P,\text{hundred}) \leftarrow \text{Ones}(P).$\\
     $\text{Prefix}(X, \varnothing) \leftarrow \text{Ones}(X).$\\
