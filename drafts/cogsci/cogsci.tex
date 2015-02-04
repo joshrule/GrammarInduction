@@ -421,12 +421,13 @@ We asked whether our model goes through a similar transition. To
 simulate learning, we generated data sets consisting of successor
 pairs between one and a hundred, with the number of examples of each
 pair $Succ(i+1, i)$ following the power law $N=\frac{K}{i}$, where $K$
-determines the overall size of the data set. To simulate the different
-overall quantities of data that children are exposed to by different
-ages, we generated data sets for $K=10, 100, 1000, 10000$. The
-resulting histograms of data are shown in
+determines the overall size of the data set. The explore the effect of
+evidence quantity, and to simulate the effect that overall quanitity
+of evidence has on a child's acquisition of the count list, we
+generated data sets for $K=10, 100, 1000, 10000$, which we denote
+stages 1-4. The resulting histograms of data are shown in
 Figure~\ref{fig:counting_grid}a-d (the y-axes are logarithmically
-scaled). 
+scaled).
 
 For each of these data sets we ran our learning algorithm ten times,
 generating ten simulated children at each stage (the simualations
@@ -435,9 +436,53 @@ Figure~\ref{fig:counting_grid}a-d, each line corresponds to one of the
 simulated children and shows the probability that the child will
 correctly count to the corresponding number on the x-axis. To generate
 this counting simulations, we asked the model for the distribution of
-successors for a given number and used a simple soft max decision procedure
-to determine the probability of the simulated child reporting each
-word. Specifically, the p(
+successors for a given number and used a simple soft max decision
+procedure to determine the probability of the simulated child
+reporting each word. Specifically, if the $p_a(x)$ is the probability
+that $x$ is the successor of $x$, then the probability that $x$ is
+chosen as the successor of $a$ is proportional to $p_z(x)^2$.
+
+The simulations in stage 1 are variable in their performances, with
+some of simulated children unable to count further than the first few
+words and couple having a relatively high chance of reaching
+``twenty.'' While there is a sharp cutoff at ``twenty'' for this
+group, which is exceeded by the majority of simulated children in
+stage 2. The sharp drops in performance at the ``twenty,'' ``thirty''
+and ``forty'' in stage 2, and the horizontal lines between them,
+indicate that here the simulation has learned the within-decade
+structure of the count list, but is uncertain about the transitions
+between decades. In stages 3 and 4, nearly all simulated children
+master the numbers up to ``thirty'' but are unable to transition from
+``thirty-nine'' to ``forty.'' And only in stage 4, do we see any
+children making the transition from this state of knowledge to one in
+which it can reach ``ninety nine.'' 
+
+The simulations in these first four stages suggest that with even with
+large increase in the quantity of data, the 1-to-29 counter mode is
+likely to trap our model. We hypothesized that this is due to a lack
+of evidence at the decade transitions. Mastering the decade
+transitions requires both learning that there is a special rule for
+the successor of numbers ending in ``nine,'' and learning the order of
+decade words. This adds considerable complexity to the grammar, and
+our simulations favor a more parsimonious explanation of the heavily
+weighted smaller numbers. Children, however, do not learn to count to
+a hundred by unsupervised exposure to naturally occuring count words;
+they are actively taught to do so. Although we know of no study of the
+pedagogical language used in teaching children to count, increased
+emphasis on difficult regions of the count list is a likely
+consequence.
+
+To confirm that increased emphasis on decade transitions can
+facilitate the transition to mastering counting up to a hundred, we
+created two additional data sets, stages 3' and 4', that contain the
+same data as stages 3 and 4, respectively, but have an additional
+$\%10$ of the data evenly distributed across the decade
+transitions (twenty nine, thirty; thirty nine, forty; ...,
+eighty-nine, ninety). The simulated data for these stages is shown in
+Figure~\ref{fig:count_grid2}e-f}.
+
+
+
 
 \begin{figure*}[t]
 \includegraphics[width=\linewidth]{figures/counting_grid2}
