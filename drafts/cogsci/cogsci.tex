@@ -495,7 +495,7 @@ To confirm that increased emphasis on decade transitions can
 facilitate the transition to mastering counting up to a hundred, we
 created two additional data sets, stages 3' and 4', that contain the
 same data as stages 3 and 4, respectively, but have an additional
-$\%10$ of the data evenly distributed across the decade transitions
+$10\%$ of the data evenly distributed across the decade transitions
 (twenty nine, thirty; thirty nine, forty; ..., eighty-nine,
 ninety). The simulated data for these stages is shown in
 Figure~\ref{fig:counting_grid2}e-f}. In both simulations, we observe a
@@ -520,8 +520,82 @@ six in stage 4').
 
 
 Figure~\ref{fig:fuson_model_comparison}b summarizes the simulation
-data for stages 1,2,3' and 4' for comparison against the
-\citet{FusRicBriar1982} data in Figure~\ref{fig:fuson_model_comparison}a.
+data for stages 1,2,$3^*$ and $4^*$ for comparison against the
+\citeauthor{FusRicBriar1982} data in
+Figure~\ref{fig:fuson_model_comparison}a. For each one of these stages
+and for each simulated child, we computed the probability that highest
+number counted starting at ``one'' would be $x$ for $x=1..98$. We
+averaged these values across simulated children within a stage and
+used the resulting densities to calculate the means, standard
+deviations, and 10th and 90th percentiles for each stage (these
+percentiles are used to be comparable with the empirical ranges described
+by \citeauthor{FusRicBriar1982}
+
+In addition to examining the learning trajectorires of our model, we
+also looked at the kinds of mistakes that it makes. One interesting
+pattern of mistakes that young English speaking children make when
+reciting the count sequence is that they invent number
+words. \citeauthor{FusRicBriar1982} report that children invent such
+words both by combining morphological components of number words (such
+as ``fiveteen'' and ``eleventy'') and by combining decade words with
+incorrect digit-place words (such as ``twenty-eleven'' and
+``twenty-twenty''). In particular, they report that appending
+\emph{teen} words to decade words is most common, creating sequences
+like ``twenty-ten'', ``twenty-eleven'', ``twenty-twelve'', etc.
+Figure~\ref{fig:fusonInventedWords} we show the most common invented
+words that \citeauthor{FusRicBriar1982} report and the mean number of
+times each child in their study use the word. 
+
+Since we do not model in this work the way in which the number word
+morphemes are composed to construct number words, our model cannot
+account for the morphologically based word errors (e.g. ``fifteen''
+and ``eleventy''). We asked, however, to what extent it can model the
+other invented word errors that \citeauthor{FusRicBriar1982} report;
+those invented words that they report were used by more than one child
+are shown in Figure~\ref{fig:inventedWordComparison}a). To compare
+these data to our model, we asked a stage 2 simulated child for the top
+twenty non-number words that could appear as successor to a number
+world or non-number word (because this was a computationally expensive
+procedure, we restrict our analysis here to a single randomly selectd
+simulation). The marginal probabilities of those non-number words is
+shown in Figure~\ref{fig:inventedWordComparison}.
+
+There is evidence that there are cross-linguistic differences in the
+kinds of errors that children make when learning the count
+sequence. In their study comparing American and Chinese four to six
+year olds, \citeauthor{miller1987counting} found that while $20\%$ of
+the errors that English speaking children made involved invented
+numbers, they encountered no instances of Chinese-speaking children
+doing so. 
+
+Our model agrees with this finding: we simulated a stage 2 child using
+the Chinese number system and found only a single invented word ``one
+ten one'' with marginal probability $3e-4$, making it much less
+probable than the twenty most probably invented words for the English
+speaking simulated child.  Our model suggests that the reason the use
+of invented words is more common in English than Chinese is because
+there are more categories of words in the English system than the
+Chinese one. In Chinese, the decade word are the same as the unit
+words (e.g. ``five-ten-one'' for 51) and the teen words (11-19) are
+uniform in contruction (e.g. ``ten-five'' for 15). Thus, there are
+both fewer words to learn about in the Chinese system, and grammar
+rules in the Chinese system that combine words of different categories
+are far less likely to produce invalid words than those in the English
+system.
+
+Our model also agrees with \citeauthor{miller1987counting}'s finding
+that, contrary to their hypothesis, Chinese children do not count by
+decades (e.g. ``twenty nine'', ``thirty'', ``forty,'' ...) more often
+than their English speaking counterparts. In our simulations we do not
+find any suggestion of this kind of error for the Chinese-speaking
+simulated children, and this is likely because our grammar rules do
+not act independently on different parts of the number words. The
+rules explicitly act on both categories of substrings and their
+relative positions, so the use of a rule that increments the units
+position of a number word does not increase the probability of a rule
+that increments the decades position, even if the those words happen
+to be the same.
+
 
 % \begin{figure}[t]
 % \includegraphics[width=0.9\linewidth]{figures/after29}
@@ -531,22 +605,18 @@ data for stages 1,2,3' and 4' for comparison against the
 
 
 \begin{figure}[t]
-\includegraphics[width=0.9\linewidth]{figures/inventedWords}
-\caption{The distribution over invented words for a simulated child
-  learner at stage
-  3 (see Figure~\ref{fig:counting_grid}c). \label{fig:inventedWords}}
+\includegraphics[width=0.9\linewidth]{figures/inventedWordComparison}
+\caption{Top ten invented number words in children's counting. a) Data
+  from \citeauthor{FusRicBriar1982} b) A simulated child at stage~2.
+   \label{fig:inventedWordComparison}}
 \end{figure}
 
 
 \section{Discussion}
 
-%% first half: Eyal
 
-%% Either way, as these models claim to cover more well-trodden
-%% territory, they should also become correspondingly more quantitative
-%% in their predictions. The ability to generalize as well as the
-%% qualitative similarities we show here between LPNs and children's
-%% overgeneralizations are intriguing, but 
+
+
 
 %% second half of discussion
 
