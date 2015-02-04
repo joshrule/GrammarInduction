@@ -6,12 +6,13 @@
 \usepackage{pslatex}
 \usepackage{apacite}
 \usepackage{graphicx}
+\usepackage{floatrow}
 \usepackage{amsmath,amssymb}
 \usepackage[longnamesfirst]{natbib}
 \usepackage{url}
 
 \title{Representing and Learning a Large System of Number Concepts \\ with Latent Predicate Networks}
- 
+
 \author{
   {\large \bf Joshua Rule (rule@mit.edu)}\\
   {\large \bf Eyal Dechter (edechter@mit.edu)}\\
@@ -426,7 +427,7 @@ used to study how children acquire the count sequence beyond twenty.
   reached when children were asked to count starting at ``one.'' Boxes
   correspond to the standard deviation, central bands to the means,
   and the whiskers to the range.
-\label{fig:fuson_count_data}}. 
+\label{fig:fuson_count_data}}
 \end{figure*}
 
 Figure~\ref{fig:fusonTable} shows the highest number correctly reached
@@ -502,25 +503,24 @@ transitions (twenty nine, thirty; thirty nine, forty; ...,
 eighty-nine, ninety). The simulated data for these stages is shown in
 Figure~\ref{fig:count_grid2}e-f}.
 
-
-
-
 \begin{figure*}[t]
-\includegraphics[width=\linewidth]{figures/counting_grid2}
-\caption{Our model's performance correctly reciting the count sequence
-  having learned with various quantities and types of evidence. Each
-  line corresponds to a single run of the learning algorithm given the
-  distribution of data shown in the histogram directly above it. For
-  each number along the x-axis the y-axis corresponds to the
-  probability that model correctly counts from one up to that
-  number. The y-axes on the data histograms are shown on a logarthmic
-  scale. The simulations in a) were trained on the least data and
-  those in b-d) on increasing quantities of data. Those in e) and f)
-  were trained on the same data as those in c) and d), respectively,
-  with the modification that extra emphasis was placed on the decade
-  transitions. \label{fig:counting_grid}}
+  \includegraphics[width=\linewidth]{figures/counting_grid2}
+  \floatbox[{\capbeside\thisfloatsetup{capbesideposition={left,center},capbesidewidth=.75\textwidth}}]{figure}[\FBwidth]
+           {\caption{Our model's performance correctly reciting the
+               count sequence. Each line corresponds to a single run
+               of the learning algorithm given the distribution of
+               data in the histogram directly above it. For each
+               number, $N$, along the x-axis, the y-axis corresponds
+               to the probability that the model correctly counts from
+               one up to $N$. The y-axes on the data histograms are
+               shown on a logarthmic scale. The simulations in a) were
+               trained on the least data and those in b-d) on
+               increasing quantities of data. e) \& f) were trained on
+               the same data as c) \& d), respectively, with extra
+               emphasis placed on the decade
+               transitions.}\label{fig:counting_grid}}
+           {\includegraphics[width=.2\textwidth]{figures/legend.pdf}}
 \end{figure*}
-
 
 \begin{figure}[t]
 \includegraphics[width=0.9\linewidth]{figures/after29}
@@ -550,7 +550,7 @@ Figure~\ref{fig:count_grid2}e-f}.
 
 While the conceptual grammar contains a great deal of knowledge about
 \emph{fifty-two}, there is no single object that in any sense
-completely defines \emph{fifty-two}. The definition is in fact heavily
+completely defines \emph{fifty-two}. The definition is heavily
 influenced by the entire collection of relationships which hold for
 the token \emph{fifty-two}. In a similar vein, the names given to
 specific predicates in our grammar are arbitrary. \emph{Number} could
@@ -560,8 +560,7 @@ with other predicates and thus the argument strings for which it
 holds. The same is true for individual words like \emph{hundred} or
 \emph{nine}: while any name could be used, what cannot be changed is
 the way each predicate combines or contrasts a given token with other
-tokens in the grammar. {\bf THEORY-THEORY and how all concepts are
-  defined as relations between entities?}
+tokens in the grammar.
 
 As mentioned in the introduction, the LPN model of concept learning
 shares many similarities with the Rational Rules family of models
