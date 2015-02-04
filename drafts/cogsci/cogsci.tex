@@ -12,12 +12,12 @@
 \usepackage[longnamesfirst]{natbib}
 \usepackage{url}
 
-\title{Representing and Learning a Large System of Number Concepts \\ with Latent Predicate Networks}
+\title{Representing and Learning a Large System of Concepts\\with Latent Predicate Networks}
 
 \author{
-  {\large \bf Joshua Rule (rule@mit.edu)}\\
-  {\large \bf Eyal Dechter (edechter@mit.edu)}\\
-  {\large \bf Joshua B. Tenenbaum (jbt@mit.edu)}\\
+  {\large \bf Joshua Rule, Eyal Dechter, Joshua B. Tenenbaum: $\{$rule, edechter, jbt$\}$ @ mit.edu}\\
+%  {\large \bf Eyal Dechter (edechter@mit.edu)}\\
+%  {\large \bf Joshua B. Tenenbaum (jbt@mit.edu)}\\
   MIT, 46-4053, 77 Massachussetts Avenue, Cambridge, MA 02139 USA}
 
 \begin{document}
@@ -215,13 +215,12 @@ context-sensitive while remaining relatively tractable
 
 Having motivated our decision to model concepts as sets of grammatical
 relations, we now present the RCG-based grammar of number knowledge we
-have constructed. In this initial exploration, we have captured five
-key number relations: \emph{Number}, capturing the distinction between
-valid and invalid number words; \emph{Succ} and \emph{Pred}, the
-successor and predecessor relations, respectively; and \emph{More} and
-\emph{Less}, the more-than and less-than relations, respectively.
-While seemingly basic tasks, children require years to master them
-\citep{FusRicBriar1982}.
+have constructed, capturing five key number relations: \emph{Number},
+capturing the distinction between valid and invalid number words;
+\emph{Succ} and \emph{Pred}, the successor and predecessor relations,
+respectively; and \emph{More} and \emph{Less}, the more-than and
+less-than relations, respectively. While seemingly basic tasks,
+children require years to master them \citep{FusRicBriar1982}.
 
 Capturing these relations with an RCG is not only possible but can
 be done quite compactly. Our grammar for the concepts of
@@ -268,9 +267,10 @@ Our grammar similarly uses a prefix-base-suffix system, and Figure
 \emph{six-hundred thirty-seven} is a valid number word. As in our
 example above, we must show that \emph{six} is a valid prefix for
 \emph{hundred} and \emph{thirty-seven} is a valid suffix or remainder:
+\setlength{\jot}{0}
 \begin{align}
-  & \text{Number}(\text{six hundred thirty seven}) \leftarrow\\
-  & \text{Prefix}(\text{six}, \text{hundred}), \text{Suffix}(\text{hundred}, \text{thirty seven}).\notag
+  & \textit{Number}(\textit{six hundred thirty seven}) \leftarrow\\
+  & \textit{Prefix}(\textit{six}, \textit{hundred}), \textit{Suffix}(\textit{hundred}, \textit{thirty seven}).\notag
 \end{align}
 
 \noindent\emph{Six} is a valid prefix for \emph{hundred} because it is
@@ -279,33 +279,33 @@ and nine. It would be incorrect for \emph{hundred} to have no prefix,
 and it would also be incorrect to use a prefix larger than
 \emph{nine}:
 \begin{align}
-  & \text{Prefix}(\text{six}, \text{hundred}) \leftarrow \text{Ones}(\text{six}).
+  & \textit{Prefix}(\textit{six}, \textit{hundred}) \leftarrow \textit{Ones}(\textit{six}).
 \end{align}
 
 \noindent\emph{Thirty-seven} is a valid suffix because it is a valid
 number for a previous base, in this case $\varnothing$, the ones base:
 \begin{align}
-  & \text{Suffix}(\text{hundred}, \text{thirty seven}) \leftarrow\\
-  & \text{LargerBase}(\text{hundred}, \varnothing), \text{Number}(\text{thirty seven}).\notag
+  & \textit{Suffix}(\textit{hundred}, \textit{thirty seven}) \leftarrow\\
+  & \textit{LargerBase}(\textit{hundred}, \varnothing), \textit{Number}(\textit{thirty seven}).\notag
 \end{align}
 
 \noindent and
 \begin{align}
-  \text{LargerBase}(\text{hundred}, \varnothing) \leftarrow \text{PrevBase}(\text{hundred}, \varnothing).
+  \textit{LargerBase}(\textit{hundred}, \varnothing) \leftarrow \textit{PrevBase}(\textit{hundred}, \varnothing).
 \end{align}
 
 \noindent\emph{Thirty-seven} is one of these numbers because it is
 merely the concatenation of a \emph{decade} word and a \emph{ones}
 word:
 \begin{align}
-  & \text{Number}(\text{thirty seven}) \leftarrow\\
-  & \text{Prefix}(\text{thirty seven}, \varnothing), \text{Suffix}(\varnothing,\varnothing).\notag
+  & \textit{Number}(\textit{thirty seven}) \leftarrow\\
+  & \textit{Prefix}(\textit{thirty seven}, \varnothing), \textit{Suffix}(\varnothing,\varnothing).\notag
 \end{align}
 
 \noindent and
 \begin{align}
-  & \text{Prefix}(\text{thirty seven}, \varnothing) \leftarrow\\
-  & \text{Decades}(\text{thirty}), \text{Ones}(\text{seven}).\notag
+  & \textit{Prefix}(\textit{thirty seven}, \varnothing) \leftarrow\\
+  & \textit{Decades}(\textit{thirty}), \textit{Ones}(\textit{seven}).\notag
 \end{align}
 
 
@@ -415,17 +415,15 @@ used to study how children acquire the count sequence beyond twenty.
 
 \begin{figure*}[t]
 \includegraphics[width=0.9\linewidth]{figures/modelboxplot}
-\caption{A comparison of our model with data on children's ablity to
-  recite the count list. a) Data from ~\citet{FusRicBriar1982}. The
-  x-axis shows the highest number correctly reached when children were
-  asked to count starting at ``one.'' Boxes correspond to the standard
-  deviation, central bands to the means, and the whiskers to the
-  range. b) Our model's performance at four stages of increasing data
-  quantity using ten simulated children for each stage (see
-  Figure~\ref{fig:counting_grid} for a more detailed view of the
-  data). Here, the whiskers correspond to the tenth and ninetieth
-  percentiles.
-\label{fig:fuson_model_comparison}}. 
+\caption{Our model compared with children's counting data a) Data
+  from~\citet{FusRicBriar1982}. The x-axis shows the highest number
+  correctly reached when children were asked to count starting at
+  ``one.'' Boxes correspond to the standard deviation, central bands
+  to the means, and whiskers to the range. b) Model performance,
+  averaged over ten runs at four stages of increasing data quantity
+  (see Figure~\ref{fig:counting_grid} for more detail). Whiskers
+  correspond to the tenth and ninetieth percentiles.
+\label{fig:fuson_model_comparison}}
 \end{figure*}
 
 Figure~\ref{fig:fuson_model_comparison}a shows the highest number
@@ -509,17 +507,15 @@ six in stage 4').
 
 \begin{figure*}[t]
   \includegraphics[width=\linewidth]{figures/counting_grid2}
-  \floatbox[{\capbeside\thisfloatsetup{capbesideposition={left,top},capbesidewidth=.75\textwidth}}]{figure}[\FBwidth]
-  {\caption{Our model's performance correctly reciting the count
-      sequence. Each line corresponds to a single run of the learning
-      algorithm given the distribution of data in the histogram
-      directly above it. For each number, $N$, along the x-axis, the
-      y-axis corresponds to the probability that the model correctly
-      counts from one up to $N$. The y-axes on the data histograms are
-      shown on a logarthmic scale. The stages refer to the
-      distributions of data available to the model (see text for details).
-    }\label{fig:counting_grid}}
-           {\includegraphics[width=.2\textwidth]{figures/legend.pdf}}
+  \caption{Our model's performance correctly reciting the count
+    sequence. Each line corresponds to a single run of the learning
+    algorithm given the distribution of data in the histogram directly
+    above it. For each number, $N$, along the x-axis, the y-axis
+    corresponds to the probability that the model correctly counts
+    from one up to $N$. The y-axes on the data histograms are shown on
+    a logarthmic scale. The stages refer to the distributions of data
+    available to the model (see text for details).
+  }\label{fig:counting_grid}
 \end{figure*}
 
 
