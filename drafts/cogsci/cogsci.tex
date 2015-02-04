@@ -27,31 +27,30 @@
   present the challenge of learning as one of choosing individual
   concepts from a profusion of options ({\bf EYAL: MARGOLIS
     CITATIONS}). They tend to underemphasize the fact that we learn
-  many concepts as part of large, potentially infinite, systems rather
-  than as isolated individuals. In such cases, the challenge of
-  learning is not so much in providing stand-alone definitions, but in
-  describing the richly structured relations between concepts. The
-  natural numbers are one of the first such abstract conceptual
-  systems children acquire, serving as a serious case study in concept
-  representation and acquisition
-  \citep{fuson1988children,galGel2005,Car2009}. Even so, models of
-  natural number learning focused on single-concept acquisition have
-  largely ignored two challenges related to natural number's status as
-  a \emph{system} of concepts: 1) there is an unbounded set of exact
-  number concepts, each with distinct semantic content; and 2) people
-  can reason flexibly about any of these concepts (even fictitious
-  ones like \emph{eighteen-gazillion and thirty-one}). To succeed,
-  models must instead learn the structure of the entire infinite set
-  of number concepts, focusing on how relationships between numbers
-  support reference and generalization. Here, we suggest that the
-  latent predicate network (LPN) -- a probabilistic context-sensitive
-  grammar formalism -- facilitates tractable learning and reasoning
-  for exact number concepts \citep{DecRulTen2015}. We show how the
-  number words and their relations to one another can be expressed in
-  this formalism and discuss a Bayesian learning algorithm for LPNs,
-  suggesting a computational mechanism by which children might learn
-  abstract numerical knowledge from linguistic utterances about
-  numbers.
+  many concepts as part of large systems rather than as isolated
+  individuals. In such cases, the challenge of learning is not so much
+  in providing stand-alone definitions, but in describing the richly
+  structured relations between concepts. The natural numbers are one
+  of the first such abstract conceptual systems children acquire,
+  serving as a serious case study in concept representation and
+  acquisition \citep{fuson1988children,galGel2005,Car2009}. Even so,
+  models of natural number learning focused on single-concept
+  acquisition have largely ignored two challenges related to natural
+  number's status as a \emph{system} of concepts: 1) there is an
+  unbounded set of exact number concepts, each with distinct semantic
+  content; and 2) people can reason flexibly about any of these
+  concepts (even fictitious ones like \emph{eighteen-gazillion and
+    thirty-one}). To succeed, models must instead learn the structure
+  of the entire infinite set of number concepts, focusing on how
+  relationships between numbers support reference and generalization.
+  Here, we suggest that the latent predicate network (LPN) -- a
+  probabilistic context-sensitive grammar formalism -- facilitates
+  tractable learning and reasoning for natural number concepts
+  \citep{DecRulTen2015}. We show how the number words and their
+  relations to one another can be expressed in this formalism and
+  discuss a Bayesian learning algorithm for LPNs, suggesting a
+  computational mechanism by which children might learn abstract
+  numerical knowledge from linguistic utterances about numbers.
 
   \textbf{Keywords:}
   child development; concept learning; number; generalization;
@@ -74,9 +73,10 @@ concepts without learning the structure of the entire system.
 A great deal of empirical work has focused on the first part of this
 problem, on how initial number concepts are grounded in counting
 routines and the core systems of approximate magnitude and parallel
-object individuation \citep{dehaene2011number,feigenson2004core}.
-Recent studies have also proposed computational mechanisms to explain
-several key behavioral changes during early number learning
+object individuation
+\citep{Car2009,dehaene2011number,feigenson2004core}. Recent studies
+have also proposed computational mechanisms to explain several key
+behavioral changes during early number learning
 \citep{PianGoodTen2012}.
 
 Far fewer studies have focused on the second half of the problem, on
@@ -85,8 +85,8 @@ to each other. While the problems of how children link physical sets
 with the counting routine and develop their first number concepts are
 crucial, we direct our attention elsewhere in this paper. We focus on
 this second problem, on how children might acquire knowledge of an
-infinite number system, particularly for numbers which they are
-unlikely to ever see counted out explicitly.
+infinite number system, particularly for numbers they are unlikely to
+ever see counted out explicitly.
 
 Our approach shares much in common with the recent family of Rational
 Rules models
@@ -97,8 +97,8 @@ fundamental to understanding concept learning.
 
 The major difference is in how our models represent concepts. In
 Rational Rules models, each concept is a single stand-alone rule
-supported by its own evidence. These rules are generated by a single
-static grammar defining the hypothesis space. Learning is determining
+supported by its own evidence. These rules are generated from a static
+grammar which defines the hypothesis space. Learning is determining
 which concepts (which rules) are supported by the evidence. In the
 model we present here, concepts are not stand-alone rules, but
 networks of possible relations generated according to a grammar. The
@@ -117,27 +117,25 @@ learning framework for PRCGs \citep{DecRulTen2015}..
 \section{Representing Number Knowledge}
 
 To show how a system of concepts like number might be learned, we must
-first understand what that system of concepts is and how it might be
-represented. This task is non-trivial for number learning, and several
-models have been proposed. For example,
-\citeauthor{hurford1975linguistic} (\citeyear{hurford1975linguistic})
-describes a single system differentiating primitive and compound
-number concepts, while \citeauthor{siegler1982development}
+first understand what that system is and how it might be represented.
+This task is non-trivial for number, and several models have been
+proposed. For example, \citeauthor{hurford1975linguistic}
+(\citeyear{hurford1975linguistic}) describes a single system
+differentiating primitive and compound number concepts, while
+\citeauthor{siegler1982development}
 (\citeyear{siegler1982development}) propose a system with several
 stages of development, each containing minimal internal structure.
 
-To motivate our stance on the issue, we begin by describing several
-challenges a representation of number must overcome. We then formally
-introduce PRCGs as an answer to these challenges. Finally, we show how
-this formalism, initially developed to explain syntactic structures in
-natural language, can explain the conceptual structure of number
-words.
+To motivate our stance on the issue, we first describe several
+challenges a representation of number must overcome. Finally, we show
+how PRCGs, initially developed to explain context-sensitive syntactic
+structures in natural language, can explain the conceptual structure
+of number words.
 
 \subsection{The Challenges of Number}
 
 Relative to many other semantic fields children encounter ({\it e.g.}
-the parts of the body, types of furniture in a house), the natural
-numbers are highly distinctive.
+color, kinship), natural numbers are highly distinctive.
 
 First, where many semantic fields refer to relatively concrete classes
 of objects or object parts, the natural numbers refer primarily to an
@@ -145,25 +143,25 @@ abstract property (cardinality) of an abstract entity (sets). Semantic
 fields like colors also tend to be relatively limited in scope,
 applying primarily, in this case, to the colors of objects. By
 contrast, natural number is incredibly broad, applying not only to
-concrete objects, but also to things like other sets ({\it e.g.} three
-pairs of socks), sounds, events, time periods, people and other
-agents, and numbers themselves ({\it e.g.} three threes makes nine).
+concrete objects, but also to things like sets ({\it e.g.} three pairs
+of socks), sounds, events, time periods, people and other agents, and
+numbers themselves ({\it e.g.} three threes makes nine).
 
 Second, there are infinitely many number concepts. Even given a
-practically infinite number of perceivable colors ({\it e.g.}
-green of sunlight through leaves), the collection of named colors is fairly small ({\it
-  e.g.} red, orange, yellow, green, ...). By contrast, not only are there
-a practically infinite number of natural number instances ({\it e.g.}
-three leaves), but a truly infinite number of natural number concepts
-({\it e.g.} three). Moreover, being infinite, the amount of explicitly
-counted, perceptually-grounded evidence children receive relative to
-the size of the semantic field is incredibly sparse (When did you last
-see exactly 253 objects?) In order to accommodate such an expressive
-conceptual system in a finite mind, the concepts themselves must be
-constructed as needed in a systematic and compositional manner.
-Being infinite and broadly applicable also suggests that numbers can
-be learned, represented, and understood without direct perceptual
-grounding.
+practically infinite number of perceivable colors ({\it e.g.} green of
+sunlight through leaves), the collection of named colors is fairly
+small ({\it e.g.} red, orange, yellow, green, ...). By contrast, not
+only are there a practically infinite number of natural number
+instances ({\it e.g.} three leaves), but a truly infinite number of
+natural number concepts ({\it e.g.} three). Being infinite, the amount
+of explicitly counted, perceptually-grounded evidence children receive
+relative to the size of the semantic field is incredibly sparse (When
+did you last see exactly 253 objects?). In order to accommodate such
+an expressive conceptual system in a finite mind, the concepts
+themselves must be constructed as needed in a systematic and
+compositional manner. Being infinite and broadly applicable also
+suggests that numbers can be learned, represented, and understood
+without direct perceptual grounding.
 
 Third, numbers do not uniquely describe cardinalities for children but
 initially have distinct meanings related to sequencing, counting,
@@ -172,17 +170,16 @@ telephone numbers) (Fuson, Richards, Briar, 1982). Even when numbers
 do describe cardinalities, interest may not be so much in the
 cardinality itself as in some more complex property, such as whether
 it is more or less than another cardinality or how it operates
-arithmetically via addition, subtraction, multiplication, or division.
-Indeed, children may eventually learn about negative and rational
-numbers, algebra, geometry, and myriad other mathematical disciplines.
-This hugely diverse range of meanings makes it impossible to fully
-describe the meaning of \emph{three} without referencing \emph{two},
+in arithmetic. Children may eventually learn about negative
+and rational numbers, algebra, geometry, and myriad other mathematical
+disciplines. This hugely diverse range of meanings makes it impossible
+to fully describe \emph{three} without referencing \emph{two},
 \emph{four}, and eventually all other numbers. The concept of
 \emph{two} (or any other number) is not rightly understood as a single
 object, but must also include the web of relationships in which
 \emph{two} participates.
 
-How can we hope to represent a systems of concepts which are: 1)
+How can we hope to represent systems of concepts which are: 1)
 learnable without direct perceptual grounding; 2) compositionally
 constructed; and 3) relationally defined? Happily, these properties
 are similar to those linguists face in studying natural language
@@ -193,9 +190,9 @@ define their constituents based on their relationships to each other
 rather than as discrete objects. While most work in natural language
 syntax uses context-free grammars, our focus on capturing structural
 relationships between concepts demands that we use a context-sensitive
-grammar. Specifically, we use Probabilistic Range Concatenation
-Grammars, an expressive, context-sensitive formalism in which
-reasoning remains relatively tractable \citep{boullier2005range}.
+grammar. We specifically use PRCGs because they are expressive and
+context-sensitive while remaining relatively tractable
+\citep{boullier2005range}.
 
 \subsection{A Grammar for Number Concepts}
 
@@ -239,17 +236,15 @@ online.\footnote{http://github.com/joshrule/GrammarInduction}
 Two notes of clarification: First, our grammar never produces nor
 parses full English sentences. This is a grammar for the structure of
 concepts, not the structure of language. When attempting to parse
-something like \emph{Succ(ninety nine, one hundred)}, we assume some
-other system more directly involved in language preprocesses
-utterances into a partially predicated state, which is then checked
-against the knowledge encoded in our conceptual grammar. Second, this
-grammar has not been optimized for compactness or efficiency. A number
-of predicates could be compressed or even eliminated, for example, by
-implementing \emph{More} with a binary search tree or as the
-transitive closure of \emph{Successor}. Instead, we focused on
-providing a grammar that would be correct, easy to understand for the
-human reader, and fit a prefix-base-suffix understanding of number, as
-discussed below.
+something like \emph{Succ(ninety nine, one hundred)}, we assume
+another system more directly involved in language preprocesses
+utterances into predicates which are then checked against the
+knowledge encoded in our conceptual grammar. Second, this grammar has
+not been optimized for compactness or efficiency. Implementing
+\emph{More} with as the transitive closure of \emph{Successor}, for
+example, would eliminate several predicates. We focused on providing a
+grammar that would be correct, human-readable, and fit a
+prefix-base-suffix understanding of number, as discussed below.
 
 Intuitively, a number word like \emph{six-hundred thirty-seven} is
 valid because we have six units of one hundred each and thirty-seven
@@ -267,13 +262,11 @@ there is no explicit mention of the base \emph{one} in a valid number
 word - it is implied and marked by appending $\varnothing$, the empty
 string, instead of \emph{one}.
 
-Our grammar similarly uses a prefix-base-suffix system, and figure
+Our grammar similarly uses a prefix-base-suffix system, and Figure
 \ref{fig:parse} shows the concepts involved in deciding that
 \emph{six-hundred thirty-seven} is a valid number word. As in our
 example above, we must show that \emph{six} is a valid prefix for
-\emph{hundred} and \emph{thirty-seven} is a valid suffix or remainder.
-We must show that our use of the largest base is legal, as well as
-show recursively that the rest of the number is legal:
+\emph{hundred} and \emph{thirty-seven} is a valid suffix or remainder:
 
 \vspace{.5em}
 \emph{Number(six hundred thirty seven) $\leftarrow$}
@@ -322,7 +315,7 @@ word:
 \emph{ Prefix(thirty seven, $\varnothing$) $\leftarrow$ Decades(thirty), Ones(seven). }
 \vspace{.5em}
 
-\noindent Thus, the compositional use of simple predicates helps us
+\noindent The compositional use of simple predicates thus helps us
 analyze the structure of a complex phrase like \emph{six hundred
   thirty seven} and show that while it is a valid number word,
 \emph{hundred six seven thirty} is not. \emph{Successor} and
@@ -364,8 +357,10 @@ described in these studies is captured by this model.
 \subsection{Latent Predicate Networks}
 
 \begin{figure}[t]
-\includegraphics[width=0.9\linewidth]{figures/lpn}
-\caption{A schematic LPN for number knowledge learning.}
+  \begin{centering}
+    \includegraphics[width=0.9\linewidth]{figures/lpn}
+    \caption{A schematic LPN for number knowledge learning.}
+  \end{centering}
 \end{figure}
 
 Latent Predicate Networks (LPNs) are PRCGs with a large number of
@@ -509,19 +504,19 @@ word. Specifically, the p(
 %% second half of discussion
 
 While the conceptual grammar contains a great deal of knowledge about
-\emph{fifty-two}, there is no object that in any sense contains the
-entire meaning of \emph{fifty-two}. That meaning is defined by the
-collection of relationships which hold for the token \emph{fifty-two}.
-In a similar vein, the names given to specific predicates in our
-grammar are arbitrary. \emph{Number} could just as easily be called
-\emph{Yulmpa} or \emph{Snarg}. What is important is not a predicate's
-name, but the relations it enters into with other predicates and thus
-the argument strings for which it holds. The same is true for
-individual words like \emph{hundred} or \emph{nine}: while any name
-could be used, what cannot be changed is the way each predicate
-combines or contrasts a given token with other tokens in the grammar.
-{\bf THEORY-THEORY and how all concepts are defined as relations
-  between entities?}
+\emph{fifty-two}, there is no single object that in any sense
+completely defines \emph{fifty-two}. The definition is in fact heavily
+influenced by the entire collection of relationships which hold for
+the token \emph{fifty-two}. In a similar vein, the names given to
+specific predicates in our grammar are arbitrary. \emph{Number} could
+just as easily be called \emph{Yulmpa} or \emph{Snarg}. What is
+important is not a predicate's name, but the relations it enters into
+with other predicates and thus the argument strings for which it
+holds. The same is true for individual words like \emph{hundred} or
+\emph{nine}: while any name could be used, what cannot be changed is
+the way each predicate combines or contrasts a given token with other
+tokens in the grammar. {\bf THEORY-THEORY and how all concepts are
+  defined as relations between entities?}
 
 As mentioned in the introduction, the LPN model of concept learning
 shares many similarities with the Rational Rules family of models
@@ -569,15 +564,15 @@ a more complex framework is an open question. Certainly, the human
 mind is more powerful than an RCG and is at least Turing-complete.
 RCGs provide a tractable way, however, to explore a restricted
 subclass of problems. The strategies and solutions we discover here
-are also available in Turing-complete systems, and in fact implemented
-in one (PRISM Prolog) so our findings easily generalize to more
-expressive grammars.
+are also available in Turing-complete systems, and are in fact
+implemented in one (PRISM Prolog), so our findings easily generalize
+to more expressive grammars.
 
 More broadly, we see this paper as growing out of the hypothesis that
 much of human learning, including the explosion of knowledge that
 occurs during development, can be explained as induction in a formal
 language. This vision of the \emph{child-as-hacker} draws on and
-extends the notion of the \emph{child-as-scientist}; not only are
+extends the notion of the \emph{child-as-scientist} \citep{gopnik1996scientist}; not only are
 children forming theories about the world, but they are simultaneously
 developing the very conceptual language they use to formulate those
 theories.
