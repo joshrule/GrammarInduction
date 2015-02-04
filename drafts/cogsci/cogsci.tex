@@ -25,34 +25,33 @@
 \maketitle
 
 \begin{abstract}
-  Conventional models of exemplar or rule-based concept learning
-  present the challenge of learning as one of choosing individual
-  concepts from a profusion of options ({\bf EYAL: MARGOLIS
-    CITATIONS}). They tend to underemphasize the fact that we learn
-  many concepts as part of large systems rather than as isolated
-  individuals. In such cases, the challenge of learning is not so much
-  in providing stand-alone definitions, but in describing the richly
-  structured relations between concepts. The natural numbers are one
-  of the first such abstract conceptual systems children acquire,
-  serving as a serious case study in concept representation and
-  acquisition \citep{fuson1988children,galGel2005,Car2009}. Even so,
-  models of natural number learning focused on single-concept
-  acquisition have largely ignored two challenges related to natural
-  number's status as a \emph{system} of concepts: 1) there is an
-  unbounded set of exact number concepts, each with distinct semantic
-  content; and 2) people can reason flexibly about any of these
-  concepts (even fictitious ones like \emph{eighteen-gazillion and
-    thirty-one}). To succeed, models must instead learn the structure
-  of the entire infinite set of number concepts, focusing on how
-  relationships between numbers support reference and generalization.
-  Here, we suggest that the latent predicate network (LPN) -- a
-  probabilistic context-sensitive grammar formalism -- facilitates
-  tractable learning and reasoning for natural number concepts
-  \citep{DecRulTen2015}. We show how the number words and their
-  relations to one another can be expressed in this formalism and
-  discuss a Bayesian learning algorithm for LPNs, suggesting a
-  computational mechanism by which children might learn abstract
-  numerical knowledge from linguistic utterances about numbers.
+  Conventional models of exemplar or rule-based concept learning tend
+  to focus on the acquisition of one concept at a time. They tend to
+  underemphasize the fact that we learn many concepts as part of large
+  systems rather than as isolated individuals. In such cases, the
+  challenge of learning is not so much in providing stand-alone
+  definitions, but in describing the richly structured relations
+  between concepts. The natural numbers are one of the first such
+  abstract conceptual systems children acquire, serving as a serious
+  case study in concept representation and acquisition
+  \citep{fuson1988children,galGel2005,Car2009}. Even so, models of
+  natural number learning focused on single-concept acquisition have
+  largely ignored two challenges related to natural number's status as
+  a \emph{system} of concepts: 1) there is an unbounded set of exact
+  number concepts, each with distinct semantic content; and 2) people
+  can reason flexibly about any of these concepts (even fictitious
+  ones like \emph{eighteen-gazillion and thirty-one}). To succeed,
+  models must instead learn the structure of the entire infinite set
+  of number concepts, focusing on how relationships between numbers
+  support reference and generalization.  Here, we suggest that the
+  latent predicate network (LPN) -- a probabilistic context-sensitive
+  grammar formalism -- facilitates tractable learning and reasoning
+  for natural number concepts \citep{DecRulTen2015}. We show how the
+  number words and their relations to one another can be expressed in
+  this formalism and discuss a Bayesian learning algorithm for LPNs,
+  suggesting a computational mechanism by which children might learn
+  abstract numerical knowledge from linguistic utterances about
+  numbers.
 
   \textbf{Keywords:}
   child development; concept learning; number; generalization;
@@ -416,22 +415,28 @@ used to study how children acquire the count sequence beyond twenty.
 
 \begin{figure*}[t]
 \includegraphics[width=0.9\linewidth]{figures/modelboxplot}
-\caption{Data from~\citet{FusRicBriar1982} on children's ability to
-  recite the count list. The x-axis shows the highest number correctly
-  reached when children were asked to count starting at ``one.'' Boxes
-  correspond to the standard deviation, central bands to the means,
-  and the whiskers to the range.
-\label{fig:fuson_count_data}}
+\caption{A comparison of our model with data on children's ablity to
+  recite the count list. a) Data from ~\citet{FusRicBriar1982}. The
+  x-axis shows the highest number correctly reached when children were
+  asked to count starting at ``one.'' Boxes correspond to the standard
+  deviation, central bands to the means, and the whiskers to the
+  range. b) Our model's performance at four stages of increasing data
+  quantity using ten simulated children for each stage (see
+  Figure~\ref{fig:counting_grid} for a more detailed view of the
+  data). Here, the whiskers correspond to the tenth and ninetieth
+  percentiles.
+\label{fig:fuson_model_comparison}}. 
 \end{figure*}
 
-Figure~\ref{fig:fusonTable} shows the highest number correctly reached
-by children in various age ranges~\cite{FusRicBriar1982}. The authors
-hypothesize that the large jump in range between the young three year
-olds and the older four year olds and year olds is due to the older
-children partially solving what they term ``the decade problem.'' --
-i.e. recognizing both that there is a repetitive pattern of that
-repeats across decades beyond twenty and learning that there is a
-particular sequence to the decade words.
+Figure~\ref{fig:fuson_model_comparison}a shows the highest number
+correctly reached by children in various age
+ranges~\cite{FusRicBriar1982}. The authors hypothesize that the large
+jump in range between the young three year olds and the older four
+year olds and year olds is due to the older children partially solving
+what they term ``the decade problem.'' -- i.e. recognizing both that
+there is a repetitive pattern of that repeats across decades beyond
+twenty and learning that there is a particular sequence to the decade
+words.
 
 We asked whether our model goes through a similar transition. To
 simulate learning, we generated data sets consisting of successor
@@ -456,7 +461,7 @@ successors for a given number and used a simple soft max decision
 procedure to determine the probability of the simulated child
 reporting each word. Specifically, if the $p_a(x)$ is the probability
 that $x$ is the successor of $x$, then the probability that $x$ is
-chosen as the successor of $a$ is proportional to $p_z(x)^2$.
+chosen as the successor of $a$ is proportional to $p_a(x)^2$.
 
 The simulations in stage 1 are variable in their performances, with
 some of simulated children unable to count further than the first few
@@ -492,39 +497,46 @@ To confirm that increased emphasis on decade transitions can
 facilitate the transition to mastering counting up to a hundred, we
 created two additional data sets, stages 3' and 4', that contain the
 same data as stages 3 and 4, respectively, but have an additional
-$\%10$ of the data evenly distributed across the decade
-transitions (twenty nine, thirty; thirty nine, forty; ...,
-eighty-nine, ninety). The simulated data for these stages is shown in
-Figure~\ref{fig:count_grid2}e-f}.
+$\%10$ of the data evenly distributed across the decade transitions
+(twenty nine, thirty; thirty nine, forty; ..., eighty-nine,
+ninety). The simulated data for these stages is shown in
+Figure~\ref{fig:counting_grid2}e-f}. In both simulations, we observe a
+sharp increase in the number of simulated children how transition to
+counting to a hundred (from zero to four in stage 3' and from two to
+six in stage 4').
+
+
 
 \begin{figure*}[t]
   \includegraphics[width=\linewidth]{figures/counting_grid2}
-  \floatbox[{\capbeside\thisfloatsetup{capbesideposition={left,center},capbesidewidth=.75\textwidth}}]{figure}[\FBwidth]
-           {\caption{Our model's performance correctly reciting the
-               count sequence. Each line corresponds to a single run
-               of the learning algorithm given the distribution of
-               data in the histogram directly above it. For each
-               number, $N$, along the x-axis, the y-axis corresponds
-               to the probability that the model correctly counts from
-               one up to $N$. The y-axes on the data histograms are
-               shown on a logarthmic scale. The simulations in a) were
-               trained on the least data and those in b-d) on
-               increasing quantities of data. e) \& f) were trained on
-               the same data as c) \& d), respectively, with extra
-               emphasis placed on the decade
-               transitions.}\label{fig:counting_grid}}
+  \floatbox[{\capbeside\thisfloatsetup{capbesideposition={left,top},capbesidewidth=.75\textwidth}}]{figure}[\FBwidth]
+  {\caption{Our model's performance correctly reciting the count
+      sequence. Each line corresponds to a single run of the learning
+      algorithm given the distribution of data in the histogram
+      directly above it. For each number, $N$, along the x-axis, the
+      y-axis corresponds to the probability that the model correctly
+      counts from one up to $N$. The y-axes on the data histograms are
+      shown on a logarthmic scale. The stages refer to the
+      distributions of data available to the model (see text for details).
+    }\label{fig:counting_grid}}
            {\includegraphics[width=.2\textwidth]{figures/legend.pdf}}
 \end{figure*}
 
+
+Figure~\ref{fig:fuson_model_comparison}b summarizes the simulation
+data for stages 1,2,3' and 4' for comparison against the
+\citet{FusRicBriar1982} data in Figure~\ref{fig:fuson_model_comparison}a.
+
 \begin{figure}[t]
 \includegraphics[width=0.9\linewidth]{figures/after29}
-\caption{The distribution over successors of ``twenty nine'' given learning on the evidence corresponding to Figure~\ref{fig:counting_grid}b. \label{fig:after29}}
+\caption{The distribution over successors of ``twenty nine'' for
+  averaged over simulated children at stage 2.\label{fig:after29}}
 \end{figure}
 
 
 \begin{figure}[t]
 \includegraphics[width=0.9\linewidth]{figures/inventedWords}
-\caption{The distribution over invented words for simulated child
+\caption{The distribution over invented words for a simulated child
   learner at stage
   3 (see Figure~\ref{fig:counting_grid}c). \label{fig:inventedWords}}
 \end{figure}
