@@ -431,17 +431,18 @@ used to study how children acquire the count sequence beyond twenty.
   reached when children were asked to count starting at ``one.'' Boxes
   correspond to the standard deviation, central bands to the means,
   and the whiskers to the range.
-\label{fig:fuson_count_data}}. 
+\label{fig:fuson_model_comparison}}. 
 \end{figure*}
 
-Figure~\ref{fig:fusonTable} shows the highest number correctly reached
-by children in various age ranges~\cite{FusRicBriar1982}. The authors
-hypothesize that the large jump in range between the young three year
-olds and the older four year olds and year olds is due to the older
-children partially solving what they term ``the decade problem.'' --
-i.e. recognizing both that there is a repetitive pattern of that
-repeats across decades beyond twenty and learning that there is a
-particular sequence to the decade words.
+Figure~\ref{fig:fuson_model_comparison}a shows the highest number
+correctly reached by children in various age
+ranges~\cite{FusRicBriar1982}. The authors hypothesize that the large
+jump in range between the young three year olds and the older four
+year olds and year olds is due to the older children partially solving
+what they term ``the decade problem.'' -- i.e. recognizing both that
+there is a repetitive pattern of that repeats across decades beyond
+twenty and learning that there is a particular sequence to the decade
+words.
 
 We asked whether our model goes through a similar transition. To
 simulate learning, we generated data sets consisting of successor
@@ -466,7 +467,7 @@ successors for a given number and used a simple soft max decision
 procedure to determine the probability of the simulated child
 reporting each word. Specifically, if the $p_a(x)$ is the probability
 that $x$ is the successor of $x$, then the probability that $x$ is
-chosen as the successor of $a$ is proportional to $p_z(x)^2$.
+chosen as the successor of $a$ is proportional to $p_a(x)^2$.
 
 The simulations in stage 1 are variable in their performances, with
 some of simulated children unable to count further than the first few
@@ -502,11 +503,13 @@ To confirm that increased emphasis on decade transitions can
 facilitate the transition to mastering counting up to a hundred, we
 created two additional data sets, stages 3' and 4', that contain the
 same data as stages 3 and 4, respectively, but have an additional
-$\%10$ of the data evenly distributed across the decade
-transitions (twenty nine, thirty; thirty nine, forty; ...,
-eighty-nine, ninety). The simulated data for these stages is shown in
-Figure~\ref{fig:count_grid2}e-f}.
-
+$\%10$ of the data evenly distributed across the decade transitions
+(twenty nine, thirty; thirty nine, forty; ..., eighty-nine,
+ninety). The simulated data for these stages is shown in
+Figure~\ref{fig:counting_grid2}e-f}. In both simulations, we observe a
+sharp increase in the number of simulated children how transition to
+counting to a hundred (from zero to four in stage 3' and from two to
+six in stage 4').
 
 
 
@@ -525,6 +528,12 @@ Figure~\ref{fig:count_grid2}e-f}.
   with the modification that extra emphasis was placed on the decade
   transitions. \label{fig:counting_grid}}
 \end{figure*}
+
+Figure~\ref{fig:fuson_model_comparison}b summarizes the simulation
+data for stages 1,2,3' and 4' for comparison against the
+\citet{FusRicBriar1982} data in Figure~\ref{fig:fuson_model_comparison}a.
+
+
 
 
 \begin{figure}[t]
