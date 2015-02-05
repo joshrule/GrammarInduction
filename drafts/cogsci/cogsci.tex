@@ -4,13 +4,20 @@
 
 \usepackage{cogsci}
 \usepackage{pslatex}
-\usepackage{apacite}
+\usepackage[natbibapa]{apacite}
 \usepackage{graphicx}
 \usepackage{floatrow}
 \usepackage[fleqn]{amsmath}
 \usepackage{amssymb}
 \usepackage[longnamesfirst]{natbib}
 \usepackage{url}
+
+\renewcommand{\bibfont}{\small}
+\renewcommand\bibsection{%
+  \section*{\refname\markboth{\MakeUppercase{\refname}}{\MakeUppercase{\refname}}}%
+  \addcontentsline{toc}{section}{\refname}%
+}
+
 
 \title{Representing and Learning a Large System of Concepts\\with Latent Predicate Networks}
 
@@ -138,47 +145,40 @@ of number words.
 Relative to many other semantic fields children encounter ({\it e.g.}
 color, kinship), natural numbers are highly distinctive.
 
-First, where many semantic fields refer to relatively concrete classes
-of objects or object parts, the natural numbers refer primarily to an
-abstract property (cardinality) of an abstract entity (sets). Semantic
-fields like colors also tend to be relatively limited in scope,
-applying primarily, in this case, to the colors of objects. By
-contrast, natural number is incredibly broad, applying not only to
+
+First , there are infinitely many number concepts. While the
+collection of, say, colors anyone might be able to name is fairly
+small, there are an infinite number of readily-identified natural
+number concepts. Being infinite, the amount of explicitly counted,
+perceptually-grounded evidence children receive relative to the size
+of the semantic field is incredibly sparse (When did you last see
+exactly 253 objects?). In order to accommodate such an expressive
+conceptual system in a finite mind, the concepts themselves must be
+constructed as needed in a systematic and compositional manner.
+
+Second, where many semantic fields refer to relatively concrete
+classes of objects or object parts, the natural numbers refer
+primarily to an abstract property (cardinality) of an abstract entity
+(sets). Moreover, where many semantic fields are highly limited in
+scope, natural number is incredibly broad, applying not only to
 concrete objects, but also to things like sets ({\it e.g.} three pairs
 of socks), sounds, events, time periods, people and other agents, and
-numbers themselves ({\it e.g.} three threes makes nine).
+numbers themselves ({\it e.g.} three threes makes nine). Being
+infinite and broadly applicable suggests that numbers must be learned,
+represented, and understood without direct perceptual grounding.
 
-Second, there are infinitely many number concepts. Even given a
-practically infinite number of perceivable colors ({\it e.g.} green of
-sunlight through leaves), the collection of named colors is fairly
-small ({\it e.g.} red, orange, yellow, green, ...). By contrast, not
-only are there a practically infinite number of natural number
-instances ({\it e.g.} three leaves), but a truly infinite number of
-natural number concepts ({\it e.g.} three). Being infinite, the amount
-of explicitly counted, perceptually-grounded evidence children receive
-relative to the size of the semantic field is incredibly sparse (When
-did you last see exactly 253 objects?). In order to accommodate such
-an expressive conceptual system in a finite mind, the concepts
-themselves must be constructed as needed in a systematic and
-compositional manner. Being infinite and broadly applicable also
-suggests that numbers can be learned, represented, and understood
-without direct perceptual grounding.
-
-Third, numbers do not uniquely describe cardinalities for children but
-initially have distinct meanings related to sequencing, counting,
-measuring, ordinality, and several non-numerical meanings ({\it e.g.}
-telephone numbers) (Fuson, Richards, Briar, 1982). Even when numbers
-do describe cardinalities, interest may not be so much in the
-cardinality itself as in some more complex property, such as whether
-it is more or less than another cardinality or how it operates
-in arithmetic. Children may eventually learn about negative
-and rational numbers, algebra, geometry, and myriad other mathematical
-disciplines. This hugely diverse range of meanings makes it impossible
-to fully describe \emph{three} without referencing \emph{two},
-\emph{four}, and eventually all other numbers. The concept of
-\emph{two} (or any other number) is not rightly understood as a single
-object, but must also include the web of relationships in which
-\emph{two} participates.
+Third, numbers cannot be understood in isolation. Even when numbers
+are used to describe cardinalities- as opposed to ordinals or
+sequences -- interest may not be so much in the cardinality itself as
+in some more complex property, such as whether it is more or less than
+another cardinality or how it operates in arithmetic. Children may
+eventually learn about negative and rational numbers, algebra,
+geometry, and myriad other mathematical disciplines. This hugely
+diverse range of meanings makes it impossible to fully describe
+\emph{three} without referencing \emph{two}, \emph{four}, and
+eventually all other numbers. The concept of \emph{two} (or any other
+number) is not rightly understood as a single object, but must also
+include the web of relationships in which \emph{two} participates.
 
 How can we hope to represent systems of concepts which are: 1)
 learnable without direct perceptual grounding; 2) compositionally
@@ -188,12 +188,7 @@ syntax. Motivated by this similarity, we use a grammar to represent
 the system of natural number concepts. Grammars can be induced
 directly from a stream of utterances, are highly compositional, and
 define their constituents based on their relationships to each other
-rather than as discrete objects. While most work in natural language
-syntax uses context-free grammars, our focus on capturing structural
-relationships between concepts demands that we use a context-sensitive
-grammar. We specifically use PRCGs because they are expressive and
-context-sensitive while remaining relatively tractable
-\citep{boullier2005range}.
+rather than as discrete objects.
 
 \subsection{A Grammar for Number Concepts}
 
@@ -214,13 +209,18 @@ context-sensitive while remaining relatively tractable
 \end{figure*}
 
 Having motivated our decision to model concepts as sets of grammatical
-relations, we now present the RCG-based grammar of number knowledge we
-have constructed, capturing five key number relations: \emph{Number},
+relations, we now present a grammar of number knowledge we have
+constructed, capturing five key number relations: \emph{Number},
 capturing the distinction between valid and invalid number words;
 \emph{Succ} and \emph{Pred}, the successor and predecessor relations,
 respectively; and \emph{More} and \emph{Less}, the more-than and
 less-than relations, respectively. While seemingly basic tasks,
-children require years to master them \citep{FusRicBriar1982}.
+children require years to master them \citep{FusRicBriar1982}. While
+most work in natural language syntax uses context-free grammars, our
+focus on capturing structural relationships between concepts demands
+that we use a context-sensitive grammar. We specifically use PRCGs
+because they are expressive and context-sensitive while remaining
+relatively tractable \citep{boullier2005range}.
 
 Capturing these relations with an RCG is not only possible but can
 be done quite compactly. Our grammar for the concepts of
@@ -267,7 +267,7 @@ Our grammar similarly uses a prefix-base-suffix system, and Figure
 \emph{six-hundred thirty-seven} is a valid number word. As in our
 example above, we must show that \emph{six} is a valid prefix for
 \emph{hundred} and \emph{thirty-seven} is a valid suffix or remainder:
-\setlength{\jot}{0}
+\setlength{\jot}{0pt}
 \begin{align}
   & \textit{Number}(\textit{six hundred thirty seven}) \leftarrow\\
   & \textit{Prefix}(\textit{six}, \textit{hundred}), \textit{Suffix}(\textit{hundred}, \textit{thirty seven}).\notag
@@ -355,12 +355,12 @@ data.
 
 \subsection{Latent Predicate Networks}
 
-% \begin{figure}[t]
-%   \begin{centering}
-%     \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
-%     \caption{A schematic LPN for number knowledge learning.}
-%   \end{centering}
-% \end{figure}
+%% \begin{figure}[t]
+%%   \begin{centering}
+%%     \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
+%%     \caption{A schematic LPN for number knowledge learning.}
+%%   \end{centering}
+%% \end{figure}
 
 Latent Predicate Networks (LPNs) are PRCGs with a large number of
 rules connected in a layered fashion. There are three types of
@@ -434,19 +434,19 @@ used to study how children acquire the count sequence beyond twenty.
 Figure~\ref{fig:fuson_model_comparison}a shows the highest number
 correctly reached by children in various age
 ranges~\cite{FusRicBriar1982}. The authors hypothesize that the large
-jump in range between the young three year olds and the older four
-year olds and year olds is due to the older children partially solving
-what they term ``the decade problem.'' -- i.e. recognizing both that
-there is a repetitive pattern that repeats across decades beyond
-twenty and learning that there is a particular sequence to the decade
-words.
+jump in range between the young three-year-olds and the older
+four-year-olds and five-year-olds is due to the older children
+partially solving what they term ``the decade problem.'' -- i.e.
+recognizing both that there is a repetitive pattern of that repeats
+across decades beyond twenty and learning that there is a particular
+sequence to the decade words.
 
 We asked whether our model goes through a similar transition. To
 simulate learning, we generated data sets consisting of successor
 pairs between one and a hundred, with the number of examples $N$ of each
 pair $Succ(i+1, i)$ following the power law $N=\frac{K}{i}$, where $K$
 determines the overall size of the data set. The explore the effect of
-evidence quantity, and to simulate the effect that overall quanitity
+evidence quantity, and to simulate the effect that overall quantity
 of evidence has on a child's acquisition of the count list, we
 generated data sets for $K=10, 100, 1000, 10000$, which we denote
 stages 1-4. The resulting histograms of data are shown in
@@ -455,7 +455,7 @@ scaled).
 
 For each of these data sets we ran our learning algorithm ten times,
 generating ten simulated children at each stage (the simulations
-differ due to different random parameter intiailizations). In
+differ due to different random parameter initializations). In
 Figure~\ref{fig:counting_grid}a-d, each line corresponds to one of the
 simulated children and shows the probability that the child will
 correctly count to the corresponding number on the x-axis. To generate
@@ -488,7 +488,7 @@ the successor of numbers ending in ``nine,'' and learning the order of
 decade words. This adds considerable complexity to the grammar, and
 our simulations favor a more parsimonious explanation of the heavily
 weighted smaller numbers. Children, however, do not learn to count to
-a hundred by unsupervised exposure to naturally occuring count words;
+a hundred by unsupervised exposure to naturally occurring count words;
 they are actively taught to do so. Although we know of no study of the
 pedagogical language used in teaching children to count, some kindergarten teaching
 blogs\footnote{e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html}
@@ -512,12 +512,12 @@ six in stage 4').
 \begin{figure*}[t]
   \includegraphics[width=\linewidth]{figures/counting_grid2}
   \caption{Our model's performance correctly reciting the count
-    sequence. Each line corresponds to a single run of the learning
+    sequence. Each colored curve corresponds to a single run of the learning
     algorithm given the distribution of data in the histogram directly
     above it. For each number, $N$, along the x-axis, the y-axis
     corresponds to the probability that the model correctly counts
     from one up to $N$. The y-axes on the data histograms are shown on
-    a logarthmic scale. The stages refer to the distributions of data
+    a logarithmic scale. The stages refer to the distributions of data
     available to the model (see text for details).
   }\label{fig:counting_grid}
 \end{figure*}
@@ -559,17 +559,17 @@ are shown in Figure~\ref{fig:inventedWordComparison}a). To compare
 these data to our model, we asked a stage 2 simulated child for the
 top twenty non-number words that could appear as successor to a number
 world or non-number word (because this was a computationally expensive
-procedure, we restrict our analysis here to a single randomly selectd
+procedure, we restrict our analysis here to a single randomly selected
 simulation). The marginal probabilities of those non-number words is
 shown in Figure~\ref{fig:inventedWordComparison}.
 
 There is evidence that there are cross-linguistic differences in the
-kinds of errors that children make when learning the count
-sequence. In their study comparing American and Chinese four to six
-year olds, \citeauthor{miller1987counting} found that while $20\%$ of
-the errors that English speaking children made involved invented
-numbers, they encountered no instances of Chinese-speaking children
-doing so. 
+kinds of errors that children make when learning the count sequence.
+In their study comparing American and Chinese four to six-year-olds,
+\citeauthor{miller1987counting} found that while $20\%$ of the errors
+that English speaking children made involved invented numbers, they
+encountered no instances of Chinese-speaking children doing so.
+
 
 Our model agrees that Chinese children should use fewer invented
 words: we simulated a stage 2 child using the Chinese number system
@@ -619,64 +619,57 @@ the those words happen to be the same.
 
 In this work, we have shown how the infinite set of exact number
 concepts and the relations among them can be represented using
-probabilistic context sensitive grammars. We have also presented a
-model for how children might learn such a representation based on
-hierarchical Bayesian inference. Our simulations suggest that our model
-captures several interesting phenonema that arise as children learn
-the count sequence up to a hundred -- a process that is both difficult
-for many children and critical to obtaining adult-like numerical
-knowledge.
+probabilistic context-sensitive grammars. We have also given a model
+for how children might learn such representations based on
+hierarchical Bayesian inference. Our simulations suggest this model
+captures several behavioral phenomena children exhibit learning the count
+sequence -- a critical and difficult prerequisite to adult-like
+numerical knowledge.
 
-A interesting aspect of this process is that it seems to
-involve a sudden transition between being able to count
-only through the first few decades and being able to count all the way
-to a hundred. Our model explains this transition as an inductive leap:
-for small amounts of data, learning is slow and incremental -- adding
-a decade at a time -- because the cost of increasing the complexity of
-the conceptual knowledge is large compared to the gains in explantory
-power. At a certain point, however, enough evidence accumulates to
-warrant adopting a more complex and more general grammar, and this results
+An interesting aspect of this process is the seemingly sudden
+transition from counting only through the first few decades to
+counting all the way to a hundred. Our model explains this transition
+as an inductive leap: for small amounts of data, learning is slow and
+incremental -- adding a decade at a time -- because the increased
+complexity of the conceptual knowledge is large compared to the gains
+in explanatory power. Eventually, however, enough evidence accumulates
+to warrant a more complex and more general grammar, resulting
 in a kind of phase transition between states of knowledge.
 
-In many ways this phenomenon is analagous to the Cardinal Principle
+In many ways this phenomenon is analogous to the Cardinal Principle
 (CP) transition, in which younger children learning the relationship
 between small numbers and set sizes make slow and incremental progress
 when learning the meanings of the first three or four numbers but then
-expand their understanding all at once to the remaining numbers that
+suddenly expand their understanding to the remaining numbers that
 they know. The theory that this rapid transition is due to what Carey
-refers to as \emph{Quinian bootstrapping} has been formalized by
-Piantadosi et al. as probabilistic inference over a space of recursive
-programs defined by a grammar. As we do here, they explain the
-inductive leap of the CP transition as a result of the tension between
-program complexity and fit to the available data. Crucially, whereas
-Piantodosi et al. place a distribution over programs using a
-probabilistic context free grammar, our model here is learning a
-grammar itself, one that can accomodate many different concepts and
-relations and that can be seen as a probabilistic knowledge base, with
-its conceptual content represented declaratively.
+(\citeyear{Car2009}) refers to as \emph{Quinian bootstrapping} has
+been formalized by Piantadosi et al. (\citeyear{PianGoodTen2012}) as
+probabilistic inference over a space of recursive programs defined by
+a grammar. As we do here, they explain the inductive leap of the CP
+transition as a result of the tension between program complexity and
+fit to the available data. Crucially, whereas Piantodosi et al. place
+a distribution over programs using a probabilistic context-free
+grammar, our model here is learning a complete grammar, one that can
+accommodate many different concepts and relations and that can be seen
+as a probabilistic and declarative knowledge base.
 
 Another difference is that our simulations require a pedagogical
-emphasis on critical pieces of evidence -- the decade transitions --
-in order to master the count sequence robustly, and this suggests that
-pedagogy may play an important role in facilitating these kinds of
-inductive leaps. Focusing on concept acquisition phenomena in slightly
-older children allows us to explore the relationship between
-computational level considerations that drive inductive reasoning and
-the pedagogical factors that enable it in practice.
+emphasis on critical evidence -- the decade transitions -- to master
+the count sequence robustly, suggesting that pedagogy may play an
+important role in facilitating these kinds of inductive leaps.
+Focusing on concept acquisition in slightly older children allows us
+to explore the relationship between computational level considerations
+driving inductive reasoning and the pedagogical factors enabling it in
+practice.
 
-%  Concretely,
-% although , systematic analyses of
-% pedagogical techniques in this domain
-
-An important future step in this line of research will be to relate
-our model to those, like Piantadosi et al. for counting and Dehaene et
-al. for the approximate magnitude system, that attempt to explain how
-these abstract number knowledge comes to be grounded in the perceptual
-and procedural primitives through which children learn about the
-world. The model we have presented here does not attempt to explain
-how children come to understand that number words refer to
-cardinalities, though we certainly see this as a crucial part of
-understanding number.
+An important future step for this research will be to relate our model
+to those, like Piantadosi et al. (\citeyear{PianGoodTen2012}) for
+counting and Dehaene et al. for the approximate magnitude system, that
+attempt to explain how abstract number knowledge becomes grounded in
+the perceptual and procedural primitives through which children learn
+about the world. The model we presented here does not attempt to
+explain how children come to understand that number words refer to
+cardinalities, though this is crucial to understanding number.
 
 That said, we see no fundamental incompatibility between the model
 presented here and extensions to include approximate magnitude, object
@@ -698,23 +691,23 @@ one (PRISM Prolog), so our findings easily generalize to more
 expressive grammars.
 
 More broadly, we see this paper as growing out of the hypothesis that
-much of human learning, including the explosion of knowledge that
-occurs during development, can be undestood as inducing, from sparse
-and noisy data, a library of bits of conceptual knowledge, written in
-something like a programming language of thought. This vision of the
+much of human learning, including the explosion of knowledge during
+development, can be understood as inducing, from sparse and noisy data,
+a library of bits of conceptual knowledge, written in something like a
+programming language of thought. This vision of the
 \emph{child-as-hacker} draws on and extends the notion of the
 \emph{child-as-scientist} \citep{gopnik1996scientist}; not only are
 children forming theories about the world, but they are simultaneously
 developing the very conceptual language they use to formulate those
 theories.
 
-\section{Acknowledgments}
-
-The authors benefited significantly from conversations with Timothy
-O'Donnell and Leon Bergen. This material is based upon work supported
-by the Center for Minds, Brains and Machines (CBMM), funded by NSF STC
-award CCF-1231216, an NSF Graduate Research Fellowship, and the Eugene
-Stark Graduate Fellowship.
+%% \section{Acknowledgments}
+%% 
+%% The authors benefited significantly from conversations with Timothy
+%% O'Donnell and Leon Bergen. This material is based upon work supported
+%% by the Center for Minds, Brains and Machines (CBMM), funded by NSF STC
+%% award CCF-1231216, an NSF Graduate Research Fellowship, and the Eugene
+%% Stark Graduate Fellowship.
 
 
 \bibliographystyle{apacite}

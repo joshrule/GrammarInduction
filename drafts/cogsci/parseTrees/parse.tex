@@ -63,19 +63,19 @@
 %%       \draw [<-] (Su1)    to (On2);
 %%   \end{tikzpicture}};
 
-  \node[anchor=north,darkblue] (Number) at (-6.5,0) {
+  \node[anchor=north,darkblue] (Number) at (-7,0) {
   \begin{tikzpicture}
-    \node (N0) at (0,2.4) {Number(six hundred thirty seven)\\1};
-    \node (P1) at (-2.5,1.2) {Prefix(six, hundred)\\2};
-    \node (S1) at (3,1.2) {Suffix(hundred, thirty seven)\\3};
-    \node (O2) at (-2.5,0) {Ones(six).\\};
-    \node (LB2) at (1.25,0) {LargerBase(hundred, $\varnothing$).\\4};
-    \node (N2) at (5.75,0) {Number(thirty seven)\\5};
-    \node (P3) at (7.5,-1.2) {Suffix($\varnothing$, $\varnothing$).};
-    \node (S3) at (4.5,-1.2) {Prefix(thirty seven, $\varnothing$)\\6};
-    \node (D3) at (3.,-2.4) {Decades(thirty).};
-    \node (O3) at (6.,-2.4) {Ones(seven).};
-    \node (PB3) at (0,-1.2) {PrevBase(hundred, $\varnothing$).};
+    \node (N0) at (0,1.6) {(1) Number(six hundred thirty seven)};
+    \node (P1) at (-2.5,.8) {(2) Prefix(six, hundred)};
+    \node (S1) at (3,.8) {(3) Suffix(hundred, thirty seven)};
+    \node (O2) at (-2.5,0) {Ones(six).};
+    \node (LB2) at (1.25,0) {(4) LargerBase(hundred, $\varnothing$).};
+    \node (N2) at (5.75,0) {(5) Number(thirty seven)};
+    \node (P3) at (8,-.8) {Suffix($\varnothing$, $\varnothing$).};
+    \node (S3) at (4.5,-.8) {(6) Prefix(thirty seven, $\varnothing$)};
+    \node (D3) at (3.,-1.6) {Decades(thirty).};
+    \node (O3) at (6.,-1.6) {Ones(seven).};
+    \node (PB3) at (0,-.8) {PrevBase(hundred, $\varnothing$).};
     
     \draw [<-] (N0) to (P1);
     \draw [<-] (N0) to (S1);
@@ -95,11 +95,11 @@
     \begin{tikzpicture}
       \node (S0) at (2,2.4) {Succ(one hundred ninety nine, two hundred)};
       
-      \node (PB1) at (-4.25,1.2) {PrevBase(hundred, $\varnothing$).};
+      \node (PB1) at (-3,1.2) {PrevBase(hundred, $\varnothing$).};
 
-      \node (MFB1) at (.25,1.2) {MaxForBase(ninety nine, $\varnothing$)};
-      \node (MD2) at (-1.75,0) {MaxDecades(ninety).};
-      \node (MO2) at (1.70,0) {MaxOnes(nine).};
+      \node (MFB1) at (1.25,1.2) {MaxForBase(ninety nine, $\varnothing$)};
+      \node (MD2) at (-1.5,0) {MaxDecades(ninety).};
+      \node (MO2) at (2,0) {MaxOnes(nine).};
 
       \node (S1) at (4.75,1.2) {Succ(one,two)};
       \node (SO2) at (4.75,0) {Succ1(one,two).};
