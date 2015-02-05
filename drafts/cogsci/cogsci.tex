@@ -120,7 +120,7 @@ of natural number, and show how a particular formalism -- the
 Probabilistic Range Concatenation Grammar (PRCG) -- can represent
 number this way \citep{boullier2005range}. We then show how a portion
 of this grammar can be learned using Bayesian inference in an LPN, a
-learning framework for PRCGs \citep{DecRulTen2015}..
+learning framework for PRCGs \citep{DecRulTen2015}.
 
 \section{Representing Number Knowledge}
 
@@ -231,7 +231,7 @@ requires only 216 rules. Even considering just \emph{Number},
 than 500 quadrillion relations. Figure \ref{fig:gon} shows a schematic
 of the rules concerned with determining valid and invalid numbers,
 while the rest, due to space constraints, can be found
-online.\footnote{http://github.com/joshrule/GrammarInduction}
+online (http://github.com/joshrule/GrammarInduction).
 
 Two notes of clarification: First, our grammar never produces nor
 parses full English sentences. This is a grammar for the structure of
@@ -286,12 +286,8 @@ and it would also be incorrect to use a prefix larger than
 number for a previous base, in this case $\varnothing$, the ones base:
 \begin{align}
   & \textit{Suffix}(\textit{hundred}, \textit{thirty seven}) \leftarrow\\
-  & \textit{LargerBase}(\textit{hundred}, \varnothing), \textit{Number}(\textit{thirty seven}).\notag
-\end{align}
-
-\noindent and
-\begin{align}
-  \textit{LargerBase}(\textit{hundred}, \varnothing) \leftarrow \textit{PrevBase}(\textit{hundred}, \varnothing).
+  & \hspace{0.5cm}  \textit{LargerBase}(\textit{hundred}, \varnothing), \textit{Number}(\textit{thirty seven}). \notag\\
+ &  \textit{LargerBase}(\textit{hundred}, \varnothing) \leftarrow \textit{PrevBase}(\textit{hundred}, \varnothing).
 \end{align}
 
 \noindent\emph{Thirty-seven} is one of these numbers because it is
@@ -299,13 +295,9 @@ merely the concatenation of a \emph{decade} word and a \emph{ones}
 word:
 \begin{align}
   & \textit{Number}(\textit{thirty seven}) \leftarrow\\
-  & \textit{Prefix}(\textit{thirty seven}, \varnothing), \textit{Suffix}(\varnothing,\varnothing).\notag
-\end{align}
-
-\noindent and
-\begin{align}
+  & \hspace{0.5cm} \textit{Prefix}(\textit{thirty seven}, \varnothing), \textit{Suffix}(\varnothing,\varnothing).\notag\\
   & \textit{Prefix}(\textit{thirty seven}, \varnothing) \leftarrow\\
-  & \textit{Decades}(\textit{thirty}), \textit{Ones}(\textit{seven}).\notag
+  & \hspace{0.5cm} \textit{Decades}(\textit{thirty}), \textit{Ones}(\textit{seven}).\notag
 \end{align}
 
 
@@ -353,7 +345,7 @@ data.
 % inference over RCGs and show that the generalization phenomena
 % described in these studies is captured by this model. 
 
-\subsection{Latent Predicate Networks}
+\subsubsection{Latent Predicate Networks}
 
 %% \begin{figure}[t]
 %%   \begin{centering}
@@ -403,7 +395,7 @@ iteration, a concentration parameter $\alpha=0.1$, and a convergence
 criterion of $\epsilon=1e-4$. We will refer to each separate
 simulation below as a \emph{simulated child}.
 
-\subsection{Modeling the acquisition and elaboration of the count sequence}
+\subsubsection{Acquiring the count sequence}
 
 \citeauthor{FusRicBriar1982} describe qualitative phenomena of
 count sequence acquisition and elaboration based on several surveys in
@@ -491,7 +483,7 @@ weighted smaller numbers. Children, however, do not learn to count to
 a hundred by unsupervised exposure to naturally occurring count words;
 they are actively taught to do so. Although we know of no study of the
 pedagogical language used in teaching children to count, some kindergarten teaching
-blogs\footnote{e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html}
+blogs (e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html).
 mention emphasizing decade transitions as useful in helping struggling
 students to learn the count sequence.
 
@@ -563,28 +555,28 @@ procedure, we restrict our analysis here to a single randomly selected
 simulation). The marginal probabilities of those non-number words is
 shown in Figure~\ref{fig:inventedWordComparison}.
 
-There is evidence that there are cross-linguistic differences in the
-kinds of errors that children make when learning the count sequence.
-In their study comparing American and Chinese four to six-year-olds,
-\citeauthor{miller1987counting} found that while $20\%$ of the errors
-that English speaking children made involved invented numbers, they
-encountered no instances of Chinese-speaking children doing so.
+% There is evidence that there are cross-linguistic differences in the
+% kinds of errors that children make when learning the count sequence.
+% In their study comparing American and Chinese four to six-year-olds,
+% \citeauthor{miller1987counting} found that while $20\%$ of the errors
+% that English speaking children made involved invented numbers, they
+% encountered no instances of Chinese-speaking children doing so.
 
 
-Our model agrees that Chinese children should use fewer invented
-words: we simulated a stage 2 child using the Chinese number system
-and found only a single invented word ``one ten one'' with marginal
-probability $3e-4$, making it much less probable than the twenty most
-probably invented words for the English speaking simulated child.  Our
-model suggests that the reason the use of invented words is more
-common in English than Chinese is because there are more categories of
-words in the English system than the Chinese one. In Chinese, the
-decade word are the same as the unit words (e.g. ``five-ten-one'' for
-51) and the teen words (11-19) are uniform in contruction
-(e.g. ``ten-five'' for 15). Thus, there are both fewer words to learn
-about in the Chinese system, and grammar rules in the Chinese system
-that combine words of different categories are far less likely to
-produce invalid words than those in the English system.
+% Our model agrees that Chinese children should use fewer invented
+% words: we simulated a stage 2 child using the Chinese number system
+% and found only a single invented word ``one ten one'' with marginal
+% probability $3e-4$, making it much less probable than the twenty most
+% probably invented words for the English speaking simulated child.  Our
+% model suggests that the reason the use of invented words is more
+% common in English than Chinese is because there are more categories of
+% words in the English system than the Chinese one. In Chinese, the
+% decade word are the same as the unit words (e.g. ``five-ten-one'' for
+% 51) and the teen words (11-19) are uniform in contruction
+% (e.g. ``ten-five'' for 15). Thus, there are both fewer words to learn
+% about in the Chinese system, and grammar rules in the Chinese system
+% that combine words of different categories are far less likely to
+% produce invalid words than those in the English system.
 
 % Our model also is consistent with \citeauthor{miller1987counting}'s finding
 % that, contrary to their original expectations, Chinese children do not
@@ -608,7 +600,7 @@ produce invalid words than those in the English system.
 
 
 \begin{figure}[t]
-\includegraphics[width=0.9\linewidth]{figures/inventedWordComparison}
+\includegraphics[width=0.9\linewidth]{figures/inventedWordComparison3}
 \caption{Top ten invented number words in children's counting. a) Data
   from \citeauthor{FusRicBriar1982} b) A simulated child at stage~2.
    \label{fig:inventedWordComparison}}
@@ -662,12 +654,22 @@ to explore the relationship between computational level considerations
 driving inductive reasoning and the pedagogical factors enabling it in
 practice.
 
-An important future step for this research will be to relate our model
-to those, like Piantadosi et al. (\citeyear{PianGoodTen2012}) for
-counting and Dehaene et al. for the approximate magnitude system, that
-attempt to explain how abstract number knowledge becomes grounded in
-the perceptual and procedural primitives through which children learn
-about the world. The model we presented here does not attempt to
+An important goal for future work is to apply our model to learning
+systems of number concepts in other languages besides English.  In
+preliminary work we have applied our model to learning the Chinese
+number system, shown that it can learn the adult system with relative
+ease, and also that it can explain why Chinese children generally make
+different patterns of mistakes than English-speaking children -- in
+particular, why they are much less likely to invent number words like
+"twenty eleven" even though Chinese uses the same words to refer to
+both decade and ones values (e.g., "twenty one" is "two ten one")"~\citep{miller1987counting}.
+
+Another important future step for this research will be to relate our
+model to those, like Piantadosi et al. (\citeyear{PianGoodTen2012})
+for counting and Dehaene et al. for the approximate magnitude system,
+that attempt to explain how abstract number knowledge becomes grounded
+in the perceptual and procedural primitives through which children
+learn about the world. The model we presented here does not attempt to
 explain how children come to understand that number words refer to
 cardinalities, though this is crucial to understanding number.
 
