@@ -322,7 +322,7 @@ $\text{Less}(X,Y) \leftarrow \text{More}(Y,X)$ and $\text{Pred}(X,Y)
 
 How might children learn the knowledge about number that is captured
 in the representation presented above? In this section, we present a
-computational model of learning over RCGs and take a first step
+computational model of learning over PRCGs and take a first step
 towards evaluating this model against the learning trajectories and
 patterns of error reported in the literature on counting. 
 
@@ -330,73 +330,80 @@ Because the learning problem is computationally challenging and
 because much of the focus in the literature on exact number knowledge
 has been on counting, we restrict our experiments here to the
 successor relation, and, in particular, to learning how to count from
-one to a hundred.
+one to a hundred. Several studies of children's learning trajectories
+and patterns of errors when acquiring the count
+sequence~\citep{FusRicBriar1982,miller1987counting}. Thus, the
+acquisition of the count sequence provides an interesting domain in
+which evaluate how well our model of learning PRCGs fits the empirical
+data.
 
-Learning to count up to a hundred does not come easily. Studies of
-counting in children between three and six years of age, suggests that
-although some children are able to count up to a hundred shortly
-before entering kindergarten, many have trouble with the task at least
-as late as first
-grade~\citep{FusRicBriar1982,miller1987counting}. These studies suggest
-that children do not learn to count to a hundred by memorizing the
-sequence of numbers between on and a hundred. As might be expected of
-a system that will eventually be able to count to arbitrarily large
-numbers, learning to count to a hundred involves discovering the
-pattern that successive number words follow. 
+% Learning to count up to a hundred does not come easily. Studies of
+% counting in children between three and six years of age suggest that
+% although some children are able to count up to a hundred shortly
+% before entering kindergarten, many have trouble with the task at least
+% as late as first
+% grade ~\citep{FusRicBriar1982,miller1987counting}. These studies identify qualities learning trajectories and patterns of errors that children make. As such, These studies suggest
+% that children do not learn to count to a hundred by memorizing the
+% sequence of numbers between one and a hundred. As might be expected of
+% a system that will eventually be able to count to arbitrarily large
+% numbers, learning to count to a hundred involves discovering the
+% pattern that successive number words follow. 
 
-We will model this process of pattern discovery as probabilistic
-inference over RCGs and show that the generalization phenomena
-described in these studies is captured by this model. 
+% We will model this process of pattern discovery as probabilistic
+% inference over RCGs and show that the generalization phenomena
+% described in these studies is captured by this model. 
 
 \subsection{Latent Predicate Networks}
 
-\begin{figure}[t]
-  \begin{centering}
-    \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
-    \caption{A schematic LPN for number knowledge learning.}
-  \end{centering}
-\end{figure}
+% \begin{figure}[t]
+%   \begin{centering}
+%     \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
+%     \caption{A schematic LPN for number knowledge learning.}
+%   \end{centering}
+% \end{figure}
 
 Latent Predicate Networks (LPNs) are PRCGs with a large number of
-rules connected in a layered fashion. An schematic of the LPN used in
-the following learning experiments and simulations is show in
-Figure~\ref{fig:lpn}. There are three types of predicates in LPNs. The
-\emph{observed} predicates are relations that are directly present in
-the data (e.g. the successor predicate Succ is observed if the data is
-a collection of successor pairs). The observed predicates are defined
-in terms of layers of \emph{latent} predicates. These are relations
-that are not directly observable in the data and whose meanings are
-determined through learning. For example, the Decade predicate, which
-is true for ``ten'', ``twenty'', etc., might correspond to one of the
-latent predicates after learning on successor pair data. The lowest
-layer of latent predicates is defined in terms of a collection of
-\emph{lexicon} predicates, each of which is a unary predicate that is
-true of the atomic units (the words) of the system.
+rules connected in a layered fashion. There are three types of
+predicates in LPNs. The \emph{observed} predicates are relations that
+are directly present in the data (e.g. the successor predicate Succ is
+observed if the data is a collection of successor pairs). The observed
+predicates are defined in terms of layers of \emph{latent}
+predicates. These are relations that are not directly observable in
+the data and whose meanings are determined through learning. For
+example, the \emph{Decade} predicate, which is true for ``ten'',
+``twenty'', etc., might correspond to one of the latent predicates
+after the model is trained on pairs of successive number words. Each
+layer of latent predicates is defined in terms of the latent predicate
+layer beneath it, and the lowest layer of latent predicates is defined
+in terms of a collection of \emph{lexicon} predicates, each of which
+is a unary predicate that is true of the atomic units (the words) of
+the system. The rules of the LPN consist all possible definitions
+possible within the network architecture (for details see
+~\cite{DecRulTen2015}), and the parameters of the network are the
+probabilities of the rules.
 
-Given a collection of observations, our model assumes that there is a
-setting of the parameters of the LPN that gave rise to those
-observations. The model's goal is to infer what those parameters
-are. This inference is conducting via hierarchical Bayesian
-inference~(CITATION): the model assumes that there is a prior
-distribution over the parameters of the LPN and that given those
-parameters the LPN induces a distribution over observations. Using
-Bayes' rule, the model infers a distribution over parameter values
-that balances the fit of the observations against the prior. We use a
-sparsity inducing prior distribution which formalizes the intuition
-that latent predicates and rules should be shared in order to learn
-grammars that can generalize beyond the observed data.
+Our model attempts to infer a distribution over the parameters of the
+LPN given the data available to it. This inference is conducting via
+hierarchical Bayesian inference~\citep{gelman2014bayesian}: the model
+assumes that there is a prior distribution over the parameters of the
+LPN and, using Bayes' rule, the model infers a distribution
+over parameter values that balances the fit of the observations
+against the prior. We use a sparsity inducing prior distribution which
+formalizes the intuition that latent predicates and rules should be
+shared in order to learn grammars that can generalize beyond the
+observed data.
 
 Exact inference in probabilistic grammars is computationally
-intractable. We use the common ``variational'' approximation
-implemented using Variational Bayes EM algorithm~(CITATION), which has
-been widely used in approximate inference of probabilsitic context
+intractable. We use the Variational Bayes EM algorithm~(CITATION), which has
+been widely used in approximate inference of probabilistic context
 free grammars~(CITATION). All the computations in this paper were done
 using the PRISM probabilistic logic programming language~(CITATION).
 
 All the simulations below were run on an LPN with three layers of five
 predicates each. The learning algorithm was run for a single
-iteration, a concentration parameter $alpha=0.1$, and a convergence
-criterion of $\epsilon=1e-4$.
+iteration, a concentration parameter $\alpha=0.1$, and a convergence
+criterion of $\epsilon=1e-4$. We will refer to each separate
+simulation below as a \emph{simulated child}.
 
 \subsection{Modeling the acquisition and elaboration of the count sequence}
 
@@ -414,7 +421,7 @@ used to study how children acquire the count sequence beyond twenty.
 
 
 \begin{figure*}[t]
-\includegraphics[width=0.9\linewidth]{figures/modelboxplot}
+\includegraphics[width=0.7\linewidth]{figures/modelboxplot}
 \caption{Our model compared with children's counting data a) Data
   from~\citet{FusRicBriar1982}. The x-axis shows the highest number
   correctly reached when children were asked to count starting at
@@ -432,13 +439,13 @@ ranges~\cite{FusRicBriar1982}. The authors hypothesize that the large
 jump in range between the young three year olds and the older four
 year olds and year olds is due to the older children partially solving
 what they term ``the decade problem.'' -- i.e. recognizing both that
-there is a repetitive pattern of that repeats across decades beyond
+there is a repetitive pattern that repeats across decades beyond
 twenty and learning that there is a particular sequence to the decade
 words.
 
 We asked whether our model goes through a similar transition. To
 simulate learning, we generated data sets consisting of successor
-pairs between one and a hundred, with the number of examples of each
+pairs between one and a hundred, with the number of examples $N$ of each
 pair $Succ(i+1, i)$ following the power law $N=\frac{K}{i}$, where $K$
 determines the overall size of the data set. The explore the effect of
 evidence quantity, and to simulate the effect that overall quanitity
@@ -449,7 +456,7 @@ Figure~\ref{fig:counting_grid}a-d (the y-axes are logarithmically
 scaled).
 
 For each of these data sets we ran our learning algorithm ten times,
-generating ten simulated children at each stage (the simualations
+generating ten simulated children at each stage (the simulations
 differ due to different random parameter intiailizations). In
 Figure~\ref{fig:counting_grid}a-d, each line corresponds to one of the
 simulated children and shows the probability that the child will
@@ -457,21 +464,19 @@ correctly count to the corresponding number on the x-axis. To generate
 this counting simulations, we asked the model for the distribution of
 successors for a given number and used a simple soft max decision
 procedure to determine the probability of the simulated child
-reporting each word. Specifically, if the $p_a(x)$ is the probability
-that $x$ is the successor of $x$, then the probability that $x$ is
-chosen as the successor of $a$ is proportional to $p_a(x)^2$.
+reporting each word. Specifically, if the simulated child believes
+that the $x$ follows $a$ with probability $p_a(x)$, then it says $x$
+after $a$ for probability proportional to $p_a(x)^2 $.
 
 The simulations in stage 1 are variable in their performances, with
 some of simulated children unable to count further than the first few
-words and couple having a relatively high chance of reaching
-``twenty.'' While there is a sharp cutoff at ``twenty'' for this
-group, which is exceeded by the majority of simulated children in
-stage 2. The sharp drops in performance at the ``twenty,'' ``thirty''
+words and a few having a relatively high chance of reaching
+``twenty.'' The sharp drops in performance at the ``twenty,'' ``thirty''
 and ``forty'' in stage 2, and the horizontal lines between them,
 indicate that here the simulation has learned the within-decade
-structure of the count list, but is uncertain about the transitions
+structure of the count list but is uncertain about the transitions
 between decades. In stages 3 and 4, nearly all simulated children
-master the numbers up to ``thirty'' but are unable to transition from
+master the numbers up to ``twenty nine'' but are unable to transition from
 ``thirty-nine'' to ``forty.'' And only in stage 4, do we see any
 children making the transition from this state of knowledge to one in
 which it can reach ``ninety nine.'' 
@@ -487,13 +492,14 @@ our simulations favor a more parsimonious explanation of the heavily
 weighted smaller numbers. Children, however, do not learn to count to
 a hundred by unsupervised exposure to naturally occuring count words;
 they are actively taught to do so. Although we know of no study of the
-pedagogical language used in teaching children to count, increased
-emphasis on difficult regions of the count list is a likely
-consequence.
+pedagogical language used in teaching children to count, some kindergarten teaching
+blogs\footnote{e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html}
+mention emphasizing decade transitions as useful in helping struggling
+students to learn the count sequence.
 
 To confirm that increased emphasis on decade transitions can
 facilitate the transition to mastering counting up to a hundred, we
-created two additional data sets, stages 3' and 4', that contain the
+created two additional data sets, stages $3^*$ and $4^*$, that contain the
 same data as stages 3 and 4, respectively, but have an additional
 $10\%$ of the data evenly distributed across the decade transitions
 (twenty nine, thirty; thirty nine, forty; ..., eighty-nine,
@@ -524,14 +530,14 @@ data for stages 1,2,$3^*$ and $4^*$ for comparison against the
 \citeauthor{FusRicBriar1982} data in
 Figure~\ref{fig:fuson_model_comparison}a. For each one of these stages
 and for each simulated child, we computed the probability that highest
-number counted starting at ``one'' would be $x$ for $x=1..98$. We
+number counted starting at ``one'' would be $x$ for $x=1 \dots 98$. We
 averaged these values across simulated children within a stage and
 used the resulting densities to calculate the means, standard
 deviations, and 10th and 90th percentiles for each stage (these
-percentiles are used to be comparable with the empirical ranges described
+percentiles were chosen to be comparable with the empirical ranges described
 by \citeauthor{FusRicBriar1982}
 
-In addition to examining the learning trajectorires of our model, we
+In addition to examining the learning trajectories of our model, we
 also looked at the kinds of mistakes that it makes. One interesting
 pattern of mistakes that young English speaking children make when
 reciting the count sequence is that they invent number
@@ -542,19 +548,18 @@ incorrect digit-place words (such as ``twenty-eleven'' and
 ``twenty-twenty''). In particular, they report that appending
 \emph{teen} words to decade words is most common, creating sequences
 like ``twenty-ten'', ``twenty-eleven'', ``twenty-twelve'', etc.
-Figure~\ref{fig:fusonInventedWords} we show the most common invented
+In Figure~\ref{fig:fusonInventedWords} we show the most common invented
 words that \citeauthor{FusRicBriar1982} report and the mean number of
 times each child in their study use the word. 
 
 Since we do not model in this work the way in which the number word
 morphemes are composed to construct number words, our model cannot
-account for the morphologically based word errors (e.g. ``fifteen''
-and ``eleventy''). We asked, however, to what extent it can model the
-other invented word errors that \citeauthor{FusRicBriar1982} report;
-those invented words that they report were used by more than one child
+account for the morphologically based word errors. We asked, however,
+to what extent it can model the other invented word errors that
+\citeauthor{FusRicBriar1982} report; the most common invented words
 are shown in Figure~\ref{fig:inventedWordComparison}a). To compare
-these data to our model, we asked a stage 2 simulated child for the top
-twenty non-number words that could appear as successor to a number
+these data to our model, we asked a stage 2 simulated child for the
+top twenty non-number words that could appear as successor to a number
 world or non-number word (because this was a computationally expensive
 procedure, we restrict our analysis here to a single randomly selectd
 simulation). The marginal probabilities of those non-number words is
@@ -568,22 +573,22 @@ the errors that English speaking children made involved invented
 numbers, they encountered no instances of Chinese-speaking children
 doing so. 
 
-Our model agrees with this finding: we simulated a stage 2 child using
-the Chinese number system and found only a single invented word ``one
-ten one'' with marginal probability $3e-4$, making it much less
-probable than the twenty most probably invented words for the English
-speaking simulated child.  Our model suggests that the reason the use
-of invented words is more common in English than Chinese is because
-there are more categories of words in the English system than the
-Chinese one. In Chinese, the decade word are the same as the unit
-words (e.g. ``five-ten-one'' for 51) and the teen words (11-19) are
-uniform in contruction (e.g. ``ten-five'' for 15). Thus, there are
-both fewer words to learn about in the Chinese system, and grammar
-rules in the Chinese system that combine words of different categories
-are far less likely to produce invalid words than those in the English
-system.
+Our model agrees that Chinese children should use fewer invented
+words: we simulated a stage 2 child using the Chinese number system
+and found only a single invented word ``one ten one'' with marginal
+probability $3e-4$, making it much less probable than the twenty most
+probably invented words for the English speaking simulated child.  Our
+model suggests that the reason the use of invented words is more
+common in English than Chinese is because there are more categories of
+words in the English system than the Chinese one. In Chinese, the
+decade word are the same as the unit words (e.g. ``five-ten-one'' for
+51) and the teen words (11-19) are uniform in contruction
+(e.g. ``ten-five'' for 15). Thus, there are both fewer words to learn
+about in the Chinese system, and grammar rules in the Chinese system
+that combine words of different categories are far less likely to
+produce invalid words than those in the English system.
 
-Our model also agrees with \citeauthor{miller1987counting}'s finding
+Our model also is consistent with \citeauthor{miller1987counting}'s finding
 that, contrary to their original expectations, Chinese children do not
 count by decades (e.g. ``twenty nine'', ``thirty'', ``forty,'' ...)
 more often than their English speaking counterparts. In our
@@ -662,10 +667,7 @@ computational level considerations that drive inductive reasoning and
 the pedagogical factors that enable it in practice.
 
 %  Concretely,
-% although some kindergarten teaching
-% blogs\footnote{e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html}
-% mention emphasizing decade transitions as useful in helping struggling
-% students to learn the count sequence, systematic analyses of
+% although , systematic analyses of
 % pedagogical techniques in this domain
 
 An important future step in this line of research will be to relate
