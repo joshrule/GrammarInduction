@@ -614,42 +614,52 @@ the those words happen to be the same.
 
 \section{Discussion}
 
+In this work, we have shown how the infinite set of exact number
+concepts and the relations among them can be represented using a
+probabilistic context sensitive grammars. We have also presented a
+model for how children might learn such a representation based on
+hierarchical Bayesian inference. Our simulations using this model
+suggest that it captures several interesting phenonema that arise as
+children learn the count sequence up to a hundred -- a process that is
+both difficult for many children and integral to obtaining adult-like
+numerical knowledge.
 
+A particularly interesting aspect of this process is that it seems to
+involve a relatively sudden transition between being able to count
+only through the first few decades and being able to count all the way
+to a hundred. Our model explains this transition as an inductive leap:
+for small amounts of data, learning is slow and incremental -- adding
+a decade at a time -- because the cost of increasing the complexity of
+the conceptual knowledge is large compared to the gains in explantory
+power. At a certain point, however, enough evidence accumulates to
+warrant adopting a more complex by far more general grammar, resulting
+in a kind of phase transition between states of knowledge.
 
+In many ways this phenomenon is analagous to the Cardinal Principle
+(CP) transition, in which younger children learning the relationship
+between small numbers and set sizes make slow and incremental progress
+when learning the meanings of the first three or four numbers but then
+expand their understanding all at once to the remaining numbers that
+they know. The theory that this rapid transition is due to what Carey
+refers to as \emph{Quinian bootstrapping} has been formalized by
+Piantadosi et al. as probabilistic inference over a space of recursive
+programs defined by a grammar. As we do here, they explain the
+inductive leap of CP transition as a result of the tension between
+program complexity and fit the data. Crucially, whereas Piantodosi et
+al. place a distribution over programs using a probabilistic context
+free grammar, our model here is learning a grammar itself, one that
+can accomodate many different concepts and relations and that can be
+seen as a probabilistic knowledge base, with its conceptual content
+representated declaratively. 
 
-
-%% second half of discussion
-
-While the conceptual grammar contains a great deal of knowledge about
-\emph{fifty-two}, there is no single object that in any sense
-completely defines \emph{fifty-two}. The definition is heavily
-influenced by the entire collection of relationships which hold for
-the token \emph{fifty-two}. In a similar vein, the names given to
-specific predicates in our grammar are arbitrary. \emph{Number} could
-just as easily be called \emph{Yulmpa} or \emph{Snarg}. What is
-important is not a predicate's name, but the relations it enters into
-with other predicates and thus the argument strings for which it
-holds. The same is true for individual words like \emph{hundred} or
-\emph{nine}: while any name could be used, what cannot be changed is
-the way each predicate combines or contrasts a given token with other
-tokens in the grammar.
-
-As mentioned in the introduction, the LPN model of concept learning
-shares many similarities with the Rational Rules family of models
-\citep{goodman2008rational,T.D.Ullman:2012:1b1b6,PianGoodTen2012},
-particularly our focus on learning concepts from sparse evidence using
-Bayesian induction over compositional representations. We differ in
-how we use grammars. Rational Rules models use a grammar to generate
-sentences, each of which represents a single concept to be learned.
-LPNs, by contrast, learn a grammar which generates relations, each of
-which describes a particular interaction between a set of concepts.
-
-For example, the Rational Rules-based model of Cardinal Principle (CP)
-learning given in \citep{PianGoodTen2012} is focused on finding a
-specific sentence which captures the CP, in this case a program in the
-simply-typed lambda calculus. An LPN-based approach would be to learn
-a complete grammar over many number concepts, the relationships
-between some of which happen to correctly encode the CP.
+Our simulations required a pedagogical emphasis on critical pieces of
+evidence in order to master the count sequence robustly, and this
+suggests that pedagogy may play an important role in facilitating
+these kinds of inductive leaps. Focusing on concept acquisition
+phenomena in slightly older children allows us to explore the
+relationship between computational level considerations that drive
+inductive reasoning and the pedagogical factors that enable it in
+practice.
 
 Note, however, that this paper focuses on a different psychological
 problem than Piantadosi and colleagues (\citeyear{PianGoodTen2012}) in
