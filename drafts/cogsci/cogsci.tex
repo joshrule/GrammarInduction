@@ -615,24 +615,24 @@ the those words happen to be the same.
 \section{Discussion}
 
 In this work, we have shown how the infinite set of exact number
-concepts and the relations among them can be represented using a
+concepts and the relations among them can be represented using
 probabilistic context sensitive grammars. We have also presented a
 model for how children might learn such a representation based on
-hierarchical Bayesian inference. Our simulations using this model
-suggest that it captures several interesting phenonema that arise as
-children learn the count sequence up to a hundred -- a process that is
-both difficult for many children and integral to obtaining adult-like
-numerical knowledge.
+hierarchical Bayesian inference. Our simulations suggest that our model
+captures several interesting phenonema that arise as children learn
+the count sequence up to a hundred -- a process that is both difficult
+for many children and critical to obtaining adult-like numerical
+knowledge.
 
-A particularly interesting aspect of this process is that it seems to
-involve a relatively sudden transition between being able to count
+A interesting aspect of this process is that it seems to
+involve a sudden transition between being able to count
 only through the first few decades and being able to count all the way
 to a hundred. Our model explains this transition as an inductive leap:
 for small amounts of data, learning is slow and incremental -- adding
 a decade at a time -- because the cost of increasing the complexity of
 the conceptual knowledge is large compared to the gains in explantory
 power. At a certain point, however, enough evidence accumulates to
-warrant adopting a more complex by far more general grammar, resulting
+warrant adopting a more complex and more general grammar, and this results
 in a kind of phase transition between states of knowledge.
 
 In many ways this phenomenon is analagous to the Cardinal Principle
@@ -644,61 +644,66 @@ they know. The theory that this rapid transition is due to what Carey
 refers to as \emph{Quinian bootstrapping} has been formalized by
 Piantadosi et al. as probabilistic inference over a space of recursive
 programs defined by a grammar. As we do here, they explain the
-inductive leap of CP transition as a result of the tension between
-program complexity and fit the data. Crucially, whereas Piantodosi et
-al. place a distribution over programs using a probabilistic context
-free grammar, our model here is learning a grammar itself, one that
-can accomodate many different concepts and relations and that can be
-seen as a probabilistic knowledge base, with its conceptual content
-representated declaratively. 
+inductive leap of the CP transition as a result of the tension between
+program complexity and fit to the available data. Crucially, whereas
+Piantodosi et al. place a distribution over programs using a
+probabilistic context free grammar, our model here is learning a
+grammar itself, one that can accomodate many different concepts and
+relations and that can be seen as a probabilistic knowledge base, with
+its conceptual content represented declaratively.
 
-Our simulations required a pedagogical emphasis on critical pieces of
-evidence in order to master the count sequence robustly, and this
-suggests that pedagogy may play an important role in facilitating
-these kinds of inductive leaps. Focusing on concept acquisition
-phenomena in slightly older children allows us to explore the
-relationship between computational level considerations that drive
-inductive reasoning and the pedagogical factors that enable it in
-practice.
+Another difference is that our simulations require a pedagogical
+emphasis on critical pieces of evidence -- the decade transitions --
+in order to master the count sequence robustly, and this suggests that
+pedagogy may play an important role in facilitating these kinds of
+inductive leaps. Focusing on concept acquisition phenomena in slightly
+older children allows us to explore the relationship between
+computational level considerations that drive inductive reasoning and
+the pedagogical factors that enable it in practice.
 
-Note, however, that this paper focuses on a different psychological
-problem than Piantadosi and colleagues (\citeyear{PianGoodTen2012}) in
-that we are not proposing a model of how children acquire or ground
-their initial number concepts or the CP. Neither our hand-crafted nor
-our learned \emph{Number} predicates contain any link between set
-cardinalities and number words, nor does \emph{More} connect in any
-way to approximate magnitude. We intend to explore these connections
-in future work but focus here on the fact that to know what the number
-words mean is to know how they interact with each other as well as
-concepts you already have, including (potentially innate) pre-existing
-conceptions of \emph{More} or \emph{Less} used to differentiate sets,
-or the version of \emph{Successor} used to memorize songs and
-routines.
+%  Concretely,
+% although some kindergarten teaching
+% blogs\footnote{e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html}
+% mention emphasizing decade transitions as useful in helping struggling
+% students to learn the count sequence, systematic analyses of
+% pedagogical techniques in this domain
+
+An important future step in this line of research will be to relate
+our model to those, like Piantadosi et al. for counting and Dehaene et
+al. for the approximate magnitude system, that attempt to explain how
+these abstract number knowledge comes to be grounded in the perceptual
+and procedural primitives through which children learn about the
+world. The model we have presented here does not attempt to explain
+how children come to understand that number words refer to
+cardinalities, though we certainly see this as a crucial part of
+understanding number.
 
 That said, we see no fundamental incompatibility between the model
 presented here and extensions to include approximate magnitude, object
 tracking, set manipulation, more complex morphology ({\it e.g.} the
 meaning of \emph{-illion} or \emph{-teen}), or different counting
 strategies ({\it e.g.} as used in Turkish, French, or Mandarin) as
-would be needed for a more comprehensive model of number learning. Far
-from it, we see our work here as a first demonstration of LPN's
-suitability for capturing a broad range of concepts in number and
-other semantic domains including space, kinship, and natural kinds.
-Whether these more general models are best approached by working
-strictly within the LPN formalism or by using it as one module within
-a more complex framework is an open question. Certainly, the human
-mind is more powerful than an RCG and is at least Turing-complete.
-RCGs provide a tractable way, however, to explore a restricted
-subclass of problems. The strategies and solutions we discover here
-are also available in Turing-complete systems, and are in fact
-implemented in one (PRISM Prolog), so our findings easily generalize
-to more expressive grammars.
+would be needed for a more comprehensive model of number learning. We
+see our work here as a first demonstration of LPN's suitability for
+capturing a broad range of concepts in number and other semantic
+domains including space, kinship, and natural kinds.  Whether these
+more general models are best approached by working strictly within the
+LPN formalism or by using it as one module within a more complex
+framework is an open question. Certainly, the human mind is more
+powerful than an RCG and is at least Turing-complete.  RCGs provide a
+tractable way, however, to explore a restricted subclass of
+problems. The strategies and solutions we discover here are also
+available in Turing-complete systems, and are in fact implemented in
+one (PRISM Prolog), so our findings easily generalize to more
+expressive grammars.
 
 More broadly, we see this paper as growing out of the hypothesis that
 much of human learning, including the explosion of knowledge that
-occurs during development, can be explained as induction in a formal
-language. This vision of the \emph{child-as-hacker} draws on and
-extends the notion of the \emph{child-as-scientist} \citep{gopnik1996scientist}; not only are
+occurs during development, can be undestood as inducing, from sparse
+and noisy data, a library of bits of conceptual knowledge, written in
+something like a programming language of thought. This vision of the
+\emph{child-as-hacker} draws on and extends the notion of the
+\emph{child-as-scientist} \citep{gopnik1996scientist}; not only are
 children forming theories about the world, but they are simultaneously
 developing the very conceptual language they use to formulate those
 theories.
