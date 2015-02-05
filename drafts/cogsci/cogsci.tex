@@ -344,7 +344,7 @@ counting in children between three and six years of age, suggests that
 although some children are able to count up to a hundred shortly
 before entering kindergarten, many have trouble with the task at least
 as late as first
-grade~\cite{FusRicBriar1982,miller1987counting}. These studies suggest
+grade~\citep{FusRicBriar1982,miller1987counting}. These studies suggest
 that children do not learn to count to a hundred by memorizing the
 sequence of numbers between on and a hundred. As might be expected of
 a system that will eventually be able to count to arbitrarily large
@@ -589,17 +589,17 @@ are far less likely to produce invalid words than those in the English
 system.
 
 Our model also agrees with \citeauthor{miller1987counting}'s finding
-that, contrary to their hypothesis, Chinese children do not count by
-decades (e.g. ``twenty nine'', ``thirty'', ``forty,'' ...) more often
-than their English speaking counterparts. In our simulations we do not
-find any suggestion of this kind of error for the Chinese-speaking
-simulated children, and this is likely because our grammar rules do
-not act independently on different parts of the number words. The
-rules explicitly act on both categories of substrings and their
-relative positions, so the use of a rule that increments the units
-position of a number word does not increase the probability of a rule
-that increments the decades position, even if the those words happen
-to be the same.
+that, contrary to their original expectations, Chinese children do not
+count by decades (e.g. ``twenty nine'', ``thirty'', ``forty,'' ...)
+more often than their English speaking counterparts. In our
+simulations we do not find any suggestion of this kind of error for
+the Chinese-speaking simulated children, and this is likely because
+our grammar rules do not act independently on different parts of the
+number words. The rules explicitly act on both categories of
+substrings and their relative positions, so the use of a rule that
+increments the units position of a number word does not increase the
+probability of a rule that increments the decades position, even if
+the those words happen to be the same.
 
 
 % \begin{figure}[t]
@@ -619,81 +619,96 @@ to be the same.
 
 \section{Discussion}
 
+In this work, we have shown how the infinite set of exact number
+concepts and the relations among them can be represented using
+probabilistic context sensitive grammars. We have also presented a
+model for how children might learn such a representation based on
+hierarchical Bayesian inference. Our simulations suggest that our model
+captures several interesting phenonema that arise as children learn
+the count sequence up to a hundred -- a process that is both difficult
+for many children and critical to obtaining adult-like numerical
+knowledge.
 
+A interesting aspect of this process is that it seems to
+involve a sudden transition between being able to count
+only through the first few decades and being able to count all the way
+to a hundred. Our model explains this transition as an inductive leap:
+for small amounts of data, learning is slow and incremental -- adding
+a decade at a time -- because the cost of increasing the complexity of
+the conceptual knowledge is large compared to the gains in explantory
+power. At a certain point, however, enough evidence accumulates to
+warrant adopting a more complex and more general grammar, and this results
+in a kind of phase transition between states of knowledge.
 
+In many ways this phenomenon is analagous to the Cardinal Principle
+(CP) transition, in which younger children learning the relationship
+between small numbers and set sizes make slow and incremental progress
+when learning the meanings of the first three or four numbers but then
+expand their understanding all at once to the remaining numbers that
+they know. The theory that this rapid transition is due to what Carey
+refers to as \emph{Quinian bootstrapping} has been formalized by
+Piantadosi et al. as probabilistic inference over a space of recursive
+programs defined by a grammar. As we do here, they explain the
+inductive leap of the CP transition as a result of the tension between
+program complexity and fit to the available data. Crucially, whereas
+Piantodosi et al. place a distribution over programs using a
+probabilistic context free grammar, our model here is learning a
+grammar itself, one that can accomodate many different concepts and
+relations and that can be seen as a probabilistic knowledge base, with
+its conceptual content represented declaratively.
 
+Another difference is that our simulations require a pedagogical
+emphasis on critical pieces of evidence -- the decade transitions --
+in order to master the count sequence robustly, and this suggests that
+pedagogy may play an important role in facilitating these kinds of
+inductive leaps. Focusing on concept acquisition phenomena in slightly
+older children allows us to explore the relationship between
+computational level considerations that drive inductive reasoning and
+the pedagogical factors that enable it in practice.
 
-%% second half of discussion
+%  Concretely,
+% although some kindergarten teaching
+% blogs\footnote{e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html}
+% mention emphasizing decade transitions as useful in helping struggling
+% students to learn the count sequence, systematic analyses of
+% pedagogical techniques in this domain
 
-While the conceptual grammar contains a great deal of knowledge about
-\emph{fifty-two}, there is no single object that in any sense
-completely defines \emph{fifty-two}. The definition is heavily
-influenced by the entire collection of relationships which hold for
-the token \emph{fifty-two}. In a similar vein, the names given to
-specific predicates in our grammar are arbitrary. \emph{Number} could
-just as easily be called \emph{Yulmpa} or \emph{Snarg}. What is
-important is not a predicate's name, but the relations it enters into
-with other predicates and thus the argument strings for which it
-holds. The same is true for individual words like \emph{hundred} or
-\emph{nine}: while any name could be used, what cannot be changed is
-the way each predicate combines or contrasts a given token with other
-tokens in the grammar.
-
-As mentioned in the introduction, the LPN model of concept learning
-shares many similarities with the Rational Rules family of models
-\citep{goodman2008rational,T.D.Ullman:2012:1b1b6,PianGoodTen2012},
-particularly our focus on learning concepts from sparse evidence using
-Bayesian induction over compositional representations. We differ in
-how we use grammars. Rational Rules models use a grammar to generate
-sentences, each of which represents a single concept to be learned.
-LPNs, by contrast, learn a grammar which generates relations, each of
-which describes a particular interaction between a set of concepts.
-
-For example, the Rational Rules-based model of Cardinal Principle (CP)
-learning given in \citep{PianGoodTen2012} is focused on finding a
-specific sentence which captures the CP, in this case a program in the
-simply-typed lambda calculus. An LPN-based approach would be to learn
-a complete grammar over many number concepts, the relationships
-between some of which happen to correctly encode the CP.
-
-Note, however, that this paper focuses on a different psychological
-problem than Piantadosi and colleagues (\citeyear{PianGoodTen2012}) in
-that we are not proposing a model of how children acquire or ground
-their initial number concepts or the CP. Neither our hand-crafted nor
-our learned \emph{Number} predicates contain any link between set
-cardinalities and number words, nor does \emph{More} connect in any
-way to approximate magnitude. We intend to explore these connections
-in future work but focus here on the fact that to know what the number
-words mean is to know how they interact with each other as well as
-concepts you already have, including (potentially innate) pre-existing
-conceptions of \emph{More} or \emph{Less} used to differentiate sets,
-or the version of \emph{Successor} used to memorize songs and
-routines.
+An important future step in this line of research will be to relate
+our model to those, like Piantadosi et al. for counting and Dehaene et
+al. for the approximate magnitude system, that attempt to explain how
+these abstract number knowledge comes to be grounded in the perceptual
+and procedural primitives through which children learn about the
+world. The model we have presented here does not attempt to explain
+how children come to understand that number words refer to
+cardinalities, though we certainly see this as a crucial part of
+understanding number.
 
 That said, we see no fundamental incompatibility between the model
 presented here and extensions to include approximate magnitude, object
 tracking, set manipulation, more complex morphology ({\it e.g.} the
 meaning of \emph{-illion} or \emph{-teen}), or different counting
 strategies ({\it e.g.} as used in Turkish, French, or Mandarin) as
-would be needed for a more comprehensive model of number learning. Far
-from it, we see our work here as a first demonstration of LPN's
-suitability for capturing a broad range of concepts in number and
-other semantic domains including space, kinship, and natural kinds.
-Whether these more general models are best approached by working
-strictly within the LPN formalism or by using it as one module within
-a more complex framework is an open question. Certainly, the human
-mind is more powerful than an RCG and is at least Turing-complete.
-RCGs provide a tractable way, however, to explore a restricted
-subclass of problems. The strategies and solutions we discover here
-are also available in Turing-complete systems, and are in fact
-implemented in one (PRISM Prolog), so our findings easily generalize
-to more expressive grammars.
+would be needed for a more comprehensive model of number learning. We
+see our work here as a first demonstration of LPN's suitability for
+capturing a broad range of concepts in number and other semantic
+domains including space, kinship, and natural kinds.  Whether these
+more general models are best approached by working strictly within the
+LPN formalism or by using it as one module within a more complex
+framework is an open question. Certainly, the human mind is more
+powerful than an RCG and is at least Turing-complete.  RCGs provide a
+tractable way, however, to explore a restricted subclass of
+problems. The strategies and solutions we discover here are also
+available in Turing-complete systems, and are in fact implemented in
+one (PRISM Prolog), so our findings easily generalize to more
+expressive grammars.
 
 More broadly, we see this paper as growing out of the hypothesis that
 much of human learning, including the explosion of knowledge that
-occurs during development, can be explained as induction in a formal
-language. This vision of the \emph{child-as-hacker} draws on and
-extends the notion of the \emph{child-as-scientist} \citep{gopnik1996scientist}; not only are
+occurs during development, can be undestood as inducing, from sparse
+and noisy data, a library of bits of conceptual knowledge, written in
+something like a programming language of thought. This vision of the
+\emph{child-as-hacker} draws on and extends the notion of the
+\emph{child-as-scientist} \citep{gopnik1996scientist}; not only are
 children forming theories about the world, but they are simultaneously
 developing the very conceptual language they use to formulate those
 theories.
