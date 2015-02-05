@@ -23,8 +23,6 @@
 
 \author{
   {\large \bf Joshua Rule, Eyal Dechter, Joshua B. Tenenbaum: $\{$rule, edechter, jbt$\}$ @ mit.edu}\\
-%  {\large \bf Eyal Dechter (edechter@mit.edu)}\\
-%  {\large \bf Joshua B. Tenenbaum (jbt@mit.edu)}\\
   MIT, 46-4053, 77 Massachussetts Avenue, Cambridge, MA 02139 USA}
 
 \begin{document}
@@ -33,7 +31,7 @@
 
 \begin{abstract}
   Conventional models of exemplar or rule-based concept learning tend
-  to focus on the acquisition of one concept at a time. They tend to
+  to focus on the acquisition of one concept at a time. They often
   underemphasize the fact that we learn many concepts as part of large
   systems rather than as isolated individuals. In such cases, the
   challenge of learning is not so much in providing stand-alone
@@ -75,7 +73,7 @@ number such as \emph{one}, we must not only ground it in terms of
 concepts and percepts we already know, but we must also relate it to
 other number concepts we are still in the process of acquiring. The
 natural numbers are in fact particularly interesting in this respect.
-Because they are infinite, there is no way to learn all the individual
+Because they are infinite, there is no way to learn all individual
 concepts without learning the structure of the entire system.
 
 A great deal of empirical work has focused on the first part of this
@@ -94,24 +92,21 @@ with the counting routine and develop their first number concepts are
 crucial, we direct our attention elsewhere in this paper. We focus on
 this second problem, on how children might acquire knowledge of an
 infinite number system, particularly for numbers they are unlikely to
-ever see counted out explicitly. To show how a system of concepts like
-number might be learned, we must first understand what that system is
-and how it might be represented. This task is non-trivial for number,
-and several models have been proposed. For example,
-\citeauthor{hurford1975linguistic} (\citeyear{hurford1975linguistic})
-describes a single system differentiating primitive and compound
-number concepts, while \citeauthor{siegler1982development}
-(\citeyear{siegler1982development}) propose a system with several
+ever see counted out explicitly.
+
+We ground our learning proposal in a new framework for representing
+number as a conceptual system, which on its own has presented a
+non-trivial challenge met in different ways by linguists and
+developmentalists. For example, \citeauthor{hurford1975linguistic}
+(\citeyear{hurford1975linguistic}) proposed a single system
+differentiating primitive and compound number concepts, while
+\citeauthor{siegler1982development}
+(\citeyear{siegler1982development}) proposed a system with several
 stages of development, each containing minimal internal structure.
 
-%% To motivate our stance on the issue, we first describe several
-%% challenges a representation of number must overcome. Finally, we show
-%% how PRCGs, initially developed to explain context-sensitive syntactic
-%% structures in natural language, can explain the conceptual structure
-%% of number words.
-
-Our approach shares much in common with the recent family of Rational
-Rules models
+Our approach to representation and learning is in part inspired by,
+and shares much in common with, the recent family of Rational Rules
+models
 \citep{goodman2008rational,T.D.Ullman:2012:1b1b6,PianGoodTen2012},
 exploring concept learning through Bayesian induction of compositional
 representations using sparse evidence. We agree that these points are
@@ -138,64 +133,31 @@ learning framework for PRCGs \citep{DecRulTen2015}.
 
 \section{A Grammar Representing Number Knowledge}
 
-%% Relative to many other semantic fields children encounter ({\it e.g.}
-%% color, kinship), natural numbers are highly distinctive.
-%% 
-%% 
-%% First , there are infinitely many number concepts. While the
-%% collection of, say, colors anyone might be able to name is fairly
-%% small, there are an infinite number of readily-identified natural
-%% number concepts. Being infinite, the amount of explicitly counted,
-%% perceptually-grounded evidence children receive relative to the size
-%% of the semantic field is incredibly sparse (When did you last see
-%% exactly 253 objects?). In order to accommodate such an expressive
-%% conceptual system in a finite mind, the concepts themselves must be
-%% constructed as needed in a systematic and compositional manner.
-%% 
-%% Second, where many semantic fields refer to relatively concrete
-%% classes of objects or object parts, the natural numbers refer
-%% primarily to an abstract property (cardinality) of an abstract entity
-%% (sets). Moreover, where many semantic fields are highly limited in
-%% scope, natural number is incredibly broad, applying not only to
-%% concrete objects, but also to things like sets ({\it e.g.} three pairs
-%% of socks), sounds, events, time periods, people and other agents, and
-%% numbers themselves ({\it e.g.} three threes makes nine). Being
-%% infinite and broadly applicable suggests that numbers must be learned,
-%% represented, and understood without direct perceptual grounding.
-%% 
-%% Third, numbers cannot be understood in isolation. Even when numbers
-%% are used to describe cardinalities- as opposed to ordinals or
-%% sequences -- interest may not be so much in the cardinality itself as
-%% in some more complex property, such as whether it is more or less than
-%% another cardinality or how it operates in arithmetic. Children may
-%% eventually learn about negative and rational numbers, algebra,
-%% geometry, and myriad other mathematical disciplines. This hugely
-%% diverse range of meanings makes it impossible to fully describe
-%% \emph{three} without referencing \emph{two}, \emph{four}, and
-%% eventually all other numbers. The concept of \emph{two} (or any other
-%% number) is not rightly understood as a single object, but must also
-%% include the web of relationships in which \emph{two} participates.
-
 Three challenges make learning systems of number concepts particularly
-difficult and interesting: 1) very few of our number concepts are
-perceptually grounded (when was the last time you saw and counted 254
-objects?); 2) much like natural language, the meanings of the numbers
-are compositional in that, for example, the meaning of
-\emph{four-hundred fifty-two} depends on the meanings of \emph{four}
-and \emph{hundred}; and 3) To understand numbers is also to understand
-the relations in which numbers participate -- to know what \emph{four}
-means is also to know that it is half of \emph{eight} and \emph{one}
-more than \emph{three}.
+difficult and interesting. First, very few of our number concepts are
+perceptually grounded. When, for example, did you last count exactly
+254 objects? The problem only intensifies as we begin applying numbers
+to events, time period, sets of objects, and eventually even other
+numbers. Second, the fact that there are infinitely many number
+concepts means that, much like in natural language sentences, the
+meanings of the numbers are compositional. The meaning of
+\emph{four-hundred fifty-two}, for example, depends on but goes
+significantly beyond the meanings of \emph{four} and \emph{hundred}.
+Third, to understand numbers is also to understand the relations in
+which numbers participate. We are often interested in a number not so
+much for its cardinality as for some more complex property, such as
+whether it is more or less than another number or how it change
+through addition or division. This hugely diverse range of meanings
+makes it impossible to fully describe \emph{three} without referencing
+\emph{two}, \emph{four}, and eventually all other numbers.
 
 How can we hope to represent systems of concepts which are: 1)
 learnable without direct perceptual grounding; 2) compositionally
 constructed; and 3) relationally defined? Happily, these properties
 are similar to those linguists face in studying natural language
-syntax. Motivated by this similarity, we use a grammar to represent
-the system of natural number concepts. Grammars can be induced
-directly from a stream of utterances, are highly compositional, and
-define their constituents based on their relationships to each other
-rather than as discrete objects.
+syntax. Grammars can be induced directly from a stream of utterances,
+are highly compositional, and define their constituents based on their
+relationships to each other rather than as discrete objects.
 
 \begin{figure*}[t]
   \begin{centering}
@@ -213,7 +175,7 @@ rather than as discrete objects.
   \end{centering}
 \end{figure*}
 
-To lend force to this insight, we now present a grammar of number
+Motivated by this insight, we now present a grammar of number
 knowledge we have constructed to capture five key number relations:
 \emph{Number}, capturing the distinction between valid and invalid
 number words; \emph{Succ} and \emph{Pred}, the successor and
@@ -248,7 +210,7 @@ another system more directly involved in language preprocesses
 utterances into predicates which are then checked against the
 knowledge encoded in our conceptual grammar. Second, this grammar has
 not been optimized for compactness or efficiency. Implementing
-\emph{More} with as the transitive closure of \emph{Successor}, for
+\emph{More} as the transitive closure of \emph{Successor}, for
 example, would eliminate several predicates. We focused on providing a
 grammar that would be correct, human-readable, and fit a
 prefix-base-suffix understanding of number, as discussed below.
@@ -294,6 +256,7 @@ number for a previous base, in this case $\varnothing$, the ones base:
 \begin{align}
   & \textit{Suffix}(\textit{hundred}, \textit{thirty seven}) \leftarrow\\
   & \hspace{0.5cm}  \textit{LargerBase}(\textit{hundred}, \varnothing), \textit{Number}(\textit{thirty seven}). \notag\\
+  \notag\\
  &  \textit{LargerBase}(\textit{hundred}, \varnothing) \leftarrow \textit{PrevBase}(\textit{hundred}, \varnothing).
 \end{align}
 
@@ -303,6 +266,7 @@ word:
 \begin{align}
   & \textit{Number}(\textit{thirty seven}) \leftarrow\\
   & \hspace{0.5cm} \textit{Prefix}(\textit{thirty seven}, \varnothing), \textit{Suffix}(\varnothing,\varnothing).\notag\\
+  \notag\\
   & \textit{Prefix}(\textit{thirty seven}, \varnothing) \leftarrow\\
   & \hspace{0.5cm} \textit{Decades}(\textit{thirty}), \textit{Ones}(\textit{seven}).\notag
 \end{align}
@@ -311,11 +275,11 @@ word:
 \noindent The compositional use of simple predicates thus helps us
 analyze the structure of a complex phrase like \emph{six hundred
   thirty seven} and show that while it is a valid number word,
-\emph{hundred six seven thirty} is not. \emph{Successor} and
-\emph{More} can similarly be encoded (Figure \ref{fig:parse}), while
-\emph{Predecessor} and \emph{Less} can be encoded quite simply as
-$\text{Less}(X,Y) \leftarrow \text{More}(Y,X)$ and $\text{Pred}(X,Y)
-\leftarrow \text{Succ}(Y,X)$.
+\emph{hundred six seven thirty} is not. \emph{Successor} can similarly
+be encoded (Figure \ref{fig:parse}) as can \emph{More} (not shown),
+while \emph{Predecessor} and \emph{Less} can be encoded quite simply
+as $\text{Less}(X,Y) \leftarrow \text{More}(Y,X)$ and
+$\text{Pred}(X,Y) \leftarrow \text{Succ}(Y,X)$.
 
 \section{Learning Number Knowledge}
 
@@ -337,7 +301,7 @@ of learning PRCGs against empirical data.
 
 Latent Predicate Networks (LPNs) are PRCGs with three types of
 predicates connected in a layered fashion. \emph{Observed} predicates
-are relations directly present in the data (e.g. \emph{Successor} is
+are relations directly present in the data ({\it e.g.} \emph{Successor} is
 observed if the data includes \emph{Successor} pairs). Observed
 predicates are defined in terms of layers of \emph{latent} predicates.
 These relations are not directly observable in the data and their
@@ -350,18 +314,17 @@ it, and the lowest layer of latent predicates is defined in terms of a
 collection of \emph{lexicon} predicates, each of which is a unary
 predicate that is true of the atomic units (the words) of the system.
 The rules of the LPN consist of all definitions possible within the
-network architecture (for details see ~\cite{DecRulTen2015}). The
+network architecture (for details see~\cite{DecRulTen2015}). The
 parameters of the network are the probabilities of the rules.
 
 Our model attempts to learn a distribution over the parameters of the
-LPN given the available data using hierarchical Bayesian
-inference: the model assumes that there is a prior distribution over
-the parameters of the LPN and, using Bayes' rule, the model infers a
-distribution over parameter values that balances the fit of the
-observations against the prior. We use a sparsity inducing prior
-distribution which formalizes the intuition that latent predicates and
-rules should be shared in order to learn grammars that can generalize
-beyond the observed data.
+LPN given the available data using hierarchical Bayesian inference:
+the model assumes that there is a prior distribution over the
+parameters of the LPN and, using Bayes' rule, infers a distribution
+over parameter values that balances the fit of the observations
+against the prior. We use a sparsity-inducing prior to formalize the
+intuition that latent predicates and rules should be shared in order
+to learn grammars that can generalize beyond the observed data.
 
 Since exact inference in probabilistic grammars is computationally
 intractable, our model is simulated using the Variational Bayes EM
@@ -370,44 +333,44 @@ programming language~\citep{sato2008variational}.
 
 All the simulations below were run on an LPN with three layers of five
 predicates each. The learning algorithm was run for a single
-iteration, a concentration parameter $\alpha=0.1$, and a convergence
+iteration with a concentration parameter of $\alpha=0.1$, and a convergence
 criterion of $\epsilon=1e-4$. We will refer to each separate
 simulation below as a \emph{simulated child}.
 
 \subsubsection{Acquiring the count sequence}
 
-\citeauthor{FusRicBriar1982} describe qualitative phenomena of
+\cite{FusRicBriar1982} describe qualitative phenomena of
 count sequence acquisition and elaboration based on several surveys in
 which they asked American children between three and five years of age
 to count (either while counting a collection of objects or just
-reciting the count world sequence). The learning trajectories and
+reciting the count word sequence). The learning trajectories and
 error patterns they describe have inspired computation modeling
 efforts using connectionist networks; for example,
 \citet{ma1989modeling} use an associative network to model the errors
 that young children typically make when learning the count sequence up
 to twenty or thirty. But, to our knowledge, such models have not been
-used to study how children acquire the count sequence beyond twenty.
+used to study how children acquire the count sequence beyond thirty.
 
 
 Figure~\ref{fig:fuson_model_comparison}a shows the highest number
-correctly reached by children in various age
-ranges~\cite{FusRicBriar1982}. The authors hypothesize that the large
+correctly reached by children of various ages
+in~\citeauthor{FusRicBriar1982} The authors hypothesize that the large
 jump in range between the young three-year-olds and the older
 four-year-olds and five-year-olds is due to the older children
-partially solving what they term ``the decade problem.'' -- i.e.
-recognizing both that there is a repetitive pattern of that repeats
-across decades beyond twenty and learning that there is a particular
-sequence to the decade words.
+partially solving what they term ``the decade problem.'' -- {\it i.e.}
+recognizing both that there is a pattern that repeats across decades
+greater than twenty and that there is a particular sequence to the
+decade words.
 
 We asked whether our model goes through a similar transition. To
 simulate learning, we generated data sets consisting of successor
-pairs between one and a hundred, with the number of examples $N$ of each
+pairs between one and one-hundred, with the number of examples $N$ of each
 pair $Succ(i+1, i)$ following the power law $N=\frac{K}{i}$, where $K$
-determines the overall size of the data set. The explore the effect of
+determines the overall size of the data set. To explore the effect of
 evidence quantity, and to simulate the effect that overall quantity
 of evidence has on a child's acquisition of the count list, we
 generated data sets for $K=10, 100, 1000, 10000$, which we denote
-stages 1-4. The resulting histograms of data are shown in
+stages 1-4, respectively. The resulting histograms of data are shown in
 Figure~\ref{fig:counting_grid}a-d (the y-axes are logarithmically
 scaled).
 
@@ -417,12 +380,12 @@ differ due to different random parameter initializations). In
 Figure~\ref{fig:counting_grid}a-d, each line corresponds to one of the
 simulated children and shows the probability that the child will
 correctly count to the corresponding number on the x-axis. To generate
-this counting simulations, we asked the model for the distribution of
-successors for a given number and used a simple soft max decision
-procedure to determine the probability of the simulated child
-reporting each word. Specifically, if the simulated child believes
-that the $x$ follows $a$ with probability $p_a(x)$, then it says $x$
-after $a$ for probability proportional to $p_a(x)^2 $.
+this data, we asked the model for the distribution of successors for a
+given number and used a simple soft max decision procedure to
+determine the probability of the simulated child reporting each word.
+Specifically, if the simulated child believes $x$ follows $a$
+with probability $p_a(x)$, then it says $x$ after $a$ with probability
+proportional to $p_a(x)^2 $.
 
 \begin{figure}[t]
   \includegraphics[width=0.9\linewidth]{figures/modelboxplot.pdf}
@@ -439,20 +402,20 @@ after $a$ for probability proportional to $p_a(x)^2 $.
 The simulations in stage 1 are variable in their performances, with
 some of simulated children unable to count further than the first few
 words and a few having a relatively high chance of reaching
-``twenty.'' The sharp drops in performance at the ``twenty,'' ``thirty''
+``twenty.'' The sharp drops in performance at ``twenty,'' ``thirty''
 and ``forty'' in stage 2, and the horizontal lines between them,
 indicate that here the simulation has learned the within-decade
 structure of the count list but is uncertain about the transitions
 between decades. In stages 3 and 4, nearly all simulated children
-master the numbers up to ``twenty nine'' but are unable to transition from
-``thirty-nine'' to ``forty.'' And only in stage 4, do we see any
+master the numbers up to ``twenty nine'' but are unable to transition
+from ``thirty nine'' to ``forty.'' Only in stage 4 do we see any
 children making the transition from this state of knowledge to one in
-which it can reach ``ninety nine.'' 
+which they can reach ``ninety nine.''
 
-The simulations in these first four stages suggest that with even with
-large increase in the quantity of data, the 1-to-29 counter mode is
-likely to trap our model. We hypothesized that this is due to a lack
-of evidence at the decade transitions. Mastering the decade
+The simulations in these first four stages suggest that even with
+large increases in the quantity of data, our model is unlikely to
+progress beyond ``twenty nine''. We hypothesized that this is due to a
+lack of evidence for the decade transitions. Mastering the decade
 transitions requires both learning that there is a special rule for
 the successor of numbers ending in ``nine,'' and learning the order of
 decade words. This adds considerable complexity to the grammar, and
@@ -460,8 +423,9 @@ our simulations favor a more parsimonious explanation of the heavily
 weighted smaller numbers. Children, however, do not learn to count to
 a hundred by unsupervised exposure to naturally occurring count words;
 they are actively taught to do so. Although we know of no study of the
-pedagogical language used in teaching children to count, some kindergarten teaching
-blogs (e.g. http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html).
+pedagogical language used in teaching children to count, some
+kindergarten teaching blogs ({\it e.g.}
+http://www.heidisongs.com/blog/2012/05/teaching-kids-to-count-to-100.html)
 mention emphasizing decade transitions as useful in helping struggling
 students to learn the count sequence.
 
@@ -470,14 +434,12 @@ facilitate the transition to mastering counting up to a hundred, we
 created two additional data sets, stages $3^*$ and $4^*$, that contain the
 same data as stages 3 and 4, respectively, but have an additional
 $10\%$ of the data evenly distributed across the decade transitions
-(twenty nine, thirty; thirty nine, forty; ..., eighty-nine,
+(twenty nine, thirty; thirty nine, forty; ..., eighty nine,
 ninety). The simulated data for these stages is shown in
 Figure~\ref{fig:counting_grid}e-f). In both simulations, we observe a
 sharp increase in the number of simulated children who transition to
-counting to a hundred (from zero to four in stage 3' and from two to
-six in stage 4').
-
-
+counting to a hundred (from 0 to 4 children in stage 3', and 2 to
+6 children in stage 4').
 
 \begin{figure*}[t]
   \includegraphics[width=\linewidth]{figures/counting_grid2}
@@ -496,17 +458,17 @@ six in stage 4').
 Figure~\ref{fig:fuson_model_comparison}b summarizes the simulation
 data for stages 1,2,$3^*$ and $4^*$ for comparison against the
 \citeauthor{FusRicBriar1982} data in
-Figure~\ref{fig:fuson_model_comparison}a. For each one of these stages
-and for each simulated child, we computed the probability that highest
-number counted starting at ``one'' would be $x$ for $x=1 \dots 98$. We
-averaged these values across simulated children within a stage and
-used the resulting densities to calculate the means, standard
-deviations, and 10th and 90th percentiles for each stage (these
-percentiles were chosen to be comparable with the empirical ranges described
-by \citeauthor{FusRicBriar1982}
+Figure~\ref{fig:fuson_model_comparison}a. For each stage and each
+simulated child, we computed the probability that the highest number
+reached by counting, starting from ``one,'' would be $x$ for $x=1
+\dots 98$. We averaged these values across simulated children within a
+stage and used the resulting densities to calculate the means,
+standard deviations, and 10th and 90th percentiles for each stage
+(these percentiles were chosen to be comparable with the empirical
+ranges described by \citeauthor{FusRicBriar1982}
 
 In addition to examining the learning trajectories of our model, we
-also looked at the kinds of mistakes that it makes. One interesting
+also examined the kinds of mistakes that it makes. One interesting
 pattern of mistakes that young English speaking children make when
 reciting the count sequence is that they invent number
 words. \citeauthor{FusRicBriar1982} report that children invent such
@@ -515,67 +477,23 @@ as ``fiveteen'' and ``eleventy'') and by combining decade words with
 incorrect digit-place words (such as ``twenty-eleven'' and
 ``twenty-twenty''). In particular, they report that appending
 \emph{teen} words to decade words is most common, creating sequences
-like ``twenty-ten'', ``twenty-eleven'', ``twenty-twelve'', etc.
+like ``twenty-ten'', ``twenty-eleven'', ``twenty-twelve'', {\it etc.}
 In Figure~\ref{fig:inventedWordComparison} we show the most common invented
 words that \citeauthor{FusRicBriar1982} report and the mean number of
 times a child used the word. 
 
 Since we do not model in this work the way in which the number word
 morphemes are composed to construct number words, our model cannot
-account for the morphologically based word errors. We asked, however,
-to what extent it can model the other invented word errors that
+account for morphologically-based errors. We asked, however, to what
+extent it can model the other invented word errors that
 \citeauthor{FusRicBriar1982} report; the most common invented words
 are shown in Figure~\ref{fig:inventedWordComparison}a). To compare
 these data to our model, we asked a stage 2 simulated child for the
-top twenty non-number words that could appear as successor to a number
-world or non-number word (because this was a computationally expensive
+top ten non-number words that could appear as successor to a number
+word or non-number word (because this was a computationally expensive
 procedure, we restrict our analysis here to a single randomly selected
 simulation). The marginal probabilities of those non-number words is
 shown in Figure~\ref{fig:inventedWordComparison}.
-
-% There is evidence that there are cross-linguistic differences in the
-% kinds of errors that children make when learning the count sequence.
-% In their study comparing American and Chinese four to six-year-olds,
-% \citeauthor{miller1987counting} found that while $20\%$ of the errors
-% that English speaking children made involved invented numbers, they
-% encountered no instances of Chinese-speaking children doing so.
-
-
-% Our model agrees that Chinese children should use fewer invented
-% words: we simulated a stage 2 child using the Chinese number system
-% and found only a single invented word ``one ten one'' with marginal
-% probability $3e-4$, making it much less probable than the twenty most
-% probably invented words for the English speaking simulated child.  Our
-% model suggests that the reason the use of invented words is more
-% common in English than Chinese is because there are more categories of
-% words in the English system than the Chinese one. In Chinese, the
-% decade word are the same as the unit words (e.g. ``five-ten-one'' for
-% 51) and the teen words (11-19) are uniform in contruction
-% (e.g. ``ten-five'' for 15). Thus, there are both fewer words to learn
-% about in the Chinese system, and grammar rules in the Chinese system
-% that combine words of different categories are far less likely to
-% produce invalid words than those in the English system.
-
-% Our model also is consistent with \citeauthor{miller1987counting}'s finding
-% that, contrary to their original expectations, Chinese children do not
-% count by decades (e.g. ``twenty nine'', ``thirty'', ``forty,'' ...)
-% more often than their English speaking counterparts. In our
-% simulations we do not find any suggestion of this kind of error for
-% the Chinese-speaking simulated children, and this is likely because
-% our grammar rules do not act independently on different parts of the
-% number words. The rules explicitly act on both categories of
-% substrings and their relative positions, so the use of a rule that
-% increments the units position of a number word does not increase the
-% probability of a rule that increments the decades position, even if
-% the those words happen to be the same.
-
-
-% \begin{figure}[t]
-% \includegraphics[width=0.9\linewidth]{figures/after29}
-% \caption{The distribution over successors of ``twenty nine'' for
-%   averaged over simulated children at stage 2.\label{fig:after29}}
-% \end{figure}
-
 
 \begin{figure}[t]
 \includegraphics[width=0.9\linewidth]{figures/inventedWordComparison3}
@@ -610,16 +528,16 @@ In many ways this phenomenon is analogous to the Cardinal Principle
 (CP) transition, in which younger children learning the relationship
 between small numbers and set sizes make slow and incremental progress
 when learning the meanings of the first three or four numbers but then
-suddenly expand their understanding to the remaining numbers that
-they know. The theory that this rapid transition is due to what Carey
+suddenly expand their understanding to every other memorized number word.
+The theory that this rapid transition is due to what Carey
 (\citeyear{Car2009}) refers to as \emph{Quinian bootstrapping} has
 been formalized by Piantadosi et al. (\citeyear{PianGoodTen2012}) as
 probabilistic inference over a space of recursive programs defined by
 a grammar. As we do here, they explain the inductive leap of the CP
 transition as a result of the tension between program complexity and
-fit to the available data. Crucially, whereas Piantodosi et al. place
+fit to the available data. Crucially, whereas Piantadosi et al.~place
 a distribution over programs using a probabilistic context-free
-grammar, our model here is learning a complete grammar, one that can
+grammar, our model is learning a complete grammar, one that can
 accommodate many different concepts and relations and that can be seen
 as a probabilistic and declarative knowledge base.
 
@@ -639,8 +557,8 @@ number system, shown that it can learn the adult system with relative
 ease, and also that it can explain why Chinese children generally make
 different patterns of mistakes than English-speaking children -- in
 particular, why they are much less likely to invent number words like
-"twenty eleven" even though Chinese uses the same words to refer to
-both decade and ones values (e.g., "twenty one" is "two ten one")"~\citep{miller1987counting}.
+``twenty eleven'' even though Chinese uses the same words to refer to
+both decade and ones values ({\it e.g.}, ``twenty one'' is ``two ten one'')~\citep{miller1987counting}.
 
 Another important future step for this research will be to relate our
 model to those, like Piantadosi et al. (\citeyear{PianGoodTen2012})
@@ -681,13 +599,13 @@ children forming theories about the world, but they are simultaneously
 developing the very conceptual language they use to formulate those
 theories.
 
-%% \section{Acknowledgments}
-%% 
-%% The authors benefited significantly from conversations with Timothy
-%% O'Donnell and Leon Bergen. This material is based upon work supported
-%% by the Center for Minds, Brains and Machines (CBMM), funded by NSF STC
-%% award CCF-1231216, an NSF Graduate Research Fellowship, and the Eugene
-%% Stark Graduate Fellowship.
+\section{Acknowledgments}
+
+The authors benefited significantly from conversations with Leon
+Bergen, Timothy O'Donnell and Steven Piantadosi. This material is
+based upon work supported by the Center for Minds, Brains and Machines
+(CBMM), funded by NSF STC award CCF-1231216, an NSF Graduate Research
+Fellowship, and the Eugene Stark Graduate Fellowship.
 
 
 \bibliographystyle{apacite}
