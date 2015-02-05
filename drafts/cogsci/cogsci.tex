@@ -4,13 +4,20 @@
 
 \usepackage{cogsci}
 \usepackage{pslatex}
-\usepackage{apacite}
+\usepackage[natbibapa]{apacite}
 \usepackage{graphicx}
 \usepackage{floatrow}
 \usepackage[fleqn]{amsmath}
 \usepackage{amssymb}
 \usepackage[longnamesfirst]{natbib}
 \usepackage{url}
+
+\renewcommand{\bibfont}{\small}
+\renewcommand\bibsection{%
+  \section*{\refname\markboth{\MakeUppercase{\refname}}{\MakeUppercase{\refname}}}%
+  \addcontentsline{toc}{section}{\refname}%
+}
+
 
 \title{Representing and Learning a Large System of Concepts\\with Latent Predicate Networks}
 
@@ -350,28 +357,26 @@ described in these studies is captured by this model.
 
 \subsection{Latent Predicate Networks}
 
-\begin{figure}[t]
-  \begin{centering}
-    \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
-    \caption{A schematic LPN for number knowledge learning.}
-  \end{centering}
-\end{figure}
+%% \begin{figure}[t]
+%%   \begin{centering}
+%%     \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
+%%     \caption{A schematic LPN for number knowledge learning.}
+%%   \end{centering}
+%% \end{figure}
 
 Latent Predicate Networks (LPNs) are PRCGs with a large number of
-rules connected in a layered fashion. An schematic of the LPN used in
-the following learning experiments and simulations is show in
-Figure~\ref{fig:lpn}. There are three types of predicates in LPNs. The
-\emph{observed} predicates are relations that are directly present in
-the data (e.g. the successor predicate Succ is observed if the data is
-a collection of successor pairs). The observed predicates are defined
-in terms of layers of \emph{latent} predicates. These are relations
-that are not directly observable in the data and whose meanings are
-determined through learning. For example, the Decade predicate, which
-is true for ``ten'', ``twenty'', etc., might correspond to one of the
-latent predicates after learning on successor pair data. The lowest
-layer of latent predicates is defined in terms of a collection of
-\emph{lexicon} predicates, each of which is a unary predicate that is
-true of the atomic units (the words) of the system.
+rules connected in a layered fashion. There are three types of
+predicates in LPNs. The \emph{observed} predicates are relations that
+are directly present in the data (e.g. the successor predicate Succ is
+observed if the data is a collection of successor pairs). The observed
+predicates are defined in terms of layers of \emph{latent} predicates.
+These are relations that are not directly observable in the data and
+whose meanings are determined through learning. For example, the
+Decade predicate, which is true for ``ten'', ``twenty'', etc., might
+correspond to one of the latent predicates after learning on successor
+pair data. The lowest layer of latent predicates is defined in terms
+of a collection of \emph{lexicon} predicates, each of which is a unary
+predicate that is true of the atomic units (the words) of the system.
 
 Given a collection of observations, our model assumes that there is a
 setting of the parameters of the LPN that gave rise to those
@@ -693,13 +698,13 @@ children forming theories about the world, but they are simultaneously
 developing the very conceptual language they use to formulate those
 theories.
 
-\section{Acknowledgments}
-
-The authors benefited significantly from conversations with Timothy
-O'Donnell and Leon Bergen. This material is based upon work supported
-by the Center for Minds, Brains and Machines (CBMM), funded by NSF STC
-award CCF-1231216, an NSF Graduate Research Fellowship, and the Eugene
-Stark Graduate Fellowship.
+%% \section{Acknowledgments}
+%% 
+%% The authors benefited significantly from conversations with Timothy
+%% O'Donnell and Leon Bergen. This material is based upon work supported
+%% by the Center for Minds, Brains and Machines (CBMM), funded by NSF STC
+%% award CCF-1231216, an NSF Graduate Research Fellowship, and the Eugene
+%% Stark Graduate Fellowship.
 
 
 \bibliographystyle{apacite}
