@@ -384,20 +384,18 @@ probabilities of the rules.
 
 Our model attempts to infer a distribution over the parameters of the
 LPN given the data available to it. This inference is conducting via
-hierarchical Bayesian inference~\citep{gelman2014bayesian}: the model
-assumes that there is a prior distribution over the parameters of the
-LPN and, using Bayes' rule, the model infers a distribution
-over parameter values that balances the fit of the observations
-against the prior. We use a sparsity inducing prior distribution which
-formalizes the intuition that latent predicates and rules should be
-shared in order to learn grammars that can generalize beyond the
-observed data.
+hierarchical Bayesian inference: the model assumes that there is a
+prior distribution over the parameters of the LPN and, using Bayes'
+rule, the model infers a distribution over parameter values that
+balances the fit of the observations against the prior. We use a
+sparsity inducing prior distribution which formalizes the intuition
+that latent predicates and rules should be shared in order to learn
+grammars that can generalize beyond the observed data.
 
-Exact inference in probabilistic grammars is computationally
-intractable. We use the Variational Bayes EM algorithm~(CITATION), which has
-been widely used in approximate inference of probabilistic context
-free grammars~(CITATION). All the computations in this paper were done
-using the PRISM probabilistic logic programming language~(CITATION).
+Since exact inference in probabilistic grammars is computationally
+intractable, our model is simulated using the Variational Bayes EM
+approximate inference algorithm as implemented in the PRISM
+programming language~\citep{sato2008variational}.
 
 All the simulations below were run on an LPN with three layers of five
 predicates each. The learning algorithm was run for a single
@@ -407,7 +405,7 @@ simulation below as a \emph{simulated child}.
 
 \subsection{Modeling the acquisition and elaboration of the count sequence}
 
-\citet{FusRicBriar1982} describe qualitative phenomena of
+\citeauthor{FusRicBriar1982} describe qualitative phenomena of
 count sequence acquisition and elaboration based on several surveys in
 which they asked American children between three and five years of age
 to count (either while counting a collection of objects or just
@@ -550,7 +548,7 @@ incorrect digit-place words (such as ``twenty-eleven'' and
 like ``twenty-ten'', ``twenty-eleven'', ``twenty-twelve'', etc.
 In Figure~\ref{fig:inventedWordComparison} we show the most common invented
 words that \citeauthor{FusRicBriar1982} report and the mean number of
-times each child in their study use the word. 
+times a child used the word. 
 
 Since we do not model in this work the way in which the number word
 morphemes are composed to construct number words, our model cannot
