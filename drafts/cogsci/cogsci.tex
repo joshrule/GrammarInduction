@@ -19,7 +19,7 @@
 }
 
 
-\title{Representing and Learning a Large System of Concepts\\with Latent Predicate Networks}
+\title{Representing and Learning a Large System of Number Concepts\\with Latent Predicate Networks}
 
 \author{
   {\large \bf Joshua Rule, Eyal Dechter, Joshua B. Tenenbaum: $\{$rule, edechter, jbt$\}$ @ mit.edu}\\
@@ -94,7 +94,21 @@ with the counting routine and develop their first number concepts are
 crucial, we direct our attention elsewhere in this paper. We focus on
 this second problem, on how children might acquire knowledge of an
 infinite number system, particularly for numbers they are unlikely to
-ever see counted out explicitly.
+ever see counted out explicitly. To show how a system of concepts like
+number might be learned, we must first understand what that system is
+and how it might be represented. This task is non-trivial for number,
+and several models have been proposed. For example,
+\citeauthor{hurford1975linguistic} (\citeyear{hurford1975linguistic})
+describes a single system differentiating primitive and compound
+number concepts, while \citeauthor{siegler1982development}
+(\citeyear{siegler1982development}) propose a system with several
+stages of development, each containing minimal internal structure.
+
+%% To motivate our stance on the issue, we first describe several
+%% challenges a representation of number must overcome. Finally, we show
+%% how PRCGs, initially developed to explain context-sensitive syntactic
+%% structures in natural language, can explain the conceptual structure
+%% of number words.
 
 Our approach shares much in common with the recent family of Rational
 Rules models
@@ -122,63 +136,56 @@ number this way \citep{boullier2005range}. We then show how a portion
 of this grammar can be learned using Bayesian inference in an LPN, a
 learning framework for PRCGs \citep{DecRulTen2015}.
 
-\section{Representing Number Knowledge}
+\section{A Grammar Representing Number Knowledge}
 
-To show how a system of concepts like number might be learned, we must
-first understand what that system is and how it might be represented.
-This task is non-trivial for number, and several models have been
-proposed. For example, \citeauthor{hurford1975linguistic}
-(\citeyear{hurford1975linguistic}) describes a single system
-differentiating primitive and compound number concepts, while
-\citeauthor{siegler1982development}
-(\citeyear{siegler1982development}) propose a system with several
-stages of development, each containing minimal internal structure.
+%% Relative to many other semantic fields children encounter ({\it e.g.}
+%% color, kinship), natural numbers are highly distinctive.
+%% 
+%% 
+%% First , there are infinitely many number concepts. While the
+%% collection of, say, colors anyone might be able to name is fairly
+%% small, there are an infinite number of readily-identified natural
+%% number concepts. Being infinite, the amount of explicitly counted,
+%% perceptually-grounded evidence children receive relative to the size
+%% of the semantic field is incredibly sparse (When did you last see
+%% exactly 253 objects?). In order to accommodate such an expressive
+%% conceptual system in a finite mind, the concepts themselves must be
+%% constructed as needed in a systematic and compositional manner.
+%% 
+%% Second, where many semantic fields refer to relatively concrete
+%% classes of objects or object parts, the natural numbers refer
+%% primarily to an abstract property (cardinality) of an abstract entity
+%% (sets). Moreover, where many semantic fields are highly limited in
+%% scope, natural number is incredibly broad, applying not only to
+%% concrete objects, but also to things like sets ({\it e.g.} three pairs
+%% of socks), sounds, events, time periods, people and other agents, and
+%% numbers themselves ({\it e.g.} three threes makes nine). Being
+%% infinite and broadly applicable suggests that numbers must be learned,
+%% represented, and understood without direct perceptual grounding.
+%% 
+%% Third, numbers cannot be understood in isolation. Even when numbers
+%% are used to describe cardinalities- as opposed to ordinals or
+%% sequences -- interest may not be so much in the cardinality itself as
+%% in some more complex property, such as whether it is more or less than
+%% another cardinality or how it operates in arithmetic. Children may
+%% eventually learn about negative and rational numbers, algebra,
+%% geometry, and myriad other mathematical disciplines. This hugely
+%% diverse range of meanings makes it impossible to fully describe
+%% \emph{three} without referencing \emph{two}, \emph{four}, and
+%% eventually all other numbers. The concept of \emph{two} (or any other
+%% number) is not rightly understood as a single object, but must also
+%% include the web of relationships in which \emph{two} participates.
 
-To motivate our stance on the issue, we first describe several
-challenges a representation of number must overcome. Finally, we show
-how PRCGs, initially developed to explain context-sensitive syntactic
-structures in natural language, can explain the conceptual structure
-of number words.
-
-\subsection{The Challenges of Number}
-
-Relative to many other semantic fields children encounter ({\it e.g.}
-color, kinship), natural numbers are highly distinctive.
-
-
-First , there are infinitely many number concepts. While the
-collection of, say, colors anyone might be able to name is fairly
-small, there are an infinite number of readily-identified natural
-number concepts. Being infinite, the amount of explicitly counted,
-perceptually-grounded evidence children receive relative to the size
-of the semantic field is incredibly sparse (When did you last see
-exactly 253 objects?). In order to accommodate such an expressive
-conceptual system in a finite mind, the concepts themselves must be
-constructed as needed in a systematic and compositional manner.
-
-Second, where many semantic fields refer to relatively concrete
-classes of objects or object parts, the natural numbers refer
-primarily to an abstract property (cardinality) of an abstract entity
-(sets). Moreover, where many semantic fields are highly limited in
-scope, natural number is incredibly broad, applying not only to
-concrete objects, but also to things like sets ({\it e.g.} three pairs
-of socks), sounds, events, time periods, people and other agents, and
-numbers themselves ({\it e.g.} three threes makes nine). Being
-infinite and broadly applicable suggests that numbers must be learned,
-represented, and understood without direct perceptual grounding.
-
-Third, numbers cannot be understood in isolation. Even when numbers
-are used to describe cardinalities- as opposed to ordinals or
-sequences -- interest may not be so much in the cardinality itself as
-in some more complex property, such as whether it is more or less than
-another cardinality or how it operates in arithmetic. Children may
-eventually learn about negative and rational numbers, algebra,
-geometry, and myriad other mathematical disciplines. This hugely
-diverse range of meanings makes it impossible to fully describe
-\emph{three} without referencing \emph{two}, \emph{four}, and
-eventually all other numbers. The concept of \emph{two} (or any other
-number) is not rightly understood as a single object, but must also
-include the web of relationships in which \emph{two} participates.
+Three challenges make learning systems of number concepts particularly
+difficult and interesting: 1) very few of our number concepts are
+perceptually grounded (when was the last time you saw and counted 254
+objects?); 2) much like natural language, the meanings of the numbers
+are compositional in that, for example, the meaning of
+\emph{four-hundred fifty-two} depends on the meanings of \emph{four}
+and \emph{hundred}; and 3) To understand numbers is also to understand
+the relations in which numbers participate -- to know what \emph{four}
+means is also to know that it is half of \emph{eight} and \emph{one}
+more than \emph{three}.
 
 How can we hope to represent systems of concepts which are: 1)
 learnable without direct perceptual grounding; 2) compositionally
@@ -189,8 +196,6 @@ the system of natural number concepts. Grammars can be induced
 directly from a stream of utterances, are highly compositional, and
 define their constituents based on their relationships to each other
 rather than as discrete objects.
-
-\subsection{A Grammar for Number Concepts}
 
 \begin{figure*}[t]
   \begin{centering}
@@ -208,19 +213,21 @@ rather than as discrete objects.
   \end{centering}
 \end{figure*}
 
-Having motivated our decision to model concepts as sets of grammatical
-relations, we now present a grammar of number knowledge we have
-constructed, capturing five key number relations: \emph{Number},
-capturing the distinction between valid and invalid number words;
-\emph{Succ} and \emph{Pred}, the successor and predecessor relations,
-respectively; and \emph{More} and \emph{Less}, the more-than and
-less-than relations, respectively. While seemingly basic tasks,
-children require years to master them \citep{FusRicBriar1982}. While
-most work in natural language syntax uses context-free grammars, our
-focus on capturing structural relationships between concepts demands
-that we use a context-sensitive grammar. We specifically use PRCGs
-because they are expressive and context-sensitive while remaining
-relatively tractable \citep{boullier2005range}.
+To lend force to this insight, we now present a grammar of number
+knowledge we have constructed to capture five key number relations:
+\emph{Number}, capturing the distinction between valid and invalid
+number words; \emph{Succ} and \emph{Pred}, the successor and
+predecessor relations, respectively; and \emph{More} and \emph{Less},
+the more-than and less-than relations, respectively. While seemingly
+basic tasks, children require years to master them
+\citep{FusRicBriar1982}. While most work in natural language syntax
+uses context-free grammars, our focus on capturing structural
+relationships between concepts demands that we use a context-sensitive
+grammar. We specifically use PRCGs because they are expressive and
+context-sensitive while remaining relatively tractable
+\citep{boullier2005range}.
+
+
 
 Capturing these relations with an RCG is not only possible but can
 be done quite compactly. Our grammar for the concepts of
@@ -312,77 +319,49 @@ $\text{Less}(X,Y) \leftarrow \text{More}(Y,X)$ and $\text{Pred}(X,Y)
 
 \section{Learning Number Knowledge}
 
-How might children learn the knowledge about number that is captured
-in the representation presented above? In this section, we present a
-computational model of learning over PRCGs and take a first step
-towards evaluating this model against the learning trajectories and
-patterns of error reported in the literature on counting. 
+How might children learn the number knowledge captured in the
+representation above? In this section, we present a computational
+model of learning PRCGs and take a first step toward evaluating this
+model against the learning trajectories and patterns of error reported
+in the literature on counting.
 
-Because the learning problem is computationally challenging and
-because much of the focus in the literature on exact number knowledge
-has been on counting, we restrict our experiments here to the
-successor relation, and, in particular, to learning how to count from
-one to a hundred. Several studies of children's learning trajectories
-and patterns of errors when acquiring the count
-sequence~\citep{FusRicBriar1982,miller1987counting}. Thus, the
-acquisition of the count sequence provides an interesting domain in
-which evaluate how well our model of learning PRCGs fits the empirical
-data.
-
-% Learning to count up to a hundred does not come easily. Studies of
-% counting in children between three and six years of age suggest that
-% although some children are able to count up to a hundred shortly
-% before entering kindergarten, many have trouble with the task at least
-% as late as first
-% grade ~\citep{FusRicBriar1982,miller1987counting}. These studies identify qualities learning trajectories and patterns of errors that children make. As such, These studies suggest
-% that children do not learn to count to a hundred by memorizing the
-% sequence of numbers between one and a hundred. As might be expected of
-% a system that will eventually be able to count to arbitrarily large
-% numbers, learning to count to a hundred involves discovering the
-% pattern that successive number words follow. 
-
-% We will model this process of pattern discovery as probabilistic
-% inference over RCGs and show that the generalization phenomena
-% described in these studies is captured by this model. 
+To match the literature's focus on counting, we restrict our
+experiments here to the successor relation, and, in particular, to
+learning to count from one to one-hundred. Several studies track
+children's learning trajectories and patterns of errors when acquiring
+the count sequence~\citep{FusRicBriar1982,miller1987counting}, making
+count sequence learning an interesting domain for evaluating our model
+of learning PRCGs against empirical data.
 
 \subsubsection{Latent Predicate Networks}
 
-%% \begin{figure}[t]
-%%   \begin{centering}
-%%     \includegraphics[width=0.9\linewidth]{lpn/lpn.pdf}
-%%     \caption{A schematic LPN for number knowledge learning.}
-%%   \end{centering}
-%% \end{figure}
+Latent Predicate Networks (LPNs) are PRCGs with three types of
+predicates connected in a layered fashion. \emph{Observed} predicates
+are relations directly present in the data (e.g. \emph{Successor} is
+observed if the data includes \emph{Successor} pairs). Observed
+predicates are defined in terms of layers of \emph{latent} predicates.
+These relations are not directly observable in the data and their
+meanings are determined through learning. For example, the
+\emph{Decade} predicate, which is true for ``ten'', ``twenty'', etc.,
+might correspond to one of the latent predicates after the model is
+trained on pairs of successive number words. Each layer of latent
+predicates is defined in terms of the latent predicate layer beneath
+it, and the lowest layer of latent predicates is defined in terms of a
+collection of \emph{lexicon} predicates, each of which is a unary
+predicate that is true of the atomic units (the words) of the system.
+The rules of the LPN consist of all definitions possible within the
+network architecture (for details see ~\cite{DecRulTen2015}). The
+parameters of the network are the probabilities of the rules.
 
-Latent Predicate Networks (LPNs) are PRCGs with a large number of
-rules connected in a layered fashion. There are three types of
-predicates in LPNs. The \emph{observed} predicates are relations that
-are directly present in the data (e.g. the successor predicate Succ is
-observed if the data is a collection of successor pairs). The observed
-predicates are defined in terms of layers of \emph{latent}
-predicates. These are relations that are not directly observable in
-the data and whose meanings are determined through learning. For
-example, the \emph{Decade} predicate, which is true for ``ten'',
-``twenty'', etc., might correspond to one of the latent predicates
-after the model is trained on pairs of successive number words. Each
-layer of latent predicates is defined in terms of the latent predicate
-layer beneath it, and the lowest layer of latent predicates is defined
-in terms of a collection of \emph{lexicon} predicates, each of which
-is a unary predicate that is true of the atomic units (the words) of
-the system. The rules of the LPN consist all possible definitions
-possible within the network architecture (for details see
-~\cite{DecRulTen2015}), and the parameters of the network are the
-probabilities of the rules.
-
-Our model attempts to infer a distribution over the parameters of the
-LPN given the data available to it. This inference is conducting via
-hierarchical Bayesian inference: the model assumes that there is a
-prior distribution over the parameters of the LPN and, using Bayes'
-rule, the model infers a distribution over parameter values that
-balances the fit of the observations against the prior. We use a
-sparsity inducing prior distribution which formalizes the intuition
-that latent predicates and rules should be shared in order to learn
-grammars that can generalize beyond the observed data.
+Our model attempts to learn a distribution over the parameters of the
+LPN given the available data using hierarchical Bayesian
+inference: the model assumes that there is a prior distribution over
+the parameters of the LPN and, using Bayes' rule, the model infers a
+distribution over parameter values that balances the fit of the
+observations against the prior. We use a sparsity inducing prior
+distribution which formalizes the intuition that latent predicates and
+rules should be shared in order to learn grammars that can generalize
+beyond the observed data.
 
 Since exact inference in probabilistic grammars is computationally
 intractable, our model is simulated using the Variational Bayes EM
@@ -409,19 +388,6 @@ that young children typically make when learning the count sequence up
 to twenty or thirty. But, to our knowledge, such models have not been
 used to study how children acquire the count sequence beyond twenty.
 
-
-\begin{figure}[t]
-\includegraphics[width=0.9\textwidth]{figures/modelboxplot}
-\caption{Our model compared with children's counting data a) Data
-  from~\citet{FusRicBriar1982}. The x-axis shows the highest number
-  correctly reached when children were asked to count starting at
-  ``one.'' Boxes correspond to the standard deviation, central bands
-  to the means, and whiskers to the range. b) Model performance,
-  averaged over ten runs at four stages of increasing data quantity.
-  % (see Figure~\ref{fig:counting_grid} for more detail). Whiskers
-  % correspond to the tenth and ninetieth percentiles.
-\label{fig:fuson_model_comparison}}
-\end{figure}
 
 Figure~\ref{fig:fuson_model_comparison}a shows the highest number
 correctly reached by children in various age
@@ -457,6 +423,18 @@ procedure to determine the probability of the simulated child
 reporting each word. Specifically, if the simulated child believes
 that the $x$ follows $a$ with probability $p_a(x)$, then it says $x$
 after $a$ for probability proportional to $p_a(x)^2 $.
+
+\begin{figure}[t]
+  \includegraphics[width=0.9\linewidth]{figures/modelboxplot.pdf}
+  \caption{Our model compared with children's counting data a) Data
+    from~\citet{FusRicBriar1982}. The x-axis shows the highest number
+    correctly reached when children were asked to count starting at
+    ``one.'' Boxes correspond to the standard deviation, central bands
+    to the means, and whiskers to the range. b) Model performance,
+    averaged over ten runs at four stages of increasing data
+    quantity.}\label{fig:fuson_model_comparison}
+\end{figure}
+
 
 The simulations in stage 1 are variable in their performances, with
 some of simulated children unable to count further than the first few
