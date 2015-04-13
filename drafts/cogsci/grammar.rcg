@@ -7,7 +7,7 @@
 
 ## This grammar was introduced in the following paper:
 ##
-## Joshua Rule, Eyal Dechter, Joshua B. Tenenbaum (in preparation)
+## Joshua Rule, Eyal Dechter, Joshua B. Tenenbaum (2015)
 ## Representing and Learning a Large System of Number Concepts using
 ## Latent Predicate Networks
 
@@ -25,7 +25,7 @@
 ## which are yet simpler to parse.
 
 ## Overall, this grammar uses 11+9+5 = 25 concepts in addition to the
-## base lexicon. It also uses only 216 rules. It is unlikely to be the
+## base lexicon. It also uses only 218 rules. It is unlikely to be the
 ## most efficient grammar for these concepts, in part because I
 ## attempted in writing it to provide some room for generalization.
 ## We'd like to see this grammar generalize in the same way a human
@@ -76,6 +76,8 @@ Ones(eight).
 Ones(nine).
 
 # the chain of base words
+PrevBase(trillion, billion).
+PrevBase(billion, million).
 PrevBase(million, thousand).
 PrevBase(thousand, hundred).
 PrevBase(hundred, null).
